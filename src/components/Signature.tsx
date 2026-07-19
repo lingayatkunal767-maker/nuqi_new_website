@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useState } from "react";
 import { motion } from "motion/react";
-import opentype from "opentype.js";
+import { parse as parseFont } from "opentype.js";
 import { cn } from "@/lib/utils";
 
 interface SignatureProps {
@@ -11,6 +11,7 @@ interface SignatureProps {
   fontSize?: number;
   duration?: number;
   delay?: number;
+  stagger?: number;
   className?: string;
   inView?: boolean;
   once?: boolean;
@@ -24,6 +25,7 @@ export function Signature({
   fontSize = 32,
   duration = 1.5,
   delay = 0,
+  stagger = 0.2,
   className,
   inView = false,
   once = true,
@@ -42,7 +44,8 @@ export function Signature({
 
     async function load() {
       try {
-        const font = await opentype.load(fontUrl);
+        const buffer = await fetch(fontUrl).then((res) => res.arrayBuffer());
+        const font = parseFont(buffer);
         if (cancelled) return;
 
         let x = horizontalPadding;
@@ -50,10 +53,16 @@ export function Signature({
 
         for (const char of text) {
           const glyph = font.charToGlyph(char);
-          const path = glyph.getPath(x, baseline, fontSize);
-          newPaths.push(path.toPathData(3));
-
           const advanceWidth = glyph.advanceWidth ?? font.unitsPerEm;
+
+          if (char.trim() !== "") {
+            const path = glyph.getPath(x, baseline, fontSize);
+            const d = path.toPathData(3);
+            if (d && !d.includes("NaN")) {
+              newPaths.push(d);
+            }
+          }
+
           x += advanceWidth * (fontSize / font.unitsPerEm);
         }
 
@@ -77,7 +86,7 @@ export function Signature({
     visible: { pathLength: 1, opacity: 1 },
   };
 
-  const totalDuration = delay + paths.length * 0.2 + duration;
+  const totalDuration = delay + paths.length * stagger + duration;
 
   return (
     <motion.svg
@@ -106,8 +115,8 @@ export function Signature({
               fill="none"
               variants={variants}
               transition={{
-                pathLength: { delay: delay + i * 0.2, duration, ease: "easeInOut" },
-                opacity: { delay: delay + i * 0.2 + 0.01, duration: 0.01 },
+                pathLength: { delay: delay + i * stagger, duration, ease: "easeInOut" },
+                opacity: { delay: delay + i * stagger + 0.01, duration: 0.01 },
               }}
               vectorEffect="non-scaling-stroke"
               strokeLinecap="round"
@@ -126,8 +135,8 @@ export function Signature({
           fill="none"
           variants={variants}
           transition={{
-            pathLength: { delay: delay + i * 0.2, duration, ease: "easeInOut" },
-            opacity: { delay: delay + i * 0.2 + 0.01, duration: 0.01 },
+            pathLength: { delay: delay + i * stagger, duration, ease: "easeInOut" },
+            opacity: { delay: delay + i * stagger + 0.01, duration: 0.01 },
           }}
           vectorEffect="non-scaling-stroke"
           strokeLinecap="butt"

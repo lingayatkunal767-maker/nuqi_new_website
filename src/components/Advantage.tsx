@@ -20,6 +20,8 @@ interface AdvantageCard {
   icon: LucideIcon;
   title: string;
   description: string;
+  stat: string;
+  statLabel: string;
 }
 
 const CARDS: AdvantageCard[] = [
@@ -29,6 +31,8 @@ const CARDS: AdvantageCard[] = [
     title: "Secure and Regulated",
     description:
       "NUQI Digital Wealth operates under the robust oversight of SEBI regulations, ensuring smooth and compliant product offerings tailored to your requirements. With retail endorsement, NUQI lowers entry barriers, making quality investment opportunities more accessible.",
+    stat: "SEBI",
+    statLabel: "Regulated advisor",
   },
   {
     number: "02",
@@ -36,6 +40,8 @@ const CARDS: AdvantageCard[] = [
     title: "Tailored Equity Solutions",
     description:
       "Gain access to 1,500+ carefully selected stocks, screened through a robust exclusion list of industries and financial ratios to ensure quality and alignment. Additionally, explore 18+ expertly curated equity portfolios tailored to meet diverse financial goals and strategies.",
+    stat: "1,500+",
+    statLabel: "Curated stocks",
   },
   {
     number: "03",
@@ -43,6 +49,8 @@ const CARDS: AdvantageCard[] = [
     title: "Portfolio Rebalancing",
     description:
       "NUQI's expert team of advisors, alongside a supervisory panel, ensures portfolios are rebalanced every six months to maintain alignment with your investment goals and market conditions.",
+    stat: "6 MO",
+    statLabel: "Rebalancing cycle",
   },
   {
     number: "04",
@@ -50,6 +58,8 @@ const CARDS: AdvantageCard[] = [
     title: "Asset Diversification",
     description:
       "Equity, ETFs, and Mutual Funds help spread your exposure across various asset classes, enhancing portfolio stability and potential returns.",
+    stat: "3",
+    statLabel: "Asset classes",
   },
   {
     number: "05",
@@ -57,6 +67,8 @@ const CARDS: AdvantageCard[] = [
     title: "Robo Advisory",
     description:
       "Utilize NUQI's AI-powered Robo Advisory to analyze industry trends and tailor recommendations to your unique risk profile and investment goals, enabling smarter, data-driven decisions.",
+    stat: "AI",
+    statLabel: "Powered advisory",
   },
   {
     number: "06",
@@ -64,6 +76,8 @@ const CARDS: AdvantageCard[] = [
     title: "Global Market Access (Tentative)",
     description:
       "Gain access to 9+ global markets, supported by in-depth fundamental data, empowering informed investment decisions across international opportunities.",
+    stat: "9+",
+    statLabel: "Global markets",
   },
 ];
 
@@ -141,55 +155,87 @@ export function Advantage() {
       {/* Pinned scroll-story: one chapter per advantage, scrubbed by scroll position */}
       <div ref={containerRef} className="relative">
         <div className="h-screen w-full flex items-center overflow-hidden section-x">
-          <div className="max-w-7xl mx-auto w-full grid md:grid-cols-[auto_1fr] gap-12 md:gap-20 items-center">
-            {/* Chapter index rail */}
-            <div className="hidden md:flex flex-col gap-4">
-              {CARDS.map((card, i) => (
-                <div key={card.number} className="flex items-center gap-3">
-                  <span
-                    className={`h-px transition-all duration-500 ${
-                      i === activeIndex ? "w-8 bg-[#e1c66a]" : "w-4 bg-white/15"
-                    }`}
-                  />
-                  <span
-                    className={`font-mono text-xs transition-colors duration-500 ${
-                      i === activeIndex ? "text-gold" : "text-white/25"
-                    }`}
-                  >
-                    {card.number}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            {/* Stacked chapter panels */}
-            <div className="relative h-[420px] md:h-[380px]">
+          <div className="max-w-7xl mx-auto w-full">
+            <div className="relative overflow-hidden rounded-3xl border border-line bg-panel">
+              {/* ambient gold glow tied to the active chapter */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -top-1/2 right-0 h-[140%] w-1/2 rounded-full bg-[#e1c66a]/[0.06] blur-[120px]"
+              />
               <span
                 aria-hidden
-                className="absolute -top-16 -left-4 md:-left-8 font-mono text-[10rem] md:text-[16rem] leading-none text-white/[0.04] select-none pointer-events-none"
+                className="pointer-events-none absolute -bottom-16 -left-8 font-mono text-[10rem] md:text-[14rem] leading-none text-white/[0.03] select-none"
               >
                 {active.number}
               </span>
-              {CARDS.map((card, i) => (
-                <div
-                  key={card.number}
-                  ref={(el) => {
-                    chapterRefs.current[i] = el;
-                  }}
-                  className="absolute inset-0 flex flex-col justify-center"
-                  style={{ pointerEvents: i === activeIndex ? "auto" : "none" }}
-                >
-                  <div className="mb-8 w-14 h-14 rounded-md flex items-center justify-center border border-[#e1c66a]/40 bg-panel shadow-[0_0_30px_rgba(225,198,106,0.15)]">
-                    <card.icon className="w-6 h-6 text-gold" />
-                  </div>
-                  <h3 className="text-3xl md:text-5xl font-medium text-white mb-6 max-w-xl leading-tight">
-                    {card.title}
-                  </h3>
-                  <p className="text-base md:text-lg text-fg-muted leading-relaxed max-w-xl">
-                    {card.description}
-                  </p>
+
+              <div className="relative grid md:grid-cols-[auto_1fr_auto] gap-10 md:gap-16 items-center p-10 md:p-16 min-h-[440px] md:min-h-[420px]">
+                {/* Chapter index rail */}
+                <div className="hidden md:flex flex-col gap-4">
+                  {CARDS.map((card, i) => (
+                    <div key={card.number} className="flex items-center gap-3">
+                      <span
+                        className={`h-px transition-all duration-500 ${
+                          i === activeIndex ? "w-8 bg-[#e1c66a]" : "w-4 bg-white/15"
+                        }`}
+                      />
+                      <span
+                        className={`font-mono text-xs transition-colors duration-500 ${
+                          i === activeIndex ? "text-gold" : "text-white/25"
+                        }`}
+                      >
+                        {card.number}
+                      </span>
+                    </div>
+                  ))}
                 </div>
-              ))}
+
+                {/* Stacked chapter panels */}
+                <div className="relative h-[280px] md:h-[300px]">
+                  {CARDS.map((card, i) => (
+                    <div
+                      key={card.number}
+                      ref={(el) => {
+                        chapterRefs.current[i] = el;
+                      }}
+                      className="absolute inset-0 flex flex-col justify-center"
+                      style={{ pointerEvents: i === activeIndex ? "auto" : "none" }}
+                    >
+                      <div className="mb-8 w-14 h-14 rounded-md flex items-center justify-center border border-[#e1c66a]/40 bg-void shadow-[0_0_30px_rgba(225,198,106,0.15)]">
+                        <card.icon className="w-6 h-6 text-gold" />
+                      </div>
+                      <h3 className="text-3xl md:text-5xl font-medium text-white mb-6 max-w-xl leading-tight">
+                        {card.title}
+                      </h3>
+                      <p className="text-base md:text-lg text-fg-muted leading-relaxed max-w-xl">
+                        {card.description}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Big stat, one per chapter — fills the frame with real content, not decoration */}
+                <div className="relative hidden md:block h-[300px] w-56">
+                  {CARDS.map((card, i) => (
+                    <div
+                      key={card.number}
+                      className="absolute inset-0 flex flex-col items-end justify-center text-right"
+                      style={{
+                        opacity: i === activeIndex ? 1 : 0,
+                        transition: "opacity 0.5s ease",
+                        pointerEvents: "none",
+                      }}
+                    >
+                      <span className="huge-stat text-6xl lg:text-7xl font-light text-gold">
+                        {card.stat}
+                      </span>
+                      <span className="eyebrow mt-3 text-white/35">
+                        {card.statLabel}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>

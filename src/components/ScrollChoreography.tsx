@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { motion, useScroll, useSpring, useTransform } from "motion/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
 
 interface Quadrant {
@@ -34,114 +35,127 @@ export function ScrollChoreography({
   subline,
 }: ScrollChoreographyProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const eyebrowRef = useRef<HTMLParagraphElement>(null);
+  const tlRef = useRef<HTMLDivElement>(null);
+  const blRef = useRef<HTMLDivElement>(null);
+  const brRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const heroOverlayRef = useRef<HTMLDivElement>(null);
+  const heroTextRef = useRef<HTMLDivElement>(null);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const container = containerRef.current;
+    const tl = tlRef.current;
+    const bl = blRef.current;
+    const br = brRef.current;
+    const hero = heroRef.current;
+    const heroOverlay = heroOverlayRef.current;
+    const heroText = heroTextRef.current;
+    const eyebrowEl = eyebrowRef.current;
+    if (!container || !tl || !bl || !br || !hero || !heroOverlay || !heroText || !eyebrowEl) return;
 
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 400,
-    damping: 50,
-    mass: 1.2,
-    restDelta: 0.001,
-  });
+    // GSAP owns 100% of the transform on these elements (no Tailwind translate
+    // classes on the animated node itself — mixing the two fights over the
+    // same `transform` property and silently drops one of them). The -50
+    // baseline in every value below is the element's own self-centering;
+    // the extra offset on top of that is the diamond-spread displacement.
+    gsap.set(tl, { xPercent: -170, yPercent: -120, opacity: 1 });
+    gsap.set(bl, { xPercent: -170, yPercent: 20, opacity: 1 });
+    gsap.set(br, { xPercent: 70, yPercent: 20, opacity: 1 });
+    gsap.set(hero, {
+      xPercent: 70,
+      yPercent: -120,
+      width: "36vw",
+      height: "24vh",
+      borderRadius: "1.5rem",
+    });
+    gsap.set(heroOverlay, { opacity: 0 });
+    gsap.set(heroText, { opacity: 0, y: 24 });
 
-  const xLeft = "-20vw";
-  const xRight = "20vw";
-  const yTop = "-14vh";
-  const yBottom = "14vh";
+    const timeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: container,
+        start: "top top",
+        end: () => `+=${window.innerHeight * 2.2}`,
+        pin: true,
+        scrub: 0.6,
+        invalidateOnRefresh: true,
+      },
+    });
 
-  const tlX = useTransform(smoothProgress, [0, 0.3, 0.35, 0.65, 1], [xLeft, xLeft, xLeft, "0vw", "0vw"]);
-  const tlY = useTransform(smoothProgress, [0, 0.3, 0.35, 0.65, 1], [yTop, yBottom, yBottom, "0vh", "0vh"]);
+    timeline
+      .to(eyebrowEl, { opacity: 0, duration: 0.1 }, 0)
+      // Phase 1 (0 -> 0.5): the three satellite cards converge to center
+      // (xPercent/yPercent -50 = perfectly centered on the anchor point).
+      .to([tl, bl, br], { xPercent: -50, yPercent: -50, duration: 0.5 }, 0)
+      .to(hero, { xPercent: -50, yPercent: -50, duration: 0.5 }, 0)
+      // Phase 2 (0.5 -> 0.7): satellites fade out as the hero takes over.
+      .to([tl, bl, br], { opacity: 0, duration: 0.2 }, 0.5)
+      // Phase 3 (0.55 -> 0.85): hero expands to fill the screen.
+      .to(
+        hero,
+        { width: "100vw", height: "100vh", borderRadius: "0rem", duration: 0.3 },
+        0.55
+      )
+      .to(heroOverlay, { opacity: 1, duration: 0.2 }, 0.6)
+      // Phase 4 (0.85 -> 1): headline reveals over the fullscreen image.
+      .to(heroText, { opacity: 1, y: 0, duration: 0.15 }, 0.85);
 
-  const brX = useTransform(smoothProgress, [0, 0.3, 0.35, 0.65, 1], [xRight, xRight, xRight, "0vw", "0vw"]);
-  const brY = useTransform(smoothProgress, [0, 0.3, 0.35, 0.65, 1], [yBottom, yTop, yTop, "0vh", "0vh"]);
+    return () => {
+      timeline.scrollTrigger?.kill();
+      timeline.kill();
+    };
+  }, []);
 
-  const blX = useTransform(smoothProgress, [0, 0.3, 0.35, 0.65, 1], [xLeft, xLeft, xLeft, "0vw", "0vw"]);
-  const blY = useTransform(smoothProgress, [0, 0.3, 0.35, 0.65, 1], [yBottom, yBottom, yBottom, "0vh", "0vh"]);
-
-  const trX = useTransform(smoothProgress, [0, 0.3, 0.35, 0.65, 1], [xRight, xRight, xRight, "0vw", "0vw"]);
-  const trY = useTransform(smoothProgress, [0, 0.3, 0.35, 0.65, 1], [yTop, yTop, yTop, "0vh", "0vh"]);
-
-  const heroWidth = useTransform(smoothProgress, [0.65, 0.7, 0.9, 1], ["36vw", "36vw", "100vw", "100vw"]);
-  const heroHeight = useTransform(smoothProgress, [0.65, 0.7, 0.9, 1], ["24vh", "24vh", "100vh", "100vh"]);
-  const heroRadius = useTransform(smoothProgress, [0.65, 0.7, 0.9, 1], ["1.5rem", "1.5rem", "0rem", "0rem"]);
-
-  const underImagesOpacity = useTransform(smoothProgress, [0.6, 0.68], [1, 0]);
-  const captionOpacity = useTransform(smoothProgress, [0.08, 0.2, 0.55, 0.65], [0, 1, 1, 0]);
-
-  const eyebrowOpacity = useTransform(smoothProgress, [0, 0.08], [1, 0]);
-  const revealTextOpacity = useTransform(smoothProgress, [0.82, 0.92], [0, 1]);
-  const revealTextY = useTransform(smoothProgress, [0.82, 0.92], [24, 0]);
-
-  const baseImageClasses =
-    "absolute left-1/2 top-1/2 w-[36vw] h-[24vh] overflow-hidden rounded-2xl -translate-x-1/2 -translate-y-1/2 bg-panel shadow-2xl will-change-transform border border-line";
+  const cardClasses =
+    "absolute left-1/2 top-1/2 w-[36vw] h-[24vh] overflow-hidden rounded-2xl border border-line bg-panel shadow-2xl will-change-transform";
 
   return (
-    <section
-      ref={containerRef}
-      className={cn("relative h-[300vh] w-full bg-void", className)}
-    >
-      <div className="sticky top-0 h-screen w-full overflow-hidden">
-        <motion.p
-          style={{ opacity: eyebrowOpacity }}
+    <div ref={containerRef} className={cn("relative bg-void", className)}>
+      <div className="h-screen w-full overflow-hidden">
+        <p
+          ref={eyebrowRef}
           className="eyebrow absolute top-16 left-1/2 -translate-x-1/2 z-50 text-gold text-center"
         >
           {eyebrow}
-        </motion.p>
+        </p>
 
-        <div className="absolute inset-0 flex items-center justify-center">
-          <motion.div style={{ x: tlX, y: tlY, opacity: underImagesOpacity }} className={cn(baseImageClasses, "z-10")}>
+        <div className="absolute inset-0">
+          <div ref={tlRef} className={cn(cardClasses, "z-10")}>
             <Image src={topLeft.src} alt={topLeft.alt} fill sizes="36vw" className="object-cover" />
-            <motion.span
-              style={{ opacity: captionOpacity }}
-              className="eyebrow absolute bottom-4 left-4 text-white"
-            >
-              {topLeft.caption}
-            </motion.span>
-          </motion.div>
+            <span className="eyebrow absolute bottom-4 left-4 text-white">{topLeft.caption}</span>
+          </div>
 
-          <motion.div style={{ x: brX, y: brY, opacity: underImagesOpacity }} className={cn(baseImageClasses, "z-20")}>
+          <div ref={brRef} className={cn(cardClasses, "z-20")}>
             <Image src={bottomRight.src} alt={bottomRight.alt} fill sizes="36vw" className="object-cover" />
-            <motion.span
-              style={{ opacity: captionOpacity }}
-              className="eyebrow absolute bottom-4 left-4 text-white"
-            >
-              {bottomRight.caption}
-            </motion.span>
-          </motion.div>
+            <span className="eyebrow absolute bottom-4 left-4 text-white">{bottomRight.caption}</span>
+          </div>
 
-          <motion.div style={{ x: blX, y: blY, opacity: underImagesOpacity }} className={cn(baseImageClasses, "z-30")}>
+          <div ref={blRef} className={cn(cardClasses, "z-30")}>
             <Image src={bottomLeft.src} alt={bottomLeft.alt} fill sizes="36vw" className="object-cover" />
-            <motion.span
-              style={{ opacity: captionOpacity }}
-              className="eyebrow absolute bottom-4 left-4 text-white"
-            >
-              {bottomLeft.caption}
-            </motion.span>
-          </motion.div>
+            <span className="eyebrow absolute bottom-4 left-4 text-white">{bottomLeft.caption}</span>
+          </div>
 
-          <motion.div
-            style={{ x: trX, y: trY, width: heroWidth, height: heroHeight, borderRadius: heroRadius }}
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-40 origin-center overflow-hidden shadow-2xl will-change-transform"
+          <div
+            ref={heroRef}
+            className="absolute left-1/2 top-1/2 z-40 origin-center overflow-hidden shadow-2xl will-change-transform"
           >
-            <Image src={reveal.src} alt={reveal.alt} fill sizes="100vw" className="object-cover" priority={false} />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-            <motion.div
-              style={{ opacity: revealTextOpacity, y: revealTextY }}
+            <Image src={reveal.src} alt={reveal.alt} fill sizes="100vw" className="object-cover" />
+            <div
+              ref={heroOverlayRef}
+              className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"
+            />
+            <div
+              ref={heroTextRef}
               className="absolute inset-x-0 bottom-0 flex flex-col items-center pb-16 md:pb-24 text-center px-6"
             >
-              <h2 className="font-display-gold text-4xl md:text-6xl lg:text-7xl">
-                {headline}
-              </h2>
-              <p className="mt-4 max-w-md text-sm md:text-base text-white/60 font-light">
-                {subline}
-              </p>
-            </motion.div>
-          </motion.div>
+              <h2 className="font-display-gold text-4xl md:text-6xl lg:text-7xl">{headline}</h2>
+              <p className="mt-4 max-w-md text-sm md:text-base text-white/60 font-light">{subline}</p>
+            </div>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

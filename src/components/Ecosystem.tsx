@@ -22,14 +22,14 @@ function LogoRow({ direction = "left" }: { direction?: "left" | "right" }) {
       {TIEUP_LOGOS.map((logo, index) => (
         <div
           key={`${logo.src}-${index}`}
-          className="flex h-16 min-w-60 items-center justify-center"
+          className="flex h-20 min-w-64 items-center justify-center"
         >
           <Image
             src={logo.src}
             alt={logo.alt}
-            width={280}
-            height={56}
-            className="mx-20 w-64 object-contain grayscale invert opacity-60 transition-opacity duration-300 hover:opacity-100"
+            width={320}
+            height={64}
+            className="mx-24 w-72 object-contain grayscale invert opacity-60 transition-opacity duration-300 hover:opacity-100"
           />
         </div>
       ))}
@@ -55,10 +55,7 @@ export function Ecosystem() {
             financial empowerment.
           </p>
         </Reveal>
-        <div className="flex flex-col gap-10">
-          <LogoRow direction="left" />
-          <LogoRow direction="right" />
-        </div>
+        <LogoRow direction="left" />
       </div>
     </section>
   );
