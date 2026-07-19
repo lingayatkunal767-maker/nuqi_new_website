@@ -13,16 +13,30 @@ const TAGLINE_DELAY_MS = 2300;
 const HOLD_MS = 900;
 const TOTAL_MS = TAGLINE_DELAY_MS + HOLD_MS;
 
-export function Preloader() {
-  const [show, setShow] = useState(true);
+function useSignatureFontSize() {
+  const [fontSize, setFontSize] = useState(72);
 
   useEffect(() => {
-    const alreadySeen = sessionStorage.getItem("nuqi-preloader-seen");
-    const delay = alreadySeen ? 0 : TOTAL_MS;
+    function updateSize() {
+      const w = window.innerWidth;
+      setFontSize(w < 420 ? 30 : w < 640 ? 40 : w < 1024 ? 56 : 72);
+    }
+    updateSize();
+    window.addEventListener("resize", updateSize);
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
+
+  return fontSize;
+}
+
+export function Preloader() {
+  const [show, setShow] = useState(true);
+  const fontSize = useSignatureFontSize();
+
+  useEffect(() => {
     const t = setTimeout(() => {
       setShow(false);
-      sessionStorage.setItem("nuqi-preloader-seen", "1");
-    }, delay);
+    }, TOTAL_MS);
     return () => clearTimeout(t);
   }, []);
 
@@ -30,7 +44,7 @@ export function Preloader() {
     <AnimatePresence>
       {show && (
         <motion.div
-          className="fixed inset-0 z-[250] flex flex-col items-center justify-center bg-black"
+          className="fixed inset-0 z-[250] flex flex-col items-center justify-center overflow-hidden bg-black"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0, transition: { duration: 0.7, ease: EASE } }}
         >
@@ -43,11 +57,11 @@ export function Preloader() {
             The Gold Collar Life
           </motion.span>
 
-          <div className="flex flex-wrap items-baseline justify-center">
+          <div className="flex w-full max-w-full flex-wrap items-baseline justify-center px-6">
             <Signature
               text="Nuqi"
               color="#e1c66a"
-              fontSize={72}
+              fontSize={fontSize}
               duration={0.7}
               stagger={0.12}
               delay={0.15}
@@ -55,7 +69,7 @@ export function Preloader() {
             <Signature
               text=" Wealth"
               color="#f5f2ea"
-              fontSize={72}
+              fontSize={fontSize}
               duration={0.7}
               stagger={0.1}
               delay={NUQI_DONE_MS / 1000}
