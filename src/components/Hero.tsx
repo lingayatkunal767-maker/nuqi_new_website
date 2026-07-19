@@ -106,12 +106,12 @@ export function Hero() {
         style={{ opacity: contentOpacity, y: contentY }}
         className="relative z-10 w-full max-w-[1600px] mx-auto px-6 md:px-12 lg:px-20 pb-20 md:pb-24"
       >
-        <div className="max-w-5xl">
+        <div className="max-w-7xl">
           <motion.div
             initial={{ opacity: 0, x: -16 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, ease: EASE, delay: 0.1 }}
-            className="flex items-center gap-4 mb-10"
+            className="flex items-center gap-4 mb-8 md:mb-10"
           >
             <motion.span
               initial={{ scaleX: 0 }}
@@ -122,7 +122,7 @@ export function Hero() {
             <span className="eyebrow text-gold">The Gold Collar Life</span>
           </motion.div>
 
-          <h1 className="text-[clamp(3.25rem,9vw,9.5rem)] font-light text-white mb-10 leading-[0.9] tracking-[-0.03em]">
+          <h1 className="text-[clamp(2.25rem,min(6vw,9svh),7rem)] font-light text-white mb-8 md:mb-10 leading-[1.05] tracking-[-0.03em] whitespace-nowrap">
             <Line delay={0.35}>
               INDIA&apos;s First{" "}
               <span className="font-display-italic">Ethical</span>
