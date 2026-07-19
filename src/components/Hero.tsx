@@ -75,7 +75,7 @@ export function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-[100svh] w-full flex items-end overflow-hidden bg-black"
+      className="relative min-h-[100svh] w-full flex items-end overflow-hidden bg-black"
     >
       <motion.div className="absolute inset-0 z-0" style={{ y: bgY }}>
         {SLIDE_IMAGES.map((image, index) => (
@@ -104,14 +104,14 @@ export function Hero() {
 
       <motion.div
         style={{ opacity: contentOpacity, y: contentY }}
-        className="relative z-10 w-full max-w-[1600px] mx-auto px-6 md:px-12 lg:px-20 pb-20 md:pb-24"
+        className="relative z-10 w-full max-w-[1600px] mx-auto px-6 md:px-12 lg:px-20 pt-28 pb-12 sm:pb-16 md:pt-0 md:pb-24"
       >
         <div className="max-w-7xl">
           <motion.div
             initial={{ opacity: 0, x: -16 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, ease: EASE, delay: 0.1 }}
-            className="flex items-center gap-4 mb-8 md:mb-10"
+            className="flex items-center gap-4 mb-5 sm:mb-8 md:mb-10"
           >
             <motion.span
               initial={{ scaleX: 0 }}
@@ -122,7 +122,7 @@ export function Hero() {
             <span className="eyebrow text-gold">The Gold Collar Life</span>
           </motion.div>
 
-          <h1 className="text-[clamp(2.25rem,min(6vw,9svh),7rem)] font-light text-white mb-8 md:mb-10 leading-[1.05] tracking-[-0.03em] whitespace-nowrap">
+          <h1 className="text-[clamp(2.1rem,min(8vw,7svh),7rem)] font-light text-white mb-5 sm:mb-8 md:mb-10 leading-[1.08] sm:leading-[1.05] tracking-[-0.03em]">
             <Line delay={0.35}>
               INDIA&apos;s First{" "}
               <span className="font-display-italic">Ethical</span>
@@ -136,7 +136,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: EASE, delay: 0.7 }}
-            className="text-lg md:text-xl text-white/50 leading-relaxed mb-12 max-w-xl border-l border-white/10 pl-8"
+            className="text-base md:text-xl text-white/50 leading-relaxed mb-7 sm:mb-10 md:mb-12 max-w-xl border-l border-white/10 pl-6 sm:pl-8"
           >
             Nuqi delivers sustainable growth, prosperity, and financial
             security through innovative strategies and expert guidance,
@@ -147,7 +147,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: EASE, delay: 0.85 }}
-            className="flex flex-wrap gap-6 my-6 items-center"
+            className="flex flex-wrap gap-4 sm:gap-6 my-2 sm:my-6 items-center"
           >
             <MagneticButton
               as="a"
@@ -181,7 +181,7 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, ease: EASE, delay: 1 }}
-        className="absolute bottom-12 right-6 md:right-12 z-20 flex items-center gap-5"
+        className="hidden md:flex absolute bottom-12 right-6 md:right-12 z-20 items-center gap-5"
       >
         <span className="eyebrow text-white/35 tabular-nums">
           {String(activeIndex + 1).padStart(2, "0")} / {String(SLIDE_IMAGES.length).padStart(2, "0")}
@@ -208,7 +208,7 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, ease: EASE, delay: 1.1 }}
-        className="absolute bottom-10 md:bottom-12 left-6 md:left-12 flex flex-col items-center gap-3 text-white/35 cursor-pointer group"
+        className="hidden md:flex absolute bottom-10 md:bottom-12 left-6 md:left-12 flex-col items-center gap-3 text-white/35 cursor-pointer group"
       >
         <span className="eyebrow text-[10px] group-hover:text-gold transition-colors duration-500">
           Scroll
