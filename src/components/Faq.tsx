@@ -236,31 +236,15 @@ function FaqAccordionItem({
 }
 
 export function Faq() {
-  const [openLeft, setOpenLeft] = useState<Set<number>>(new Set());
-  const [openRight, setOpenRight] = useState<Set<number>>(new Set());
+  const [openLeft, setOpenLeft] = useState<number | null>(null);
+  const [openRight, setOpenRight] = useState<number | null>(null);
 
   const toggleLeft = (index: number) => {
-    setOpenLeft((prev) => {
-      const next = new Set(prev);
-      if (next.has(index)) {
-        next.delete(index);
-      } else {
-        next.add(index);
-      }
-      return next;
-    });
+    setOpenLeft((prev) => (prev === index ? null : index));
   };
 
   const toggleRight = (index: number) => {
-    setOpenRight((prev) => {
-      const next = new Set(prev);
-      if (next.has(index)) {
-        next.delete(index);
-      } else {
-        next.add(index);
-      }
-      return next;
-    });
+    setOpenRight((prev) => (prev === index ? null : index));
   };
 
   return (
@@ -282,7 +266,7 @@ export function Faq() {
                 <FaqAccordionItem
                   item={item}
                   displayNumber={index + 1}
-                  isOpen={openLeft.has(index)}
+                  isOpen={openLeft === index}
                   onToggle={() => toggleLeft(index)}
                   panelId={`faq-left-panel-${index}`}
                   tinted={(index + 1) % 4 === 0}
@@ -296,7 +280,7 @@ export function Faq() {
                 <FaqAccordionItem
                   item={item}
                   displayNumber={leftFaqItems.length + index + 1}
-                  isOpen={openRight.has(index)}
+                  isOpen={openRight === index}
                   onToggle={() => toggleRight(index)}
                   panelId={`faq-right-panel-${index}`}
                   tinted={(leftFaqItems.length + index + 1) % 4 === 0}

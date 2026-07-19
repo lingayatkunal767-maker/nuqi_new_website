@@ -141,7 +141,7 @@ export function ScrollChoreography({
             ref={heroRef}
             className="absolute left-1/2 top-1/2 z-40 origin-center overflow-hidden shadow-2xl will-change-transform"
           >
-            <Image src={reveal.src} alt={reveal.alt} fill sizes="100vw" className="object-cover" />
+            <Image src={reveal.src} alt={reveal.alt} fill sizes="100vw" quality={95} className="object-cover" />
             <div
               ref={heroOverlayRef}
               className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"

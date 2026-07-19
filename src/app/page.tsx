@@ -24,7 +24,7 @@ export default function Home() {
           topLeft={{ src: "/images/hero/stone.png", alt: "Balanced stacked stones", caption: "BALANCE" }}
           bottomLeft={{ src: "/images/hero/pen.png", alt: "Gold fountain pen", caption: "PRECISION" }}
           bottomRight={{ src: "/images/hero/mumbai-birds.jpg", alt: "Advisor in navy suit", caption: "DISCIPLINE" }}
-          reveal={{ src: "/images/universe-gold.png", alt: "The Nuqi gold mark", caption: "" }}
+          reveal={{ src: "/images/universe-gold@2x.png", alt: "The Nuqi gold mark", caption: "" }}
         />
         <Advantage />
         <CepCarousel />

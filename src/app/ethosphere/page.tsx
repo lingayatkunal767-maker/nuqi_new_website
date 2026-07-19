@@ -1,19 +1,10 @@
 "use client";
 
-import { useRef } from "react";
-import Image from "next/image";
-import { motion } from "motion/react";
-import {
-  ArrowLeft,
-  ArrowRight,
-  ChevronDown,
-  Grid3x3,
-  List,
-} from "lucide-react";
+import { ChevronDown, Grid3x3, List } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
-import { MagneticButton } from "@/components/MagneticButton";
+import { EthosphereMasonry } from "@/components/EthosphereMasonry";
 
 interface Edition {
   image: string;
@@ -53,49 +44,12 @@ function pdfUrlFor(edition: string) {
   return `https://nuqiwealth.com/pdf/NUQI-2025-Ethosphere-${ordinal}-Edition.pdf`;
 }
 
-function EditionCard({ item, index }: { item: Edition; index: number }) {
-  return (
-    <motion.a
-      href={pdfUrlFor(item.edition)}
-      target="_blank"
-      rel="noopener noreferrer"
-      whileHover={{ y: -8 }}
-      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-      className="group relative z-10 flex h-96 w-60 flex-shrink-0 flex-col items-start justify-start overflow-hidden rounded-2xl border border-line bg-panel transition-colors duration-500 hover:border-gold/50 hover:shadow-[0_0_35px_rgba(225,198,106,0.2)] md:h-[28rem] md:w-[18rem]"
-    >
-      <Image
-        className="absolute inset-0 z-0 h-full w-full object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] [filter:grayscale(1)_brightness(0.32)_contrast(1.05)] group-hover:scale-105 group-hover:[filter:grayscale(1)_brightness(0.42)_contrast(1.05)]"
-        src={item.image}
-        alt={item.alt}
-        fill
-        sizes="(max-width: 768px) 15rem, 18rem"
-      />
-      <div className="absolute inset-0 z-10 bg-gradient-to-t from-black via-black/50 to-black/30 pointer-events-none" />
-
-      <span className="eyebrow absolute right-5 top-5 z-20 text-gold/25">
-        {String(index + 1).padStart(2, "0")}
-      </span>
-
-      <div className="relative z-20 flex h-full w-full flex-col justify-end p-5">
-        <p className="eyebrow text-gold/80">{item.edition}</p>
-        <p className="mt-3 text-base md:text-lg font-medium leading-snug text-white">
-          {item.title}
-        </p>
-        <p className="mt-4 inline-flex items-center gap-1.5 eyebrow text-gold transition-transform duration-300 group-hover:translate-x-1">
-          Read More <ArrowRight size={12} aria-hidden />
-        </p>
-      </div>
-    </motion.a>
-  );
-}
+const masonryItems = editions.map((item) => ({
+  ...item,
+  href: pdfUrlFor(item.edition),
+}));
 
 export default function EthospherePage() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  const scrollByAmount = (amount: number) => {
-    scrollRef.current?.scrollBy({ left: amount, behavior: "smooth" });
-  };
-
   return (
     <>
       <Header />
@@ -146,35 +100,8 @@ export default function EthospherePage() {
             </div>
           </Reveal>
 
-          <div className="relative w-full">
-            <div
-              ref={scrollRef}
-              className="flex w-full overflow-x-scroll overscroll-x-auto py-3 pb-10 scroll-smooth [scrollbar-width:none] [mask-image:linear-gradient(to_right,transparent,black_2rem,black_calc(100%-2rem),transparent)]"
-            >
-              <div className="flex flex-row justify-start gap-4 pl-4 max-w-7xl mx-auto">
-                {editions.map((item, index) => (
-                  <EditionCard key={item.image} item={item} index={index} />
-                ))}
-              </div>
-            </div>
-            <div className="flex justify-center gap-4">
-              <MagneticButton
-                as="button"
-                type="button"
-                onClick={() => scrollByAmount(-300)}
-                className="relative z-40 h-10 w-10 rounded-full border border-white/15 bg-transparent flex items-center justify-center text-white/60 transition-colors duration-300 hover:border-gold/50 hover:text-gold disabled:opacity-50"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </MagneticButton>
-              <MagneticButton
-                as="button"
-                type="button"
-                onClick={() => scrollByAmount(300)}
-                className="relative z-40 h-10 w-10 rounded-full border border-white/15 bg-transparent flex items-center justify-center text-white/60 transition-colors duration-300 hover:border-gold/50 hover:text-gold disabled:opacity-50"
-              >
-                <ArrowRight className="h-5 w-5" />
-              </MagneticButton>
-            </div>
+          <div className="w-full max-w-7xl px-4 pb-24">
+            <EthosphereMasonry items={masonryItems} />
           </div>
         </div>
       </div>

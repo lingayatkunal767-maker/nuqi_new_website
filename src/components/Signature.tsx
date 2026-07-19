@@ -19,6 +19,15 @@ interface SignatureProps {
   onComplete?: () => void;
 }
 
+function sanitizePathData(d: string): string {
+  let last = "0";
+  return d.replace(/-?\d+\.?\d*|NaN/g, (token) => {
+    if (token === "NaN") return last;
+    last = token;
+    return token;
+  });
+}
+
 export function Signature({
   text = "Signature",
   color = "currentColor",
@@ -58,8 +67,12 @@ export function Signature({
           if (char.trim() !== "") {
             const path = glyph.getPath(x, baseline, fontSize);
             const d = path.toPathData(3);
-            if (d && !d.includes("NaN")) {
-              newPaths.push(d);
+            // Some glyphs in this font ship a malformed control point that
+            // serializes to a literal "NaN" token (e.g. capital N). Holding
+            // the last valid coordinate keeps the glyph's other curves intact
+            // instead of dropping the whole letter or kinking toward origin.
+            if (d) {
+              newPaths.push(d.includes("NaN") ? sanitizePathData(d) : d);
             }
           }
 
