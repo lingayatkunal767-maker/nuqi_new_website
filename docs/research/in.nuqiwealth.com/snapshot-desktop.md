@@ -1,0 +1,493 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - link [ref=e7] [cursor=pointer]:
+        - /url: /
+        - img "Nuqi Logo" [ref=e707]
+      - navigation [ref=e9]:
+        - list [ref=e10]:
+          - listitem [ref=e11]:
+            - link "Advisory" [ref=e12] [cursor=pointer]:
+              - /url: /
+          - listitem [ref=e13]:
+            - link "Prive" [ref=e14] [cursor=pointer]:
+              - /url: /digitalwealth
+          - listitem [ref=e15]:
+            - link "IRIS" [ref=e16] [cursor=pointer]:
+              - /url: /iris
+          - listitem [ref=e17]:
+            - link "Ethosphere" [ref=e18] [cursor=pointer]:
+              - /url: /ethosphere
+          - listitem [ref=e19]:
+            - link "Disclosures" [ref=e20] [cursor=pointer]:
+              - /url: /Disclosures
+          - listitem [ref=e21]:
+            - button "Nuqi Universe" [ref=e22] [cursor=pointer]
+      - generic [ref=e24]:
+        - link [ref=e25] [cursor=pointer]:
+          - /url: http://portal.nuqiwealth.in/
+          - button "Log In/Sign Up" [ref=e26]
+        - combobox [ref=e29] [cursor=pointer]:
+          - img "India" [ref=e31]
+  - generic [ref=e32]:
+    - generic [ref=e33]:
+      - button "Close" [ref=e35] [cursor=pointer]
+      - generic [ref=e39]:
+        - paragraph [ref=e40]: Explore
+        - heading "Nuqi Universe" [level=2] [ref=e41]
+        - paragraph [ref=e42]: Discover the full Nuqi ecosystem
+    - generic [ref=e44]:
+      - link [ref=e45] [cursor=pointer]:
+        - /url: https://nuqigold.com/
+        - img "Nuqi Gold" [ref=e708]
+        - generic [ref=e52]:
+          - paragraph [ref=e53]: Nuqi Gold
+          - paragraph [ref=e54]: Invest in gold the smart way — Nuqi Gold offers a seamless platform for fractional gold ownership backed by real assets.
+          - generic [ref=e55]: Visit site
+      - link [ref=e59] [cursor=pointer]:
+        - /url: https://nuqisukuk.com/
+        - img "Nuqi Sukuk" [ref=e709]
+        - generic [ref=e66]:
+          - paragraph [ref=e67]: Nuqi Sukuk
+          - paragraph [ref=e68]: Nuqi Sukuk is a fractional and ethical sukuk marketplace built to democratize access to the global Islamic fixed-income market.
+          - generic [ref=e69]: Visit site
+    - generic [ref=e73]:
+      - img "Nuqi" [ref=e710]
+      - generic [ref=e74]: More coming soon
+  - generic [ref=e76]:
+    - generic [ref=e78]:
+      - generic [ref=e85]:
+        - generic [ref=e86]: The Gold Collar Life
+        - heading "INDIA's First Ethical Investment Advisory App" [level=1] [ref=e89]
+        - paragraph [ref=e90]: Nuqi delivers sustainable growth, prosperity, and financial security through innovative strategies and expert guidance, tailored specifically to your aspirations.
+        - generic [ref=e91]:
+          - link [ref=e92] [cursor=pointer]:
+            - /url: "#explore-solutions"
+          - link "Contact Our Team" [ref=e96] [cursor=pointer]:
+            - /url: /ContactsPage
+      - generic [ref=e98]:
+        - button "Go to slide 1" [ref=e99] [cursor=pointer]
+        - button "Go to slide 2" [ref=e100] [cursor=pointer]
+        - button "Go to slide 3" [ref=e101] [cursor=pointer]
+        - button "Go to slide 4" [ref=e102] [cursor=pointer]
+      - generic [ref=e103] [cursor=pointer]: Scroll
+    - generic [ref=e107]:
+      - generic [ref=e108]:
+        - generic [ref=e109]:
+          - paragraph [ref=e110]: THE ADVANTAGE
+          - heading "Why NUQI Digital Wealth?" [level=2] [ref=e111]
+        - paragraph [ref=e112]: We combine the intelligence of modern fintech with institution-grade safety, transparency and global accessibility — giving investors a platform that is secure, informed and aligned with long-term growth.
+      - generic [ref=e113]:
+        - generic [ref=e114]:
+          - generic [ref=e115]:
+            - generic [ref=e116]: "01"
+            - heading "Secure and Regulated" [level=3] [ref=e122]
+            - paragraph [ref=e123]: NUQI Digital Wealth operates under the robust oversight of SEBI regulations, ensuring smooth and compliant product offerings tailored to your requirements. With retail endorsement, NUQI lowers entry barriers, making quality investment opportunities more accessible.
+          - generic [ref=e124]:
+            - generic [ref=e125]: "02"
+            - heading "Tailored Equity Solutions" [level=3] [ref=e131]
+            - paragraph [ref=e132]: Gain access to 1,500+ carefully selected stocks, screened through a robust exclusion list of industries and financial ratios to ensure quality and alignment. Additionally, explore 18+ expertly curated equity portfolios tailored to meet diverse financial goals and strategies.
+          - generic [ref=e133]:
+            - generic [ref=e134]: "03"
+            - heading "Portfolio Rebalancing" [level=3] [ref=e140]
+            - paragraph [ref=e141]: NUQI's expert team of advisors, alongside a supervisory panel, ensures portfolios are rebalanced every six months to maintain alignment with your investment goals and market conditions.
+          - generic [ref=e142]:
+            - generic [ref=e143]: "04"
+            - heading "Asset Diversification" [level=3] [ref=e151]
+            - paragraph [ref=e152]: Equity, ETFs, and Mutual Funds help spread your exposure across various asset classes, enhancing portfolio stability and potential returns.
+          - generic [ref=e153]:
+            - generic [ref=e154]: "05"
+            - heading "Robo Advisory" [level=3] [ref=e160]
+            - paragraph [ref=e161]: Utilize NUQI's AI-powered Robo Advisory to analyze industry trends and tailor recommendations to your unique risk profile and investment goals, enabling smarter, data-driven decisions.
+          - generic [ref=e162]:
+            - generic [ref=e163]: "06"
+            - heading "Global Market Access (Tentative)" [level=3] [ref=e169]
+            - paragraph [ref=e170]: Gain access to 9+ global markets, supported by in-depth fundamental data, empowering informed investment decisions across international opportunities.
+        - generic [ref=e171]:
+          - heading "Simplifying ethical compliance so businesses can operate responsibly and confidently." [level=3] [ref=e172]
+          - generic [ref=e174]:
+            - textbox "Enter your email address" [ref=e175]
+            - button "Contact Us →" [ref=e176] [cursor=pointer]:
+              - text: Contact Us
+              - generic [ref=e177]: →
+    - text: t
+    - generic [ref=e179]:
+      - heading "Nuqi Curated Equity Portfolios (CEP)" [level=6] [ref=e180]
+      - paragraph [ref=e181]: Our Nuqi India Basket offers a variety of curated investment themes, each catering to specific risk appetite and investment goals.
+      - generic [ref=e184]:
+        - button "Previous slide" [ref=e185] [cursor=pointer]
+        - button "Next slide" [ref=e188] [cursor=pointer]
+        - generic [ref=e193]:
+          - generic [ref=e195] [cursor=pointer]:
+            - generic [ref=e196]:
+              - img "Future of Healthcare" [ref=e198]
+              - heading "Future of Healthcare" [level=3] [ref=e199]
+              - paragraph [ref=e200]: Capitalize on India's healthcare sector, focusing on pharma, medical equipment, health tech, and wellness companies.
+            - generic [ref=e201]: Read more
+          - generic [ref=e206] [cursor=pointer]:
+            - generic [ref=e207]:
+              - img "Sustainable Future ESG" [ref=e209]
+              - heading "Sustainable Future ESG" [level=3] [ref=e210]
+              - paragraph [ref=e211]: Invest in companies committed to environmental responsibility, social impact, and good governance practices.
+            - generic [ref=e212]: Read more
+          - generic [ref=e217] [cursor=pointer]:
+            - generic [ref=e218]:
+              - img "Recession Proofers" [ref=e220]
+              - heading "Recession Proofers" [level=3] [ref=e221]
+              - paragraph [ref=e222]: Ride out economic downturns with investments in essential sectors like healthcare, consumer staples, utilities, and education.
+            - generic [ref=e223]: Read more
+          - generic [ref=e228] [cursor=pointer]:
+            - generic [ref=e229]:
+              - img "Inflation beaters" [ref=e231]
+              - heading "Inflation beaters" [level=3] [ref=e232]
+              - paragraph [ref=e233]: Protect your wealth against rising prices by investing in companies with strong pricing power and stable cash flows.
+            - generic [ref=e234]: Read more
+          - generic [ref=e239] [cursor=pointer]:
+            - generic [ref=e240]:
+              - img "Future of Healthcare" [ref=e242]
+              - heading "Future of Healthcare" [level=3] [ref=e243]
+              - paragraph [ref=e244]: Capitalize on India's healthcare sector, focusing on pharma, medical equipment, health tech, and wellness companies.
+            - generic [ref=e245]: Read more
+          - generic [ref=e250] [cursor=pointer]:
+            - generic [ref=e251]:
+              - img "Sustainable Future ESG" [ref=e253]
+              - heading "Sustainable Future ESG" [level=3] [ref=e254]
+              - paragraph [ref=e255]: Invest in companies committed to environmental responsibility, social impact, and good governance practices.
+            - generic [ref=e256]: Read more
+          - generic [ref=e261] [cursor=pointer]:
+            - generic [ref=e262]:
+              - img "Recession Proofers" [ref=e264]
+              - heading "Recession Proofers" [level=3] [ref=e265]
+              - paragraph [ref=e266]: Ride out economic downturns with investments in essential sectors like healthcare, consumer staples, utilities, and education.
+            - generic [ref=e267]: Read more
+          - generic [ref=e272] [cursor=pointer]:
+            - generic [ref=e273]:
+              - img "Inflation beaters" [ref=e275]
+              - heading "Inflation beaters" [level=3] [ref=e276]
+              - paragraph [ref=e277]: Protect your wealth against rising prices by investing in companies with strong pricing power and stable cash flows.
+            - generic [ref=e278]: Read more
+          - generic [ref=e283] [cursor=pointer]:
+            - generic [ref=e284]:
+              - img "Future of Healthcare" [ref=e286]
+              - heading "Future of Healthcare" [level=3] [ref=e287]
+              - paragraph [ref=e288]: Capitalize on India's healthcare sector, focusing on pharma, medical equipment, health tech, and wellness companies.
+            - generic [ref=e289]: Read more
+          - generic [ref=e294] [cursor=pointer]:
+            - generic [ref=e295]:
+              - img "Sustainable Future ESG" [ref=e297]
+              - heading "Sustainable Future ESG" [level=3] [ref=e298]
+              - paragraph [ref=e299]: Invest in companies committed to environmental responsibility, social impact, and good governance practices.
+            - generic [ref=e300]: Read more
+          - generic [ref=e305] [cursor=pointer]:
+            - generic [ref=e306]:
+              - img "Recession Proofers" [ref=e308]
+              - heading "Recession Proofers" [level=3] [ref=e309]
+              - paragraph [ref=e310]: Ride out economic downturns with investments in essential sectors like healthcare, consumer staples, utilities, and education.
+            - generic [ref=e311]: Read more
+          - generic [ref=e316] [cursor=pointer]:
+            - generic [ref=e317]:
+              - img "Inflation beaters" [ref=e319]
+              - heading "Inflation beaters" [level=3] [ref=e320]
+              - paragraph [ref=e321]: Protect your wealth against rising prices by investing in companies with strong pricing power and stable cash flows.
+            - generic [ref=e322]: Read more
+        - generic [ref=e326]:
+          - button "Go to slide 1" [ref=e327] [cursor=pointer]
+          - button "Go to slide 2" [ref=e328] [cursor=pointer]
+          - button "Go to slide 3" [ref=e329] [cursor=pointer]
+          - button "Go to slide 4" [ref=e330] [cursor=pointer]
+    - generic [ref=e333]:
+      - generic [ref=e334]:
+        - generic [ref=e335]:
+          - generic [ref=e336]: Nuqi
+          - text: Prive
+        - generic [ref=e337]: Tailored Solutions for Ultra-High Net Worth Individuals.
+      - generic [ref=e339]:
+        - generic [ref=e340]: Wealth management goes beyond numbers to protecting and growing legacies
+        - generic [ref=e345]: Focused on fulfilling unique financial aspirations
+        - generic [ref=e350]: NUQI Prive is the dedicated asset management division
+        - generic [ref=e355]: Exclusively serves Ultra-High Net Worth Individuals (UHNI)
+        - generic [ref=e360]: Delivers bespoke services with excellence and discretion
+    - generic [ref=e365]:
+      - heading "Nuqi Prive Offerings" [level=2] [ref=e366]
+      - generic [ref=e369]:
+        - button "Previous slide" [ref=e370] [cursor=pointer]
+        - button "Next slide" [ref=e373] [cursor=pointer]
+        - generic [ref=e378]:
+          - generic [ref=e381] [cursor=pointer]:
+            - img "Arranging Custody" [ref=e711]
+            - heading "Arranging Custody" [level=3] [ref=e383]
+            - paragraph [ref=e384]: Ensure the secure and efficient custody of your assets through trusted custodial arrangements and state-of-the-art reporting, giving you peace of mind.
+          - generic [ref=e387] [cursor=pointer]:
+            - img "Arranging Deals in Investments" [ref=e712]
+            - heading "Arranging Deals in Investments" [level=3] [ref=e389]
+            - paragraph [ref=e390]: Explore exclusive opportunities with expertly arranged investment deals,spanning private equity, structured products, and global market access.
+          - generic [ref=e393] [cursor=pointer]:
+            - img "Managing Assets" [ref=e713]
+            - heading "Managing Assets" [level=3] [ref=e395]
+            - paragraph [ref=e396]: Entrust your portfolio to our seasoned team, who implement a disciplined approach to asset allocation, balancing growth potential with prudent risk management.
+          - generic [ref=e399] [cursor=pointer]:
+            - img "Arranging Credit & Advising on Credit" [ref=e714]
+            - heading "Arranging Credit & Advising on Credit" [level=3] [ref=e401]
+            - paragraph [ref=e402]: Access personalized credit solutions and professional advice for structuring loans and credit facilities, ensuring liquidity while safeguarding your long-term goals.
+          - generic [ref=e405] [cursor=pointer]:
+            - img "Legacy Planning & Family Office Management" [ref=e715]
+            - heading "Legacy Planning & Family Office Management" [level=3] [ref=e407]
+            - paragraph [ref=e408]: Comprehensive solutions to manage your legacy and family office requirements, ensuring that your wealth continues to serve future generations seamlessly.
+          - generic [ref=e411] [cursor=pointer]:
+            - img "Advising on Financial Products" [ref=e716]
+            - heading "Advising on Financial Products" [level=3] [ref=e413]
+            - paragraph [ref=e414]: Receive expert guidance on a wide range of financial products, carefully tailored to align with your investment objectives, risk tolerance, and legacy planning requirements.
+          - generic [ref=e417] [cursor=pointer]:
+            - img "Arranging Custody" [ref=e717]
+            - heading "Arranging Custody" [level=3] [ref=e419]
+            - paragraph [ref=e420]: Ensure the secure and efficient custody of your assets through trusted custodial arrangements and state-of-the-art reporting, giving you peace of mind.
+          - generic [ref=e423] [cursor=pointer]:
+            - img "Arranging Deals in Investments" [ref=e718]
+            - heading "Arranging Deals in Investments" [level=3] [ref=e425]
+            - paragraph [ref=e426]: Explore exclusive opportunities with expertly arranged investment deals,spanning private equity, structured products, and global market access.
+          - generic [ref=e429] [cursor=pointer]:
+            - img "Managing Assets" [ref=e719]
+            - heading "Managing Assets" [level=3] [ref=e431]
+            - paragraph [ref=e432]: Entrust your portfolio to our seasoned team, who implement a disciplined approach to asset allocation, balancing growth potential with prudent risk management.
+          - generic [ref=e435] [cursor=pointer]:
+            - img "Arranging Credit & Advising on Credit" [ref=e720]
+            - heading "Arranging Credit & Advising on Credit" [level=3] [ref=e437]
+            - paragraph [ref=e438]: Access personalized credit solutions and professional advice for structuring loans and credit facilities, ensuring liquidity while safeguarding your long-term goals.
+          - generic [ref=e441] [cursor=pointer]:
+            - img "Legacy Planning & Family Office Management" [ref=e721]
+            - heading "Legacy Planning & Family Office Management" [level=3] [ref=e443]
+            - paragraph [ref=e444]: Comprehensive solutions to manage your legacy and family office requirements, ensuring that your wealth continues to serve future generations seamlessly.
+          - generic [ref=e447] [cursor=pointer]:
+            - img "Advising on Financial Products" [ref=e722]
+            - heading "Advising on Financial Products" [level=3] [ref=e449]
+            - paragraph [ref=e450]: Receive expert guidance on a wide range of financial products, carefully tailored to align with your investment objectives, risk tolerance, and legacy planning requirements.
+          - generic [ref=e453] [cursor=pointer]:
+            - img "Arranging Custody" [ref=e723]
+            - heading "Arranging Custody" [level=3] [ref=e455]
+            - paragraph [ref=e456]: Ensure the secure and efficient custody of your assets through trusted custodial arrangements and state-of-the-art reporting, giving you peace of mind.
+          - generic [ref=e459] [cursor=pointer]:
+            - img "Arranging Deals in Investments" [ref=e724]
+            - heading "Arranging Deals in Investments" [level=3] [ref=e461]
+            - paragraph [ref=e462]: Explore exclusive opportunities with expertly arranged investment deals,spanning private equity, structured products, and global market access.
+          - generic [ref=e465] [cursor=pointer]:
+            - img "Managing Assets" [ref=e725]
+            - heading "Managing Assets" [level=3] [ref=e467]
+            - paragraph [ref=e468]: Entrust your portfolio to our seasoned team, who implement a disciplined approach to asset allocation, balancing growth potential with prudent risk management.
+          - generic [ref=e471] [cursor=pointer]:
+            - img "Arranging Credit & Advising on Credit" [ref=e726]
+            - heading "Arranging Credit & Advising on Credit" [level=3] [ref=e473]
+            - paragraph [ref=e474]: Access personalized credit solutions and professional advice for structuring loans and credit facilities, ensuring liquidity while safeguarding your long-term goals.
+          - generic [ref=e477] [cursor=pointer]:
+            - img "Legacy Planning & Family Office Management" [ref=e727]
+            - heading "Legacy Planning & Family Office Management" [level=3] [ref=e479]
+            - paragraph [ref=e480]: Comprehensive solutions to manage your legacy and family office requirements, ensuring that your wealth continues to serve future generations seamlessly.
+          - generic [ref=e483] [cursor=pointer]:
+            - img "Advising on Financial Products" [ref=e728]
+            - heading "Advising on Financial Products" [level=3] [ref=e485]
+            - paragraph [ref=e486]: Receive expert guidance on a wide range of financial products, carefully tailored to align with your investment objectives, risk tolerance, and legacy planning requirements.
+        - generic [ref=e487]:
+          - button "Go to slide 1" [ref=e488] [cursor=pointer]
+          - button "Go to slide 2" [ref=e489] [cursor=pointer]
+          - button "Go to slide 3" [ref=e490] [cursor=pointer]
+          - button "Go to slide 4" [ref=e491] [cursor=pointer]
+          - button "Go to slide 5" [ref=e492] [cursor=pointer]
+          - button "Go to slide 6" [ref=e493] [cursor=pointer]
+    - generic [ref=e494]:
+      - heading "Frequently Asked Questions (FAQs)" [level=1] [ref=e495]
+      - generic [ref=e496]:
+        - generic [ref=e497]:
+          - generic [ref=e498]:
+            - button "What is Nuqi? +" [ref=e499] [cursor=pointer]:
+              - heading "What is Nuqi?" [level=2] [ref=e500]
+              - generic [ref=e501]: +
+            - generic: NUQI is an independent advisory platform, licensed by SEBI in India aimed at both first-time investors starting their investment journey and seasoned investors looking to diversify their portfolio. NUQI deploys its in-house expertise to create portfolios tailored for specific investor profiles and investment themes.The platform uses multiple criteria to make a selection of Stocks, ETFs, Mutual funds, etc., with Social Equity, Ethical operations, Good Governance, and Environmental protection as core investment themes aimed towards Sustainable Growth.
+          - generic [ref=e503]:
+            - button "Why Invest through Nuqi? +" [ref=e504] [cursor=pointer]:
+              - heading "Why Invest through Nuqi?" [level=2] [ref=e505]
+              - generic [ref=e506]: +
+            - generic: Access diverse portfolios featuring 1,500+ Indian stocks, along with ETFs and Mutual Funds. Access Ethical Mutual Funds for systematic investment planning and lump sum. Pre-designed portfolios by qualified investment advisors for long-term investing.
+          - generic [ref=e508]:
+            - button "Are there any hidden charges or commissions? +" [ref=e509] [cursor=pointer]:
+              - heading "Are there any hidden charges or commissions?" [level=2] [ref=e510]
+              - generic [ref=e511]: +
+            - generic: No, there are no hidden charges, fees, or commissions. We prioritize transparency, and all costs are clearly communicated upfront. If you have any questions, our team is here to help. Your trust matters to us!
+          - generic [ref=e513]:
+            - button "Does Nuqi perform RISK profiling to understand your investment goals? +" [ref=e514] [cursor=pointer]:
+              - heading "Does Nuqi perform RISK profiling to understand your investment goals?" [level=2] [ref=e515]
+              - generic [ref=e516]: +
+            - generic: YES, NUQI performs RISK profiling for all clients.
+          - generic [ref=e518]:
+            - button "Where can I invest? +" [ref=e519] [cursor=pointer]:
+              - heading "Where can I invest?" [level=2] [ref=e520]
+              - generic [ref=e521]: +
+            - generic: With NUQI, now you have the option to invest in select financial products in International markets. NUQI takes a cautious approach and presently will only recommend investment instruments that have been pre-screened and carry returns as per your risk profile.
+          - generic [ref=e523]:
+            - button "Can you set up a Regular Investment Plan through the Nuqi app? +" [ref=e524] [cursor=pointer]:
+              - heading "Can you set up a Regular Investment Plan through the Nuqi app?" [level=2] [ref=e525]
+              - generic [ref=e526]: +
+            - generic: Yes.
+          - generic [ref=e528]:
+            - button "Does Nuqi offer investment options that consider social responsibility? +" [ref=e529] [cursor=pointer]:
+              - heading "Does Nuqi offer investment options that consider social responsibility?" [level=2] [ref=e530]
+              - generic [ref=e531]: +
+            - generic: YES, our Curated Equity Portfolios (CEP) are based on Ethical / Social & Sustainable ESS Principles.
+          - generic [ref=e533]:
+            - button "How Does it Work? +" [ref=e534] [cursor=pointer]:
+              - heading "How Does it Work?" [level=2] [ref=e535]
+              - generic [ref=e536]: +
+            - generic: NUQI mobile app is soon available for Android and iOS devices and is free to download. Once you have filled out the personal assessment questionnaire, the NUQI platform will assign an investor profile to you based on your risk appetite and recommend investment instruments accordingly. You can always change your risk profile by re-taking the questionnaire and NUQI will once again offer you a list of new recommendations suited to you.
+          - generic [ref=e538]:
+            - button "Are there live events to learn more about Nuqi's investment strategies? +" [ref=e539] [cursor=pointer]:
+              - heading "Are there live events to learn more about Nuqi's investment strategies?" [level=2] [ref=e540]
+              - generic [ref=e541]: +
+            - generic: YES, live online sessions and Global Event Participations are on the cards.
+        - generic [ref=e543]:
+          - generic [ref=e544]:
+            - button "Does Nuqi have resources to learn about investing for beginners? +" [ref=e545] [cursor=pointer]:
+              - heading "Does Nuqi have resources to learn about investing for beginners?" [level=2] [ref=e546]
+              - generic [ref=e547]: +
+            - generic: YES, NUQI Ethosphere is our research library for enthusiastic learners.
+          - generic [ref=e549]:
+            - button "Can you adjust your investment plan based on changing risk tolerance? +" [ref=e550] [cursor=pointer]:
+              - heading "Can you adjust your investment plan based on changing risk tolerance?" [level=2] [ref=e551]
+              - generic [ref=e552]: +
+            - generic: YES, you have the flexibility to change your RISK profile based on any material change in your circumstances.
+          - generic [ref=e554]:
+            - button "Does Nuqi collaborate with international brokers to offer a wider range of investment options? +" [ref=e555] [cursor=pointer]:
+              - heading "Does Nuqi collaborate with international brokers to offer a wider range of investment options?" [level=2] [ref=e556]
+              - generic [ref=e557]: +
+            - generic: YES, collaborations are one of the pillars for NUQI Wealth to provide broader investment options.
+          - generic [ref=e559]:
+            - button "Does Nuqi leverage its associations to provide access to in-depth research reports? +" [ref=e560] [cursor=pointer]:
+              - heading "Does Nuqi leverage its associations to provide access to in-depth research reports?" [level=2] [ref=e561]
+              - generic [ref=e562]: +
+            - generic: Yes, IRIS & Ethosphere keep a watch on market trends and investment insights.
+          - generic [ref=e564]:
+            - button "Can you track your investment's performance live on the Nuqi app? +" [ref=e565] [cursor=pointer]:
+              - heading "Can you track your investment's performance live on the Nuqi app?" [level=2] [ref=e566]
+              - generic [ref=e567]: +
+            - generic: YES, our exhaustive portfolio view will give you a 360-degree view of your investments.
+          - generic [ref=e569]:
+            - button "Is it compulsory for the investors to use the new handle only? +" [ref=e570] [cursor=pointer]:
+              - heading "Is it compulsory for the investors to use the new handle only?" [level=2] [ref=e571]
+              - generic [ref=e572]: +
+            - generic: The investors can choose their preferred mode of payment, such as UPI, IMPS, NEFT, RTGS, or Cheques. If an investor opts to use UPI for the payment to registered intermediaries, then they have to do so only using the new UPI ID handle allotted to registered intermediaries.
+          - generic [ref=e574]:
+            - button "What should I check while making payment using the new UPI IDs/ QR Codes? +" [ref=e575] [cursor=pointer]:
+              - heading "What should I check while making payment using the new UPI IDs/ QR Codes?" [level=2] [ref=e576]
+              - generic [ref=e577]: +
+            - generic [ref=e579]:
+              - paragraph [ref=e580]: "Investors need to keep following things into consideration:"
+              - list [ref=e581]:
+                - listitem [ref=e582]: The UPI ID should properly show the name of the intermediary, followed by the short abbreviation of their category for example "brk" for Brokers, "mf" for Mutual Funds, to the left of the "@" character.
+                - listitem [ref=e583]:
+                  - text: On the right side of the "@", the new and exclusive handle
+                  - strong [ref=e584]: "\"@valid\""
+                  - text: should be present, followed by the bank name.
+                - listitem [ref=e585]: On the confirmation screen, the app should show a white thumbs-up icon inside a green triangle.
+                - listitem [ref=e586]: The QR code generated using the utility will have a white thumbs-up icon inside a green triangle. it will also display the UPI ID just below the QR code.
+          - generic [ref=e587]:
+            - button "Do investors also need to obtain new UPI handles to transact in the securities market? +" [ref=e588] [cursor=pointer]:
+              - heading "Do investors also need to obtain new UPI handles to transact in the securities market?" [level=2] [ref=e589]
+              - generic [ref=e590]: +
+            - generic: No, the new UPI IDs are only for the intermediaries to obtain and investor can continue to use their existing UPI IDs.
+          - generic [ref=e592]:
+            - button "Whom to approach if my transaction/ payment fails with the new UPI ID? +" [ref=e593] [cursor=pointer]:
+              - heading "Whom to approach if my transaction/ payment fails with the new UPI ID?" [level=2] [ref=e594]
+              - generic [ref=e595]: +
+            - generic: The secure validated UPI ID of intermediaries will use the same banking channel as the earlier generic UPI handles. In case of any technical difficulty, investors are requested to approach their respective bank.
+    - generic [ref=e599]:
+      - generic [ref=e601]:
+        - generic [ref=e602]: Our Ecosystem
+        - heading "A Shared Journey" [level=2] [ref=e603]
+        - paragraph [ref=e604]: From first-time investors to experienced wealth-builders, our users aren't just clients — they are collaborators in financial empowerment.
+      - generic [ref=e605]:
+        - generic [ref=e607]:
+          - img "Tieup Logo" [ref=e729]
+          - img "Tieup Logo" [ref=e730]
+          - img "Tieup Logo" [ref=e731]
+          - img "Tieup Logo" [ref=e732]
+        - generic [ref=e616]:
+          - img "Tieup Logo" [ref=e733]
+          - img "Tieup Logo" [ref=e734]
+          - img "Tieup Logo" [ref=e735]
+          - img "Tieup Logo" [ref=e736]
+    - generic [ref=e625]:
+      - heading "Nuqi in the News" [level=2] [ref=e626]
+      - generic [ref=e627]:
+        - generic [ref=e629]:
+          - generic [ref=e632]:
+            - img "Nuqi Digital Wealth DFSA license announcement" [ref=e633]
+            - generic [ref=e634]: Nuqi Digital Wealth attains DFSA license
+            - link "Learn more about Nuqi Digital Wealth attains DFSA license" [ref=e636] [cursor=pointer]:
+              - /url: https://gulfnews.com/business/corporate-news/nuqi-digital-wealth-attains-dfsa-license-1.1705932392422
+              - text: Learn more
+          - generic [ref=e639]:
+            - img "NUQI WEALTH discovery presentation" [ref=e640]
+            - generic [ref=e641]: Discover NUQI WEALTH
+            - link "Learn more about Discover NUQI WEALTH" [ref=e643] [cursor=pointer]:
+              - /url: https://www.linkedin.com/posts/difc_nuqiwealth-wechosedifc-activity-7160164331937017857-U_1H/?utm_source=share&utm_medium=member_desktop
+              - text: Learn more
+          - generic [ref=e646]:
+            - img "Nuqi Digital Wealth DFSA license security announcement" [ref=e647]
+            - generic [ref=e648]: Nuqi Digital Wealth secures DFSA license
+            - link "Learn more about Nuqi Digital Wealth secures DFSA license" [ref=e650] [cursor=pointer]:
+              - /url: https://www.zawya.com/en/business/fintech/nuqi-digital-wealth-secures-dfsa-licence-spinmed8
+              - text: Learn more
+          - generic [ref=e653]:
+            - img "Nuqi Digital Wealth DFSA license announcement" [ref=e654]
+            - generic [ref=e655]: Nuqi Digital wealth granted DFSA license
+            - link "Learn more about Nuqi Digital wealth granted DFSA license" [ref=e657] [cursor=pointer]:
+              - /url: https://www.khaleejtimes.com/kt-network/nuqi-digital-wealth-granted-dfsa-licence
+              - text: Learn more
+        - generic [ref=e658]:
+          - button "Previous Slide" [disabled] [ref=e659]:
+            - generic [ref=e660]: ←
+          - button "Next Slide" [ref=e661] [cursor=pointer]:
+            - generic [ref=e662]: →
+    - generic [ref=e665]:
+      - heading "Now Available On" [level=2] [ref=e666]
+      - generic [ref=e667]:
+        - img "Play Store" [ref=e669]
+        - img "App Store" [ref=e671]
+  - contentinfo [ref=e672]:
+    - generic [ref=e673]:
+      - generic [ref=e674]:
+        - img "Nuqi Logo" [ref=e738]
+        - generic [ref=e675]:
+          - link "Contact by Mail" [ref=e676] [cursor=pointer]:
+            - /url: mailto:support@nuqiwealth.in
+          - link "Follow on Instagram" [ref=e680] [cursor=pointer]:
+            - /url: https://www.instagram.com/nuqiwealth_india/
+          - link "Follow on Facebook" [ref=e684] [cursor=pointer]:
+            - /url: https://www.facebook.com/NuqiWealthIndia/
+          - link "Follow on Linkedin" [ref=e687] [cursor=pointer]:
+            - /url: https://www.linkedin.com/company/nuqi-wealth
+      - generic [ref=e692]:
+        - link "Home" [ref=e693] [cursor=pointer]:
+          - /url: /
+        - link "Advisory" [ref=e694] [cursor=pointer]:
+          - /url: /#advisory
+        - link "Prive" [ref=e695] [cursor=pointer]:
+          - /url: /#nuqiprive
+        - link "Ethosphere" [ref=e696] [cursor=pointer]:
+          - /url: /ethosphere
+        - link "Legal" [ref=e697] [cursor=pointer]:
+          - /url: /Privacy
+        - link "About" [ref=e698] [cursor=pointer]:
+          - /url: /About
+        - link "Partnership" [ref=e699] [cursor=pointer]:
+          - /url: /partnership
+        - link "News" [ref=e700] [cursor=pointer]:
+          - /url: /press
+        - link "Contact Us" [ref=e701] [cursor=pointer]:
+          - /url: /ContactsPage
+        - link "Investor Charter" [ref=e702] [cursor=pointer]:
+          - /url: /InvestorCharter
+      - paragraph [ref=e704]:
+        - text: "©2025 Nuqi Wealth India Pvt Ltd - Investment Advisory Unit (Separately Identifiable Unit) SEBI RIA Registration No: INA000016612. CIN: U65990MH2020FTC351885. Validity of registration- 30th Jan 2022 - Perpetual Registered & Corporate Address: Office Nos 206, Parinee I, Veera Desai Road, Andheri West, Mumbai - 400053Disclaimer 1: Past performance is not a guarantee of future results. The historical returns, expected returns, and probability projections provided on this website or App are for informational and illustrative purposes only. They are not an indication of future performance. All investing involves risk, including the possible loss of all the money you invest. The past performance of any trading system does not guarantee future performance. Nuqi Wealth assumes no responsibility for liability for your trading and investment results. Registration granted by SEBI is no way guarantee performance of the intermediary or provide any assurance of returns to investors.Disclaimer 2: Registration granted by SEBI, membership of BASL and certification from NISM in no way guarantee performance of the intermediary or provide any assurance of returns to investors. Advisory Services on Nuqiwealth.com is provided by Nuqi Wealth India Private Limited, a SEBI registered Investment Adviser having registration no. INA 000016612 (Valid from 31st Jan 2022 - Perpetual). BASL membership no 1750."
+        - generic [ref=e705]:
+          - text: Please visit our
+          - link "Disclaimer Notice page" [ref=e706] [cursor=pointer]:
+            - /url: /disclaimer
+          - text: for further information.
