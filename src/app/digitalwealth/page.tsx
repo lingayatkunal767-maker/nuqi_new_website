@@ -7,7 +7,7 @@ export default function DigitalWealthPage() {
   return (
     <>
       <Header />
-      <div className="overflow-x-hidden font-poppins pt-24">
+      <div className="overflow-x-hidden font-sans pt-24">
         <PriveIntro />
         <PriveOfferings />
       </div>

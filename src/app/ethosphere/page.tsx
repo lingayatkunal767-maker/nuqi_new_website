@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import Image from "next/image";
+import { motion } from "motion/react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -11,6 +12,7 @@ import {
 } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { Reveal } from "@/components/Reveal";
 
 interface Edition {
   image: string;
@@ -52,20 +54,25 @@ function pdfUrlFor(edition: string) {
 
 function EditionCard({ item }: { item: Edition }) {
   return (
-    <a
+    <motion.a
       href={pdfUrlFor(item.edition)}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex-shrink-0 rounded-3xl bg-gray-100 dark:bg-neutral-900 h-96 w-60 md:h-[28rem] md:w-[18rem] overflow-hidden flex flex-col items-start justify-start relative z-10 hover:shadow-[inset_0_0_20px_#0dd3ff] transition-all duration-300 ease-in-out">
-      <div className="absolute h-full top-0 inset-x-0 bg-gradient-to-b from-black/50 via-transparent to-transparent z-30 pointer-events-none" />
+      whileHover={{ y: -8 }}
+      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+      className="group flex-shrink-0 rounded-2xl border border-white/10 bg-[#0a0a0a] h-96 w-60 md:h-[28rem] md:w-[18rem] overflow-hidden flex flex-col items-start justify-start relative z-10 transition-colors duration-300 hover:border-[#57c0af]/50 hover:shadow-[0_0_35px_rgba(87,192,175,0.25)]"
+    >
+      <div className="absolute h-full top-0 inset-x-0 bg-gradient-to-b from-black/60 via-transparent to-transparent z-30 pointer-events-none" />
       <div className="relative z-40 p-4">
-        <p className="text-white text-xs font-medium bg-black p-1 rounded-lg inline-block">
+        <p className="eyebrow inline-block rounded-full border border-white/15 bg-black/70 px-2.5 py-1 text-white/80">
           {item.edition}
         </p>
-        <p className="text-white text-xs md:text-sm font-normal text-left mt-2 uppercase">
+        <p className="text-white text-xs md:text-sm font-normal text-left mt-3 uppercase leading-snug">
           {item.title}
         </p>
-        <p className="text-[#57c0af] text-xs font-extralight mt-2">Read More</p>
+        <p className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium uppercase tracking-[0.15em] text-[#57c0af] transition-transform duration-300 group-hover:translate-x-1">
+          Read More <span aria-hidden>→</span>
+        </p>
       </div>
       <Image
         className="object-cover h-full absolute z-10 inset-0 transition-opacity duration-400 hover:opacity-100 hover:blur-sm"
@@ -74,7 +81,7 @@ function EditionCard({ item }: { item: Edition }) {
         fill
         sizes="(max-width: 768px) 15rem, 18rem"
       />
-    </a>
+    </motion.a>
   );
 }
 
@@ -88,44 +95,53 @@ export default function EthospherePage() {
   return (
     <>
       <Header />
-      <div className="overflow-x-hidden font-poppins pt-24 max-w-screen">
-        <div className="h-[10rem] w-full flex flex-col items-center justify-center overflow-hidden rounded-md">
-          <h2 className="text-5xl md:text-7xl pb-5 mt-30 font-poppins font-medium leading-tight tracking-wide text-[#57c0af]">
-            Ethosphere
-          </h2>
-          <p className="max-w-full mx-4 sm:mx-8 lg:mx-auto px-4 sm:px-8 lg:px-12 font-poppins text-center leading-relaxed text-white text-sm sm:text-base lg:text-lg">
-            The hub for NUQI&apos;s pioneering research and insights
-          </p>
-        </div>
-        <div className="flex flex-col justify-center items-center mt-20 mx-4">
-          <div className="w-full flex flex-row justify-center items-center gap-1 sm:gap-5 container mb-4">
-            <button
-              type="button"
-              className="flex items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm w-fit h-8"
-            >
-              <div className="flex flex-row rounded-2xl items-center hover:bg-[#57c0af]">
-                2026 <ChevronDown className="w-5 h-5" />
-              </div>
-            </button>
-            <button
-              type="button"
-              className="flex items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm w-fit h-8 mr-2"
-            >
-              <div className="flex flex-row rounded-2xl items-center hover:bg-[#57c0af] text-nowrap">
-                All Month <ChevronDown className="w-5 h-5" />
-              </div>
-            </button>
-            <div className="flex items-center justify-center space-x-4 ml-auto">
-              <button type="button" className="p-2 text-black bg-white rounded-md">
-                <Grid3x3 className="w-6 h-4 lg:h-6" />
-              </button>
-              <button type="button" className="p-2 text-black bg-white rounded-md">
-                <div className="text-white text-xs font-medium bg-black p-1 rounded-lg">
-                  <List className="w-6 h-4 lg:h-6" />
-                </div>
-              </button>
+      <div className="overflow-x-hidden bg-void pt-24 max-w-screen">
+        <section className="section-x pt-16 md:pt-20">
+          <Reveal>
+            <div className="max-w-3xl mx-auto text-center">
+              <p className="eyebrow text-[#57c0af] mb-5">Research &amp; Insights</p>
+              <h1 className="font-display-italic text-5xl md:text-7xl leading-tight text-white">
+                Ethosphere
+              </h1>
+              <p className="mt-6 text-white/60 text-sm sm:text-base lg:text-lg leading-relaxed">
+                The hub for NUQI&apos;s pioneering research and insights
+              </p>
             </div>
-          </div>
+          </Reveal>
+        </section>
+
+        <div className="flex flex-col justify-center items-center mt-16 md:mt-20 mx-4">
+          <Reveal delay={0.1} className="w-full">
+            <div className="w-full flex flex-row justify-center items-center gap-2 sm:gap-4 container mb-8">
+              <button
+                type="button"
+                className="eyebrow flex items-center gap-1.5 rounded-full border border-white/15 bg-transparent px-4 py-2 text-white/60 transition-colors duration-300 hover:border-[#57c0af]/50 hover:text-[#57c0af]"
+              >
+                2026 <ChevronDown className="w-3.5 h-3.5" />
+              </button>
+              <button
+                type="button"
+                className="eyebrow flex items-center gap-1.5 whitespace-nowrap rounded-full border border-white/15 bg-transparent px-4 py-2 text-white/60 transition-colors duration-300 hover:border-[#57c0af]/50 hover:text-[#57c0af]"
+              >
+                All Month <ChevronDown className="w-3.5 h-3.5" />
+              </button>
+              <div className="flex items-center justify-center gap-2 ml-auto">
+                <button
+                  type="button"
+                  className="rounded-lg border border-white/15 p-2 text-white/60 transition-colors duration-300 hover:border-[#57c0af]/50 hover:text-[#57c0af]"
+                >
+                  <Grid3x3 className="w-4 h-4 lg:w-5 lg:h-5" />
+                </button>
+                <button
+                  type="button"
+                  className="rounded-lg border border-white/15 p-2 text-white/60 transition-colors duration-300 hover:border-[#57c0af]/50 hover:text-[#57c0af]"
+                >
+                  <List className="w-4 h-4 lg:w-5 lg:h-5" />
+                </button>
+              </div>
+            </div>
+          </Reveal>
+
           <div className="relative w-full">
             <div
               ref={scrollRef}
@@ -137,20 +153,20 @@ export default function EthospherePage() {
                 ))}
               </div>
             </div>
-            <div className="flex justify-center gap-5">
+            <div className="flex justify-center gap-4">
               <button
                 type="button"
                 onClick={() => scrollByAmount(-300)}
-                className="relative z-40 h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center disabled:opacity-50"
+                className="relative z-40 h-10 w-10 rounded-full border border-white/15 bg-transparent flex items-center justify-center text-white/60 transition-colors duration-300 hover:border-[#57c0af]/50 hover:text-[#57c0af] disabled:opacity-50"
               >
-                <ArrowLeft className="h-6 w-6 text-gray-500" />
+                <ArrowLeft className="h-5 w-5" />
               </button>
               <button
                 type="button"
                 onClick={() => scrollByAmount(300)}
-                className="relative z-40 h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center disabled:opacity-50"
+                className="relative z-40 h-10 w-10 rounded-full border border-white/15 bg-transparent flex items-center justify-center text-white/60 transition-colors duration-300 hover:border-[#57c0af]/50 hover:text-[#57c0af] disabled:opacity-50"
               >
-                <ArrowRight className="h-6 w-6 text-gray-500" />
+                <ArrowRight className="h-5 w-5" />
               </button>
             </div>
           </div>

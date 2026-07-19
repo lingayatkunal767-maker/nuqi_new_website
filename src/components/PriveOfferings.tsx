@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { RevealGroup, RevealItem } from "@/components/Reveal";
 
 interface Offering {
   themeColor: string;
@@ -56,8 +57,55 @@ const OFFERINGS: Offering[] = [
   },
 ];
 
-const CARD_WIDTH = 325;
+const CARD_WIDTH = 340;
 const CARD_GAP = 24;
+
+function OfferingCard({
+  offering,
+  index,
+}: {
+  offering: Offering;
+  index: number;
+}) {
+  return (
+    <div
+      className="card-hover-glow group flex h-full flex-col overflow-hidden rounded-2xl border border-line bg-panel/60 backdrop-blur-sm transition-all duration-300"
+      style={{ "--card-theme": offering.themeColor } as React.CSSProperties}
+    >
+      <div className="relative flex h-52 items-center justify-center overflow-hidden border-b border-line bg-black/50">
+        <div
+          aria-hidden
+          className="absolute inset-0 opacity-25 blur-3xl transition-opacity duration-500 group-hover:opacity-45"
+          style={{
+            background: `radial-gradient(circle at 50% 45%, ${offering.themeColor}, transparent 70%)`,
+          }}
+        />
+        <span className="eyebrow absolute right-4 top-4 z-10 text-white/25">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+        <Image
+          src={offering.gif}
+          alt={offering.title}
+          width={176}
+          height={176}
+          unoptimized
+          className="relative z-10 h-40 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
+        />
+      </div>
+      <div className="flex flex-1 flex-col p-6">
+        <h3
+          className="mb-3 font-mono text-xs font-medium uppercase leading-snug tracking-wider"
+          style={{ color: offering.themeColor }}
+        >
+          {offering.title}
+        </h3>
+        <p className="text-sm font-light leading-relaxed text-fg-muted transition-colors duration-300 group-hover:text-white">
+          {offering.description}
+        </p>
+      </div>
+    </div>
+  );
+}
 
 export function PriveOfferings() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -74,78 +122,58 @@ export function PriveOfferings() {
   const translateX = activeIndex * (CARD_WIDTH + CARD_GAP);
 
   return (
-    <div id="services" className="scroll-mt-24">
-      <h2 className="text-3xl text-center font-semibold font-poppins text-[#57c0af] ml-3 mt-32 mb-9 text-left">
-        <span className="text-white text-3xl font-medium">Nuqi</span>{" "}
-        <span className="text-[#57c0af] text-3xl font-medium">Prive Offerings</span>
-      </h2>
-      <section className="py-12 relative overflow-hidden mt-18 bg-black">
-        <div className="relative z-10">
-          <div className="mx-auto px-6 relative" style={{ maxWidth: 1119 }}>
+    <section id="services" className="scroll-mt-24 bg-void section-y section-x">
+      <div className="mx-auto max-w-7xl">
+        <div className="mx-auto mb-16 max-w-2xl text-center md:mb-20">
+          <h2 className="text-3xl font-medium leading-tight tracking-tight md:text-4xl lg:text-5xl">
+            <span className="text-white">Nuqi</span>{" "}
+            <span className="text-nuqi-teal">
+              <span className="font-display-italic">Prive</span> Offerings
+            </span>
+          </h2>
+        </div>
+
+        <div className="relative">
+          <div className="relative mx-auto" style={{ maxWidth: 1140 }}>
             <button
               type="button"
               aria-label="Previous slide"
               onClick={goToPrevious}
-              className="absolute -left-4 top-1/2 -translate-y-1/2 z-20 bg-[#57c0af]/20 hover:bg-[#57c0af]/40 backdrop-blur-sm border border-[#57c0af]/40 p-3 rounded-full transition-all duration-300 hover:scale-110"
+              className="absolute -left-4 top-1/2 z-20 -translate-y-1/2 rounded-full border border-line bg-panel/80 p-3 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:border-nuqi-teal/60 hover:bg-panel"
             >
-              <ChevronLeft className="text-[#57c0af]" />
+              <ChevronLeft className="text-nuqi-teal" size={18} />
             </button>
             <button
               type="button"
               aria-label="Next slide"
               onClick={goToNext}
-              className="absolute -right-4 top-1/2 -translate-y-1/2 z-20 bg-[#57c0af]/20 hover:bg-[#57c0af]/40 backdrop-blur-sm border border-[#57c0af]/40 p-3 rounded-full transition-all duration-300 hover:scale-110"
+              className="absolute -right-4 top-1/2 z-20 -translate-y-1/2 rounded-full border border-line bg-panel/80 p-3 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:border-nuqi-teal/60 hover:bg-panel"
             >
-              <ChevronRight className="text-[#57c0af]" />
+              <ChevronRight className="text-nuqi-teal" size={18} />
             </button>
-            <div className="overflow-visible px-6">
-              <div className="relative overflow-hidden">
+
+            <div className="overflow-hidden px-6">
+              <RevealGroup>
                 <div
                   className="flex transition-transform duration-500"
-                  style={{ gap: CARD_GAP, transform: `translateX(-${translateX}px)` }}
+                  style={{
+                    gap: CARD_GAP,
+                    transform: `translateX(-${translateX}px)`,
+                  }}
                 >
-                  {OFFERINGS.map((offering) => (
-                    <div
-                      key={offering.title}
-                      className="group flex flex-col justify-between bg-black/50 backdrop-blur-sm border border-white/10 rounded-2xl p-1 cursor-pointer flex-shrink-0 transition-all duration-300 card-hover-glow"
-                      style={
-                        {
-                          width: CARD_WIDTH,
-                          minHeight: 200,
-                          "--card-theme": offering.themeColor,
-                        } as React.CSSProperties
-                      }
-                    >
-                      <div className="relative z-10 flex flex-col justify-between">
-                        <div className="mr-3 items-center m-3 p-6 text-white">
-                          <div className="flex justify-center">
-                            <Image
-                              src={offering.gif}
-                              alt={offering.title}
-                              width={128}
-                              height={128}
-                              unoptimized
-                              className="h-32 w-auto object-contain rounded-md"
-                            />
-                          </div>
-                          <h3
-                            className="text-xl font-normal mb-6 mt-4 leading-tight"
-                            style={{ color: offering.themeColor }}
-                          >
-                            {offering.title}
-                          </h3>
-                          <p className="text-sm text-[#CCCCCC] font-light leading-relaxed group-hover:text-white transition-colors duration-300">
-                            {offering.description}
-                          </p>
-                        </div>
+                  {OFFERINGS.map((offering, index) => (
+                    <RevealItem key={offering.title} className="shrink-0">
+                      <div style={{ width: CARD_WIDTH }} className="h-full">
+                        <OfferingCard offering={offering} index={index} />
                       </div>
-                    </div>
+                    </RevealItem>
                   ))}
                 </div>
-              </div>
+              </RevealGroup>
             </div>
           </div>
-          <div className="flex justify-center gap-2 mt-8">
+
+          <div className="mt-10 flex justify-center gap-2">
             {OFFERINGS.map((offering, index) => (
               <button
                 key={offering.title}
@@ -154,14 +182,14 @@ export function PriveOfferings() {
                 onClick={() => setActiveIndex(index)}
                 className={`rounded-full transition-all duration-300 ${
                   index === activeIndex
-                    ? "h-2 w-8 bg-[#57c0af]"
-                    : "h-2 w-2 bg-white/30 hover:bg-white/50"
+                    ? "h-2 w-8 bg-nuqi-teal"
+                    : "h-2 w-2 bg-white/20 hover:bg-white/40"
                 }`}
               />
             ))}
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 }

@@ -1,12 +1,13 @@
 import Image from "next/image";
+import { Reveal } from "@/components/Reveal";
 
 export function AppStoreBanner() {
   return (
-    <div className="flex flex-col items-center justify-center pt-12 mt-12">
-      <div className="flex flex-col lg:flex-row items-center justify-center w-full max-w-[1200px] px-8 gap-8">
-        <div className="relative flex w-[500px] h-[300px] flex-col items-center justify-center gap-6 rounded-[20px] bg-[#0d0d0d] p-12">
-
-          <h2 className="text-3xl lg:text-4xl font-poppins text-[#57c0af] mb-6">
+    <div className="flex flex-col items-center justify-center px-6 pt-12 pb-24 md:px-12 md:pb-32">
+      <div className="flex w-full max-w-[1200px] flex-col items-center justify-center gap-8 lg:flex-row">
+        <Reveal className="relative flex w-full max-w-[500px] flex-col items-center justify-center gap-6 rounded-2xl border border-white/10 bg-black/40 px-8 py-12 backdrop-blur-sm transition-colors duration-300 hover:border-[#57c0af]/40">
+          <span className="eyebrow text-[#57c0af]">Get The App</span>
+          <h2 className="text-2xl font-medium tracking-tight text-white lg:text-3xl">
             Now Available On
           </h2>
           <div className="flex gap-16">
@@ -16,7 +17,7 @@ export function AppStoreBanner() {
                 alt="Play Store"
                 width={100}
                 height={100}
-                className="object-contain w-[100px] h-[100px]"
+                className="h-[100px] w-[100px] object-contain"
               />
             </div>
             <div className="flex items-center justify-center">
@@ -25,11 +26,11 @@ export function AppStoreBanner() {
                 alt="App Store"
                 width={100}
                 height={100}
-                className="object-contain w-[100px] h-[100px]"
+                className="h-[100px] w-[100px] object-contain"
               />
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
+import { motion, useScroll, useTransform } from "motion/react";
 import { cn } from "@/lib/utils";
 
 const SLIDE_IMAGES = [
@@ -13,9 +14,20 @@ const SLIDE_IMAGES = [
 
 const SLIDE_INTERVAL_MS = 5000;
 
+const EASE = [0.16, 1, 0.3, 1] as const;
+
 export function Hero() {
   const [activeIndex, setActiveIndex] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  // Background drifts a little slower than the page scroll — a subtle
+  // parallax read as the user leaves the hero, never more than ~32px.
+  const bgY = useTransform(scrollYProgress, [0, 1], [0, 32]);
 
   const startInterval = useCallback(() => {
     if (intervalRef.current) {
@@ -41,94 +53,142 @@ export function Hero() {
   };
 
   return (
-    <section className="relative h-screen w-full flex items-center overflow-hidden bg-black">
-      <div className="absolute inset-0 z-0">
+    <section
+      ref={sectionRef}
+      className="relative h-screen w-full flex items-center overflow-hidden bg-black"
+    >
+      <motion.div className="absolute inset-0 z-0" style={{ y: bgY }}>
         {SLIDE_IMAGES.map((image, index) => (
           <div
             key={image}
             className={cn(
-              "absolute inset-0 bg-cover bg-center bg-no-repeat grayscale transition-opacity duration-[2000ms] ease-in-out will-change-transform",
+              "absolute -inset-y-8 inset-x-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[2000ms] ease-in-out will-change-transform",
+              "[filter:grayscale(0.35)_contrast(1.1)_brightness(0.85)_saturate(0.9)]",
               index === activeIndex ? "opacity-100" : "opacity-0"
             )}
             style={{ backgroundImage: `url('${image}')` }}
           />
         ))}
-      </div>
+      </motion.div>
 
-      <div className="absolute inset-0 z-0 bg-gradient-to-r from-black via-black/80 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 z-0 bg-gradient-to-r from-black via-black/75 to-black/10 pointer-events-none" />
+      <div className="absolute inset-0 z-0 bg-gradient-to-t from-black via-transparent to-black/30 pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pt-20">
-        <div className="max-w-4xl animate-fade-in-up">
-          <div className="flex items-center gap-4 mb-8 opacity-0 animate-[fadeIn_1s_ease-out_0.5s_forwards]">
-            <span className="flex h-px w-12 bg-[#57c0af]" />
-            <span className="text-[#57c0af] uppercase tracking-[0.3em] text-xs font-bold">
-              The Gold Collar Life
-            </span>
-          </div>
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-20 w-full pt-20">
+        <div className="max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0, x: -16 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, ease: EASE, delay: 0.1 }}
+            className="flex items-center gap-4 mb-8"
+          >
+            <motion.span
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.6, ease: EASE, delay: 0.25 }}
+              className="flex h-px w-12 bg-[#57c0af] origin-left"
+            />
+            <span className="eyebrow text-[#57c0af]">The Gold Collar Life</span>
+          </motion.div>
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-light text-white mb-8 leading-[0.95] tracking-tight">
-            INDIA&apos;s First Ethical <br />
-            <span className="italic font-normal text-[#57c0af]">
-              Investment Advisory App
-            </span>
-          </h1>
+          <motion.h1
+            initial={{ opacity: 0, y: 24, filter: "blur(4px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.8, ease: EASE, delay: 0.25 }}
+            className="text-[clamp(2.75rem,6vw,6.5rem)] font-light text-white mb-8 leading-[0.95] tracking-[-0.02em]"
+          >
+            INDIA&apos;s First <span className="font-display-italic">Ethical</span>
+            <br />
+            <span className="text-[#57c0af]">Investment Advisory App</span>
+          </motion.h1>
 
-          <p className="text-lg md:text-xl text-gray-400 leading-relaxed mb-12 max-w-xl border-l border-white/10 pl-8 backdrop-blur-sm">
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: EASE, delay: 0.4 }}
+            className="text-lg md:text-xl text-white/50 leading-relaxed mb-12 max-w-xl border-l border-white/10 pl-8"
+          >
             Nuqi delivers sustainable growth, prosperity, and financial
             security through innovative strategies and expert guidance,
             tailored specifically to your aspirations.
-          </p>
+          </motion.p>
 
-          <div className="flex flex-wrap gap-6 my-6 items-center">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: EASE, delay: 0.55 }}
+            className="flex flex-wrap gap-6 my-6 items-center"
+          >
             <a
               href="#explore-solutions"
-              className="group relative px-6 py-5 border border-black bg-[#57c0af] text-black overflow-hidden rounded-xl transition-all duration-300 hover:shadow-[0_0_12px_rgba(13,211,255,0.5)] hover:scale-105 active:scale-95"
+              className="group relative px-8 py-5 border border-[#57c0af] bg-[#57c0af] text-black overflow-hidden rounded-xl transition-[box-shadow,transform] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:shadow-[0_0_24px_rgba(87,192,175,0.45)]"
             >
-              <div className="absolute inset-0 w-full h-full bg-[#57c0af] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left ease-out" />
-              <span className="relative z-10 font-bold tracking-widest text-xs uppercase flex items-center gap-2 group-hover:text-black transition-colors">
-                Explore Solutions{" "}
+              <span className="absolute inset-0 w-full h-full bg-black scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left ease-[cubic-bezier(0.16,1,0.3,1)]" />
+              <span className="eyebrow relative z-10 flex items-center gap-3 text-black group-hover:text-[#57c0af] transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
+                Explore Solutions
                 <ArrowRight
                   size={14}
-                  className="group-hover:translate-x-2 transition-transform duration-300"
+                  className="group-hover:translate-x-2 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
                 />
               </span>
             </a>
             <a
               href="/ContactsPage"
-              className="group relative px-5 py-4 border border-[#57c0af] text-white overflow-hidden rounded-xl transition-all duration-300 hover:shadow-[0_0_12px_rgba(13,211,255,0.5)] hover:scale-105 active:scale-95 inline-block"
+              className="group relative px-7 py-4 border border-white/20 text-white overflow-hidden rounded-xl transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[#57c0af]/60 inline-block"
             >
-              <div className="absolute inset-0 bg-[#57c0af]/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
-              <span className="relative z-10 font-medium tracking-widest text-xs uppercase group-hover:text-[#57C0AF] transition-colors">
+              <span className="absolute inset-0 bg-[#57c0af]/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+              <span className="eyebrow relative z-10 group-hover:text-[#57c0af] transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
                 Contact Our Team
               </span>
             </a>
-          </div>
+          </motion.div>
         </div>
       </div>
 
-      <div className="absolute bottom-12 right-12 z-20 flex gap-3">
-        {SLIDE_IMAGES.map((image, index) => (
-          <button
-            key={image}
-            type="button"
-            aria-label={`Go to slide ${index + 1}`}
-            onClick={() => handleDotClick(index)}
-            className={cn(
-              "rounded-full transition-all duration-500 hover:h-2",
-              index === activeIndex
-                ? "h-1 w-8 bg-[#57c0af] shadow-[0_0_10px_#0dd3ff]"
-                : "h-1 w-2 bg-white/20 hover:bg-white/40"
-            )}
-          />
-        ))}
-      </div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, ease: EASE, delay: 0.7 }}
+        className="absolute bottom-12 right-6 md:right-12 z-20 flex items-center gap-5"
+      >
+        <span className="eyebrow text-white/35 tabular-nums">
+          {String(activeIndex + 1).padStart(2, "0")} / {String(SLIDE_IMAGES.length).padStart(2, "0")}
+        </span>
+        <div className="flex gap-2.5">
+          {SLIDE_IMAGES.map((image, index) => (
+            <button
+              key={image}
+              type="button"
+              aria-label={`Go to slide ${index + 1}`}
+              onClick={() => handleDotClick(index)}
+              className={cn(
+                "h-[3px] rounded-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+                index === activeIndex
+                  ? "w-10 bg-[#57c0af] shadow-[0_0_10px_rgba(87,192,175,0.6)]"
+                  : "w-4 bg-white/20 hover:bg-white/40"
+              )}
+            />
+          ))}
+        </div>
+      </motion.div>
 
-      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 text-white/30 animate-float cursor-pointer hover:text-[#57c0af] transition-colors group">
-        <div className="h-12 w-px bg-gradient-to-b from-transparent via-current to-transparent group-hover:via-[#57c0af] transition-colors" />
-        <span className="text-[10px] uppercase tracking-[0.3em] group-hover:tracking-[0.5em] transition-all duration-500">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, ease: EASE, delay: 0.8 }}
+        className="absolute bottom-10 md:bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 text-white/35 cursor-pointer group"
+      >
+        <span className="eyebrow text-[10px] group-hover:text-[#57c0af] transition-colors duration-500">
           Scroll
         </span>
-      </div>
+        <div className="relative h-10 w-px bg-white/10 overflow-hidden">
+          <motion.span
+            className="absolute left-0 top-0 h-3 w-px bg-[#57c0af]"
+            animate={{ y: [-12, 40] }}
+            transition={{ duration: 1.8, ease: "easeInOut", repeat: Infinity }}
+          />
+        </div>
+      </motion.div>
     </section>
   );
 }

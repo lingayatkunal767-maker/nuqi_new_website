@@ -1,3 +1,5 @@
+"use client";
+
 import type { LucideIcon } from "lucide-react";
 import {
   ShieldCheck,
@@ -7,8 +9,12 @@ import {
   Cpu,
   Globe,
 } from "lucide-react";
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { NewsletterForm } from "@/components/NewsletterForm";
+import { RevealGroup, RevealItem } from "@/components/Reveal";
+
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 interface AdvantageCard {
   number: string;
@@ -66,18 +72,20 @@ export function Advantage() {
   return (
     <section
       id="advisory"
-      className="w-full bg-black text-zinc-200 px-6 md:px-20 py-32 font-poppins"
+      className="w-full bg-void text-zinc-200 section-x section-y"
     >
-      <div className="max-w-7xl mx-auto mb-20 grid md:grid-cols-2 gap-10">
-        <div className="space-y-4">
-          <p className="text-sm tracking-[0.2em] text-[#57c0af]">
-            THE ADVANTAGE
-          </p>
-          <h2 className="text-4xl md:text-5xl font-semibold leading-tight">
-            Why NUQI <br /> Digital Wealth?
+      <div className="max-w-7xl mx-auto mb-16 md:mb-20 grid md:grid-cols-2 gap-10">
+        <div className="space-y-5">
+          <p className="eyebrow text-nuqi-teal">THE ADVANTAGE</p>
+          <h2 className="text-4xl md:text-5xl font-medium leading-[1.05] text-white">
+            Why NUQI <br />
+            <span className="font-display-italic text-4xl md:text-5xl">
+              Digital Wealth
+            </span>
+            ?
           </h2>
         </div>
-        <p className="text-lg text-zinc-400 mt-8 leading-relaxed">
+        <p className="text-lg text-fg-muted mt-8 leading-relaxed">
           We combine the intelligence of modern fintech with
           institution-grade safety, transparency and global accessibility —
           giving investors a platform that is secure, informed and aligned
@@ -85,48 +93,72 @@ export function Advantage() {
         </p>
       </div>
 
-      <div className="max-w-7xl mx-auto border border-white/10 rounded-2xl overflow-hidden">
-        <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-white/10">
+      <div className="max-w-7xl mx-auto rounded-2xl overflow-hidden border border-line">
+        <RevealGroup className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-line">
           {CARDS.map((card) => (
-            <div
-              key={card.number}
-              className={cn(
-                "p-10 relative group transition-all duration-300",
-                "hover:bg-white/[0.02] hover:-translate-y-[2px]"
-              )}
-            >
-              <span className="absolute top-6 right-10 text-4xl font-bold text-white/5">
-                {card.number}
-              </span>
-              <div className="mb-6">
-                <div
-                  className={cn(
-                    "w-12 h-12 rounded-full flex items-center justify-center",
-                    "border border-[#57c0af]/40 transition-all duration-300",
-                    "group-hover:border-[#57c0af]/80 group-hover:shadow-[0_0_15px_rgba(13,211,255,0.25)]",
-                    "group-hover:scale-[1.07]"
-                  )}
+            <RevealItem key={card.number} className="h-full">
+              <motion.div
+                className="group relative h-full bg-void p-8 md:p-10 flex flex-col overflow-hidden"
+                whileHover={{
+                  y: -4,
+                  boxShadow: "0 24px 48px -24px rgba(87,192,175,0.35)",
+                }}
+                transition={{ duration: 0.3, ease: EASE }}
+              >
+                {/* faint mono index number */}
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute top-5 right-6 font-mono text-4xl md:text-5xl font-light tracking-tight text-white/[0.06] select-none"
                 >
-                  <card.icon
-                    className="w-6 h-6 text-[#57c0af] transition-all duration-300 group-hover:text-[#57c0af]/90"
-                  />
-                </div>
-              </div>
-              <h3 className="text-lg md:text-xl font-semibold mb-3 transition-colors duration-300 group-hover:text-white">
-                {card.title}
-              </h3>
-              <p className="text-zinc-400 leading-relaxed transition-colors duration-300 group-hover:text-zinc-300">
-                {card.description}
-              </p>
-              <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#57c0af]/60 transition-all duration-500 group-hover:w-full" />
-            </div>
-          ))}
-        </div>
+                  {card.number}
+                </span>
 
-        <div className="p-10 md:p-16 flex flex-col items-start justify-center border-t border-white/10 space-y-8">
+                {/* accent ring that brightens on hover */}
+                <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-nuqi-teal/0 transition-all duration-300 group-hover:ring-nuqi-teal/50" />
+
+                {/* square icon tile */}
+                <div className="relative mb-8">
+                  <div
+                    className={cn(
+                      "w-12 h-12 rounded-md flex items-center justify-center",
+                      "border border-line bg-panel transition-all duration-300",
+                      "group-hover:border-nuqi-teal/60 group-hover:shadow-[0_0_20px_rgba(87,192,175,0.25)]"
+                    )}
+                  >
+                    <card.icon className="w-5 h-5 text-nuqi-teal transition-colors duration-300" />
+                  </div>
+                </div>
+
+                <h3 className="relative text-lg md:text-xl font-medium mb-3 text-white">
+                  {card.title}
+                </h3>
+                <p className="relative text-sm md:text-base text-fg-muted leading-relaxed">
+                  {card.description}
+                </p>
+
+                <a
+                  href="#"
+                  className="relative mt-8 inline-flex items-center gap-2 self-start font-mono text-xs uppercase tracking-[0.15em] text-nuqi-teal"
+                >
+                  Read More
+                  <span
+                    aria-hidden
+                    className="transition-transform duration-300 group-hover:translate-x-1"
+                  >
+                    →
+                  </span>
+                </a>
+              </motion.div>
+            </RevealItem>
+          ))}
+        </RevealGroup>
+      </div>
+
+      <div className="max-w-7xl mx-auto mt-6 rounded-2xl border border-line bg-panel p-10 md:p-16">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
           <h3 className="text-2xl md:text-3xl font-light text-white max-w-3xl leading-relaxed text-left">
             Simplifying ethical compliance so businesses can operate{" "}
-            <span className="text-[#57c0af] font-normal">
+            <span className="text-nuqi-teal font-normal">
               responsibly and confidently.
             </span>
           </h3>

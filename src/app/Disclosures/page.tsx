@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { motion } from "motion/react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { Reveal } from "@/components/Reveal";
 import { cn } from "@/lib/utils";
 
 type TabKey = "compliance" | "ai" | "payment";
@@ -30,73 +32,73 @@ const AI_DISCLOSURE_ITEMS = [
 
 function ComplianceDisclosure() {
   return (
-    <>
-      <p className="mb-6 text-sm sm:text-base leading-relaxed">
+    <div>
+      <p className="mb-8 max-w-3xl text-sm sm:text-base leading-relaxed text-zinc-400">
         Disclosure with respect to compliance with Annual Compliance Audit
         requirement under Regulation 19(3) of the Securities and Exchange
         Board of India (Investment Advisers) Regulations, 2013, for last and
         current financial years are as under:
       </p>
-      <div className="mt-4 w-full overflow-x-auto">
-        <div className="border border-[#57c0af] rounded-lg">
-          <table className="min-w-full text-white">
-            <thead className="border-b border-[#57c0af] bg-black">
-              <tr>
-                <th className="p-3 text-center border-r border-[#57c0af]">
-                  Sr. No
-                </th>
-                <th className="p-3 text-center border-r border-[#57c0af]">
-                  Financial Year
-                </th>
-                <th className="p-3 text-center border-r border-[#57c0af]">
-                  Compliance Audit Report
-                </th>
-                <th className="p-3 text-center">Remarks, if any</th>
+      <div className="w-full overflow-x-auto rounded-2xl border border-white/10">
+        <table className="min-w-full text-sm sm:text-base">
+          <thead>
+            <tr className="border-b-2 border-[#57c0af]">
+              <th className="p-4 text-left font-medium text-zinc-400 eyebrow">
+                Sr. No
+              </th>
+              <th className="p-4 text-left font-medium text-zinc-400 eyebrow">
+                Financial Year
+              </th>
+              <th className="p-4 text-left font-medium text-zinc-400 eyebrow">
+                Compliance Audit Report
+              </th>
+              <th className="p-4 text-left font-medium text-zinc-400 eyebrow">
+                Remarks, if any
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {COMPLIANCE_ROWS.map((row, index) => (
+              <tr
+                key={row.sr}
+                className={cn(
+                  "transition-colors hover:bg-white/[0.03]",
+                  index !== COMPLIANCE_ROWS.length - 1 &&
+                    "border-b border-white/10"
+                )}
+              >
+                <td className="p-4 text-white/90">{row.sr}</td>
+                <td className="p-4 text-white/90">{row.year}</td>
+                <td className="p-4 text-white/90">{row.report}</td>
+                <td className="p-4 text-white/90">{row.remarks}</td>
               </tr>
-            </thead>
-            <tbody>
-              {COMPLIANCE_ROWS.map((row, index) => (
-                <tr
-                  key={row.sr}
-                  className={cn(
-                    index !== COMPLIANCE_ROWS.length - 1 &&
-                      "border-b border-[#57c0af]"
-                  )}
-                >
-                  <td className="p-3 text-center border-r border-[#57c0af]">
-                    {row.sr}
-                  </td>
-                  <td className="p-3 text-center border-r border-[#57c0af]">
-                    {row.year}
-                  </td>
-                  <td className="p-3 text-center border-r border-[#57c0af]">
-                    {row.report}
-                  </td>
-                  <td className="p-3 text-center">{row.remarks}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
-    </>
+    </div>
   );
 }
 
 function AiDisclosure() {
   return (
-    <div className="space-y-6 text-sm sm:text-base leading-relaxed">
-      <h3 className="text-lg font-semibold text-[#57c0af]">
-        Disclaimer - Use of Artificial Intelligence (&apos;AI&apos;) Tools in
-        IA Services
-      </h3>
+    <div className="max-w-3xl space-y-6 text-sm sm:text-base leading-relaxed text-zinc-300">
+      <div className="space-y-2">
+        <p className="eyebrow text-[#57c0af]">Disclaimer</p>
+        <h3 className="text-lg sm:text-xl font-medium text-white">
+          Use of Artificial Intelligence (&apos;AI&apos;) Tools in IA Services
+        </h3>
+      </div>
       <p>
         The Investment Adviser (IA) uses various Artificial Intelligence (AI)
         tools in providing investment advice to its clients as under:
       </p>
-      <ul className="list-disc pl-5 space-y-2">
+      <ul className="space-y-3">
         {AI_DISCLOSURE_ITEMS.map((item) => (
-          <li key={item}>{item}</li>
+          <li key={item} className="flex gap-3">
+            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#57c0af]" />
+            <span>{item}</span>
+          </li>
         ))}
       </ul>
     </div>
@@ -105,14 +107,12 @@ function AiDisclosure() {
 
 function PaymentUpi() {
   return (
-    <div className="space-y-8">
-      <div className="w-full bg-[#57c0af] rounded-2xl py-5 px-6 text-center">
-        <p className="text-black font-bold text-xl sm:text-2xl tracking-wide">
-          Payment Via UPI
-        </p>
+    <div className="space-y-10">
+      <div className="rounded-2xl border border-white/10 bg-white/[0.02] px-6 py-5">
+        <p className="eyebrow text-[#57c0af]">Payment Via UPI</p>
       </div>
       <div className="flex flex-col md:flex-row items-start md:items-center gap-10 md:gap-16">
-        <div className="flex-1 space-y-5 text-sm sm:text-base leading-relaxed">
+        <div className="flex-1 space-y-5 text-sm sm:text-base leading-relaxed text-zinc-300">
           <p>We now have a validated UPI ID for all investor payments:</p>
           <p className="text-[#57c0af] font-semibold text-base sm:text-lg tracking-wide">
             nuqiwealthindia.ia@validhdfc
@@ -123,13 +123,13 @@ function PaymentUpi() {
             mark of authenticity.
           </p>
         </div>
-        <div className="flex flex-col items-center gap-3 w-full md:w-auto">
+        <div className="flex w-full flex-col items-center gap-3 rounded-2xl border border-white/10 p-6 md:w-auto">
           <Image
             src="/images/QR.png"
             alt="NUQI Wealth India UPI QR Code"
             width={288}
             height={288}
-            className="w-48 h-48 sm:w-56 sm:h-56 md:w-64 md:h-64 lg:w-72 lg:h-72 object-contain"
+            className="h-48 w-48 object-contain sm:h-56 sm:w-56 md:h-64 md:w-64 lg:h-72 lg:w-72"
           />
           <p className="text-[#57c0af] text-sm font-medium tracking-wide">
             nuqiwealthindia.ia@validhdfc
@@ -146,13 +146,26 @@ export default function DisclosuresPage() {
   return (
     <>
       <Header />
-      <div className="pt-24">
-        <div className="p-6 sm:p-8 bg-black text-white mb-14 min-h-screen">
-          <h2 className="text-xl sm:text-5xl font-bold mb-6">Disclosures</h2>
-          <div className="w-full">
+      <main className="min-h-screen bg-void pt-24 text-white">
+        <div className="section-x mx-auto max-w-5xl py-16 md:py-24">
+          <Reveal>
+            <p className="eyebrow mb-4 text-[#57c0af]">Legal &amp; Compliance</p>
+            <h1 className="text-4xl font-medium tracking-tight text-white sm:text-6xl">
+              Disclosures
+            </h1>
+            <p className="mt-4 max-w-xl text-sm text-zinc-400 sm:text-base">
+              Everything we&apos;re required to tell you — and everything we{" "}
+              <span className="font-display-italic text-lg text-[#57c0af] sm:text-xl">
+                want
+              </span>{" "}
+              to.
+            </p>
+          </Reveal>
+
+          <Reveal delay={0.1} className="mt-12 md:mt-16">
             <div
               role="tablist"
-              className="h-10 items-center justify-center text-muted-foreground grid w-full md:w-[50%] lg:w-[35%] grid-cols-3 mb-8 bg-gray-900 p-1 rounded-xl"
+              className="relative flex gap-8 border-b border-white/10 sm:gap-10"
             >
               {TABS.map((tab) => (
                 <button
@@ -162,20 +175,33 @@ export default function DisclosuresPage() {
                   aria-selected={activeTab === tab.key}
                   data-state={activeTab === tab.key ? "active" : "inactive"}
                   onClick={() => setActiveTab(tab.key)}
-                  className="inline-flex items-center justify-center whitespace-nowrap px-3 py-1.5 font-medium rounded-lg transition-all text-xs sm:text-sm data-[state=active]:bg-[#57c0af] data-[state=active]:text-black text-gray-400"
+                  className={cn(
+                    "relative pb-4 font-mono text-xs uppercase tracking-[0.15em] transition-colors sm:text-sm",
+                    activeTab === tab.key
+                      ? "text-white"
+                      : "text-zinc-500 hover:text-zinc-300"
+                  )}
                 >
                   {tab.label}
+                  {activeTab === tab.key && (
+                    <motion.span
+                      layoutId="disclosures-tab-underline"
+                      className="absolute inset-x-0 -bottom-px h-[2px] bg-[#57c0af]"
+                      transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                    />
+                  )}
                 </button>
               ))}
             </div>
-            <div className="mt-2">
+
+            <div className="mt-10 md:mt-12">
               {activeTab === "compliance" && <ComplianceDisclosure />}
               {activeTab === "ai" && <AiDisclosure />}
               {activeTab === "payment" && <PaymentUpi />}
             </div>
-          </div>
+          </Reveal>
         </div>
-      </div>
+      </main>
       <Footer />
     </>
   );

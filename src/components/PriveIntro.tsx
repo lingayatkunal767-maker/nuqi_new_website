@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { Reveal, RevealGroup, RevealItem } from "@/components/Reveal";
 
 const CHECKLIST_ITEMS = [
   "Wealth management goes beyond numbers to protecting and growing legacies",
@@ -10,33 +10,41 @@ const CHECKLIST_ITEMS = [
 
 export function PriveIntro() {
   return (
-    <section id="nuqiprive">
-      <div className="flex gap-10 ml-5 max-md:mr-10 lg:ml-28 mt-32 items-center max-md:flex-col">
-        <div className="flex flex-col w-[30%] ml-20 max-md:ml-0 max-md:w-full">
-          <div className="self-stretch text-4xl md:text-6xl ml-5 mt-4 font-poppins tracking-normal leading-tight text-white max-md:mt-10 max-md:max-w-full max-md:text-3xl">
-            <span className="text-white leading-tight">Nuqi </span>Prive
+    <section id="nuqiprive" className="bg-panel section-y section-x">
+      <div className="mx-auto grid max-w-7xl gap-16 lg:grid-cols-12 lg:gap-x-12">
+        <Reveal className="lg:col-span-5">
+          <div className="lg:sticky lg:top-32">
+            <h2 className="text-4xl font-light leading-[0.95] tracking-tight text-white md:text-5xl lg:text-6xl">
+              Nuqi{" "}
+              <span className="font-display-italic text-nuqi-teal">
+                Prive
+              </span>
+            </h2>
+            <p className="mt-8 max-w-md text-xl font-light leading-relaxed text-nuqi-teal/90 md:text-2xl">
+              Tailored Solutions for Ultra-High Net Worth Individuals.
+            </p>
+            <div className="mt-10 h-px w-16 bg-nuqi-teal/40" />
           </div>
-          <div className="mt-6 text-3xl text-[#57c0af] font-poppins font-semibold ml-5">
-            Tailored Solutions for Ultra-High Net Worth Individuals.
-          </div>
-        </div>
-        <div className="order-2 md:order-1">
-          <div className="space-y-4 w-full">
-            {CHECKLIST_ITEMS.map((item) => (
-              <div
+        </Reveal>
+
+        <RevealGroup className="lg:col-span-7">
+          <div className="border-t border-line">
+            {CHECKLIST_ITEMS.map((item, index) => (
+              <RevealItem
                 key={item}
-                className="group flex items-center gap-6 p-5 rounded-lg border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] hover:border-[#57c0af]/30 transition-all duration-300"
+                className="group flex items-stretch gap-6 border-b border-line py-6 md:py-7"
               >
-                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#57c0af]/10 flex items-center justify-center text-[#57c0af] group-hover:bg-[#57c0af] group-hover:text-black transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_15px_rgba(13,211,255,0.4)]">
-                  <Check size={14} strokeWidth={3} />
-                </div>
-                <span className="text-gray-300 font-light text-lg group-hover:text-white transition-colors">
-                  {item}
+                <span className="w-px shrink-0 bg-nuqi-teal/30 transition-colors duration-300 group-hover:bg-nuqi-teal" />
+                <span className="eyebrow shrink-0 pt-0.5 text-nuqi-teal/70 transition-colors duration-300 group-hover:text-nuqi-teal">
+                  {String(index + 1).padStart(2, "0")}
                 </span>
-              </div>
+                <p className="text-base font-light leading-relaxed text-fg-muted transition-colors duration-300 group-hover:text-white md:text-lg">
+                  {item}
+                </p>
+              </RevealItem>
             ))}
           </div>
-        </div>
+        </RevealGroup>
       </div>
     </section>
   );

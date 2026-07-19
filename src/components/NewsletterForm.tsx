@@ -16,13 +16,13 @@ export function NewsletterForm() {
           type="email"
           placeholder="Enter your email address"
           required
-          className="flex-1 px-6 py-4 bg-transparent border border-white/20 rounded-full text-white placeholder:text-gray-500 focus:outline-none focus:border-[#57c0af] transition-colors"
+          className="flex-1 px-6 py-4 bg-transparent border border-line rounded-full text-white placeholder:text-fg-muted focus:outline-none focus:border-nuqi-teal transition-colors duration-300"
         />
         <button
           type="submit"
-          className="px-8 py-4 bg-[#57c0af] hover:bg-[#48a894] text-black font-semibold rounded-full transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(87,192,175,0.5)] flex items-center justify-center gap-2 whitespace-nowrap"
+          className="px-8 py-4 bg-nuqi-teal hover:bg-nuqi-teal-dark text-black font-mono text-xs uppercase tracking-[0.15em] font-medium rounded-full transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_30px_rgba(87,192,175,0.5)] flex items-center justify-center gap-2 whitespace-nowrap"
         >
-          Contact Us <span>→</span>
+          Contact Us <span aria-hidden>→</span>
         </button>
       </div>
     </form>

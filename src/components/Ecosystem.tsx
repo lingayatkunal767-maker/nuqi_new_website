@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Marquee from "react-fast-marquee";
+import { Reveal } from "@/components/Reveal";
 
 interface TieupLogo {
   src: string;
@@ -21,14 +22,14 @@ function LogoRow() {
       {TIEUP_LOGOS.map((logo, index) => (
         <div
           key={`${logo.src}-${index}`}
-          className="flex mb-16 min-w-52 justify-center h-[3.5rem]"
+          className="flex h-14 min-w-52 items-center justify-center"
         >
           <Image
             src={logo.src}
             alt={logo.alt}
             width={280}
             height={56}
-            className="mx-16 object-cover w-70"
+            className="mx-16 w-56 object-contain grayscale invert opacity-60 transition-opacity duration-300 hover:opacity-100"
           />
         </div>
       ))}
@@ -38,28 +39,24 @@ function LogoRow() {
 
 export function Ecosystem() {
   return (
-    <div className="flex flex-col gap-8 px-14 max-md:px-4 mt-10 py-12 items-center justify-center antialiased container">
-      <div className="flex flex-col bg-[#0d0d0d] rounded-3xl justify-between items-center">
-        <div className="flex flex-col justify-between items-center w-full">
-          <div className="flex flex-col gap-4 mb-16">
-            <div className="text-center max-w-4xl mx-auto mb-24 animate-fade-in-up">
-              <span className="text-[#57c0af] text-xl font-bold tracking-[0.2em] uppercase mt-10 block">
-                Our Ecosystem
-              </span>
-              <h2 className="text-5xl md:text-7xl font-light text-white mt-10 tracking-tight">
-                A Shared Journey
-              </h2>
-              <p className="md:text-xl text-sm text-gray-400 font-light leading-relaxed mt-10">
-                From first-time investors to experienced wealth-builders, our
-                users aren&apos;t just clients — they are collaborators in
-                financial empowerment.
-              </p>
-            </div>
-          </div>
+    <section className="bg-paper">
+      <div className="mx-auto max-w-7xl px-6 py-24 md:px-12 md:py-32 lg:px-20">
+        <Reveal className="mx-auto mb-16 max-w-3xl text-center md:mb-20">
+          <span className="eyebrow text-[#57c0af]">Our Ecosystem</span>
+          <h2 className="mt-6 text-4xl font-medium tracking-tight text-black md:text-6xl">
+            A Shared <span className="font-display-italic">Journey</span>
+          </h2>
+          <p className="mt-6 text-base font-light leading-relaxed text-black/60 md:text-lg">
+            From first-time investors to experienced wealth-builders, our
+            users aren&apos;t just clients — they are collaborators in
+            financial empowerment.
+          </p>
+        </Reveal>
+        <div className="flex flex-col gap-10">
           <LogoRow />
           <LogoRow />
         </div>
       </div>
-    </div>
+    </section>
   );
 }

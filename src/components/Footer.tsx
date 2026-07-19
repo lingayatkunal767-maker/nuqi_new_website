@@ -86,9 +86,9 @@ const FOOTER_LINKS: FooterLink[] = [
 
 export function Footer() {
   return (
-    <footer className="bg-[#000] text-white -mt-20 font-poppins">
-      <div className="container mx-auto px-4 py-10">
-        <div className="flex flex-col items-center mt-20 text-center text-white gap-10">
+    <footer className="border-t border-white/10 bg-black font-sans text-white">
+      <div className="container mx-auto px-4 py-20 md:py-24">
+        <div className="flex flex-col items-center gap-10 text-center text-white">
           <div>
             <Image
               alt="Nuqi Logo"
@@ -129,22 +129,22 @@ export function Footer() {
             </a>
           </div>
         </div>
-        <div className="mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 xl:flex xl:justify-center gap-10 text-base font-poppins text-center">
+        <div className="mt-16 grid grid-cols-2 gap-x-6 gap-y-6 text-center md:grid-cols-3 lg:grid-cols-6 xl:flex xl:justify-center xl:gap-10">
           {FOOTER_LINKS.map((link) => (
             <a
               key={link.href}
               href={link.href}
               className={
                 link.isHome
-                  ? "text-[#57c0af] font-bold"
-                  : "text-white hover:text-[#57c0af]"
+                  ? "eyebrow text-[#57c0af]"
+                  : "eyebrow text-white/60 transition hover:text-[#57c0af]"
               }
             >
               {link.label}
             </a>
           ))}
         </div>
-        <div className="mt-10 text-center text-xs text-gray-400 leading-relaxed">
+        <div className="mt-16 text-center text-xs leading-relaxed text-white/40">
           <p>
             ©2025 Nuqi Wealth India Pvt Ltd - Investment Advisory Unit (Separately Identifiable Unit) <br />
             SEBI RIA Registration No: INA000016612. CIN: U65990MH2020FTC351885. Validity of registration- 30th Jan 2022 - Perpetual <br />
@@ -165,7 +165,7 @@ export function Footer() {
                 href="/disclaimer"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline underline-offset-2"
+                className="underline underline-offset-2 transition-colors hover:text-white"
               >
                 Disclaimer Notice page
               </a>{" "}

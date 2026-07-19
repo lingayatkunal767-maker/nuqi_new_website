@@ -1,8 +1,12 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
+import { AnimatePresence, motion } from "motion/react";
 
+import { RevealGroup, RevealItem } from "@/components/Reveal";
 import { cn } from "@/lib/utils";
+
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 interface FaqItem {
   question: string;
@@ -145,39 +149,54 @@ interface FaqAccordionItemProps {
   item: FaqItem;
   isOpen: boolean;
   onToggle: () => void;
+  panelId: string;
 }
 
-function FaqAccordionItem({ item, isOpen, onToggle }: FaqAccordionItemProps) {
+function FaqAccordionItem({
+  item,
+  isOpen,
+  onToggle,
+  panelId,
+}: FaqAccordionItemProps) {
   return (
-    <div className="p-2 md:p-4 bg-gradient-to-b from-zinc-900 to-black border border-zinc-700 rounded-lg shadow-lg transition-all duration-300 ease-in-out hover:border-[#57c0af] hover:shadow-[#57c0af]/20">
+    <div className="group py-6 md:py-7">
       <button
         type="button"
-        className="w-full flex justify-between items-center text-left"
+        className="flex w-full items-start justify-between gap-6 text-left"
         aria-expanded={isOpen}
+        aria-controls={panelId}
         onClick={onToggle}
       >
-        <h2 className="text-sm font-normal text-white pr-4">
+        <h3 className="pr-2 text-base font-medium leading-snug text-white transition-colors duration-200 group-hover:text-[#57c0af] md:text-[17px]">
           {item.question}
-        </h2>
+        </h3>
         <span
+          aria-hidden="true"
           className={cn(
-            "text-[#57c0af] text-2xl font-light transition-transform duration-300 flex-shrink-0",
+            "mt-0.5 flex-shrink-0 font-mono text-xl leading-none text-[#57c0af] transition-transform duration-300 ease-out",
             isOpen ? "rotate-45" : "rotate-0",
           )}
         >
           +
         </span>
       </button>
-      <div
-        className={cn(
-          "overflow-hidden transition-all duration-300 ease-in-out",
-          isOpen ? "max-h-96 mt-4 opacity-100" : "max-h-0 opacity-0",
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            id={panelId}
+            key="answer"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.35, ease: EASE }}
+            className="overflow-hidden"
+          >
+            <div className="pt-4 pr-6 text-[15px] leading-7 text-zinc-400 md:pr-10">
+              {item.answer}
+            </div>
+          </motion.div>
         )}
-      >
-        <div className="text-[14px] leading-6 text-gray-300">
-          {item.answer}
-        </div>
-      </div>
+      </AnimatePresence>
     </div>
   );
 }
@@ -211,35 +230,46 @@ export function Faq() {
   };
 
   return (
-    <div className="text-white mt-4 px-5 w-full">
-      <h1 className="text-center pt-32 text-3xl text-[#57c0af] mb-7">
-        <span className="text-white text-3xl md:text-4xl font-semibold font-poppins">
-          Frequently Asked Questions{" "}
-        </span>
-        (FAQs)
-      </h1>
-      <div className="w-full min-h-full mx-auto grid gap-6 grid-cols-1 md:grid-cols-2">
-        <div className="space-y-2">
-          {leftFaqItems.map((item, index) => (
-            <FaqAccordionItem
-              key={item.question}
-              item={item}
-              isOpen={openLeft.has(index)}
-              onToggle={() => toggleLeft(index)}
-            />
-          ))}
+    <section className="bg-black text-white">
+      <div className="section-x section-y mx-auto w-full max-w-7xl">
+        <div className="mb-12 md:mb-16">
+          <p className="eyebrow text-[#57c0af]">FAQs</p>
+          <h2 className="mt-4 text-3xl font-medium text-white md:text-4xl lg:text-5xl">
+            Frequently Asked{" "}
+            <span className="font-display-italic text-[#57c0af]">
+              Questions
+            </span>{" "}
+            <span className="text-white/40">(FAQs)</span>
+          </h2>
         </div>
-        <div className="space-y-2 mt-0 p-0 gap-0">
-          {rightFaqItems.map((item, index) => (
-            <FaqAccordionItem
-              key={item.question}
-              item={item}
-              isOpen={openRight.has(index)}
-              onToggle={() => toggleRight(index)}
-            />
-          ))}
+
+        <div className="grid grid-cols-1 gap-x-16 gap-y-10 md:grid-cols-2 md:gap-y-0">
+          <RevealGroup className="divide-y divide-white/10 border-t border-white/10">
+            {leftFaqItems.map((item, index) => (
+              <RevealItem key={item.question}>
+                <FaqAccordionItem
+                  item={item}
+                  isOpen={openLeft.has(index)}
+                  onToggle={() => toggleLeft(index)}
+                  panelId={`faq-left-panel-${index}`}
+                />
+              </RevealItem>
+            ))}
+          </RevealGroup>
+          <RevealGroup className="divide-y divide-white/10 border-t border-white/10">
+            {rightFaqItems.map((item, index) => (
+              <RevealItem key={item.question}>
+                <FaqAccordionItem
+                  item={item}
+                  isOpen={openRight.has(index)}
+                  onToggle={() => toggleRight(index)}
+                  panelId={`faq-right-panel-${index}`}
+                />
+              </RevealItem>
+            ))}
+          </RevealGroup>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
