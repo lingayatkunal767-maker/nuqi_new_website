@@ -1,10 +1,14 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import { ChevronDown, Grid3x3, List } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
 import { EthosphereMasonry } from "@/components/EthosphereMasonry";
+import { EthosphereList } from "@/components/EthosphereList";
+import { cn } from "@/lib/utils";
 
 interface Edition {
   image: string;
@@ -44,12 +48,98 @@ function pdfUrlFor(edition: string) {
   return `https://nuqiwealth.com/pdf/NUQI-2025-Ethosphere-${ordinal}-Edition.pdf`;
 }
 
+function parseEditionDate(edition: string) {
+  const match = edition.match(/([A-Za-z]+)\s+\d{1,2},\s*(\d{4})/);
+  return { month: match?.[1] ?? "", year: match?.[2] ?? "" };
+}
+
 const masonryItems = editions.map((item) => ({
   ...item,
   href: pdfUrlFor(item.edition),
 }));
 
+const YEARS = Array.from(new Set(editions.map((item) => parseEditionDate(item.edition).year)));
+const MONTHS = Array.from(new Set(editions.map((item) => parseEditionDate(item.edition).month)));
+
+function FilterDropdown({
+  options,
+  value,
+  onChange,
+}: {
+  options: string[];
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((prev) => !prev)}
+        aria-expanded={open}
+        className="eyebrow flex items-center gap-1.5 whitespace-nowrap rounded-full border border-white/15 bg-transparent px-4 py-2 text-white/60 transition-colors duration-300 hover:border-gold/50 hover:text-gold"
+      >
+        {value}
+        <ChevronDown
+          className={cn("w-3.5 h-3.5 transition-transform duration-300", open && "rotate-180")}
+        />
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="absolute left-0 top-[calc(100%+0.5rem)] z-30 min-w-full overflow-hidden rounded-xl border border-white/10 bg-panel py-1.5 shadow-[0_20px_40px_-15px_rgba(0,0,0,0.6)]"
+          >
+            {options.map((option) => (
+              <button
+                key={option}
+                type="button"
+                onClick={() => {
+                  onChange(option);
+                  setOpen(false);
+                }}
+                className={cn(
+                  "eyebrow block w-full whitespace-nowrap px-4 py-2.5 text-left transition-colors duration-200",
+                  option === value ? "text-gold" : "text-white/60 hover:text-white"
+                )}
+              >
+                {option}
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 export default function EthospherePage() {
+  const [selectedYear, setSelectedYear] = useState(YEARS[0] ?? "");
+  const [selectedMonth, setSelectedMonth] = useState("All Month");
+  const [view, setView] = useState<"grid" | "list">("grid");
+
+  const filteredItems = masonryItems.filter((item) => {
+    const { month, year } = parseEditionDate(item.edition);
+    if (selectedYear && year !== selectedYear) return false;
+    if (selectedMonth !== "All Month" && month !== selectedMonth) return false;
+    return true;
+  });
+
   return (
     <>
       <Header />
@@ -69,30 +159,38 @@ export default function EthospherePage() {
         </section>
 
         <div className="flex flex-col justify-center items-center mt-16 md:mt-20 mx-4">
-          <Reveal delay={0.1} className="w-full">
-            <div className="w-full flex flex-row justify-center items-center gap-2 sm:gap-4 container mb-8">
-              <button
-                type="button"
-                className="eyebrow flex items-center gap-1.5 rounded-full border border-white/15 bg-transparent px-4 py-2 text-white/60 transition-colors duration-300 hover:border-gold/50 hover:text-gold"
-              >
-                2026 <ChevronDown className="w-3.5 h-3.5" />
-              </button>
-              <button
-                type="button"
-                className="eyebrow flex items-center gap-1.5 whitespace-nowrap rounded-full border border-white/15 bg-transparent px-4 py-2 text-white/60 transition-colors duration-300 hover:border-gold/50 hover:text-gold"
-              >
-                All Month <ChevronDown className="w-3.5 h-3.5" />
-              </button>
+          <Reveal delay={0.1} className="relative z-20 w-full max-w-7xl mx-auto px-4">
+            <div className="w-full flex flex-row justify-center items-center gap-2 sm:gap-4 mb-8">
+              <FilterDropdown options={YEARS} value={selectedYear} onChange={setSelectedYear} />
+              <FilterDropdown
+                options={["All Month", ...MONTHS]}
+                value={selectedMonth}
+                onChange={setSelectedMonth}
+              />
               <div className="flex items-center justify-center gap-2 ml-auto">
                 <button
                   type="button"
-                  className="rounded-lg border border-white/15 p-2 text-white/60 transition-colors duration-300 hover:border-gold/50 hover:text-gold"
+                  onClick={() => setView("grid")}
+                  aria-pressed={view === "grid"}
+                  className={cn(
+                    "rounded-lg border p-2 transition-colors duration-300",
+                    view === "grid"
+                      ? "border-gold/50 text-gold"
+                      : "border-white/15 text-white/60 hover:border-gold/50 hover:text-gold"
+                  )}
                 >
                   <Grid3x3 className="w-4 h-4 lg:w-5 lg:h-5" />
                 </button>
                 <button
                   type="button"
-                  className="rounded-lg border border-white/15 p-2 text-white/60 transition-colors duration-300 hover:border-gold/50 hover:text-gold"
+                  onClick={() => setView("list")}
+                  aria-pressed={view === "list"}
+                  className={cn(
+                    "rounded-lg border p-2 transition-colors duration-300",
+                    view === "list"
+                      ? "border-gold/50 text-gold"
+                      : "border-white/15 text-white/60 hover:border-gold/50 hover:text-gold"
+                  )}
                 >
                   <List className="w-4 h-4 lg:w-5 lg:h-5" />
                 </button>
@@ -101,7 +199,15 @@ export default function EthospherePage() {
           </Reveal>
 
           <div className="w-full max-w-7xl px-4 pb-24">
-            <EthosphereMasonry items={masonryItems} />
+            {filteredItems.length === 0 ? (
+              <p className="py-16 text-center text-white/40">
+                No editions found for the selected filters.
+              </p>
+            ) : view === "grid" ? (
+              <EthosphereMasonry items={filteredItems} />
+            ) : (
+              <EthosphereList items={filteredItems} />
+            )}
           </div>
         </div>
       </div>
