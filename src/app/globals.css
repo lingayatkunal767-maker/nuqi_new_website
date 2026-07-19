@@ -7,8 +7,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-poppins), "Poppins", ui-sans-serif, system-ui, sans-serif;
-  --font-poppins: var(--font-poppins), "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument-serif), Georgia, serif;
+  --font-mono: var(--font-mono), ui-monospace, monospace;
   --font-heading: var(--font-sans);
   --color-nuqi-dark: #000000;
   --color-nuqi-navy: #282e3a;
@@ -18,6 +19,11 @@
   --color-nuqi-orange: #ffa500;
   --color-nuqi-violet: #ee82ee;
   --color-nuqi-cyan: #0dd3ff;
+  --color-bg-void: #000000;
+  --color-bg-panel: #0a0a0a;
+  --color-bg-paper: #fafaf7;
+  --color-fg-muted: #a1a1a1;
+  --color-line: rgba(255, 255, 255, 0.08);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -139,7 +145,65 @@
 
 @layer utilities {
   .font-poppins {
-    font-family: var(--font-poppins), "Poppins", ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  }
+
+  .font-display-italic {
+    font-family: var(--font-instrument-serif), Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .section-x {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  @media (min-width: 768px) {
+    .section-x {
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .section-x {
+      padding-left: 5rem;
+      padding-right: 5rem;
+    }
+  }
+
+  .section-y {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+  @media (min-width: 768px) {
+    .section-y {
+      padding-top: 8rem;
+      padding-bottom: 8rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .section-y {
+      padding-top: 10rem;
+      padding-bottom: 10rem;
+    }
+  }
+
+  .bg-void {
+    background-color: var(--color-bg-void);
+  }
+  .bg-panel {
+    background-color: var(--color-bg-panel);
+  }
+  .bg-paper {
+    background-color: var(--color-bg-paper);
   }
 }
 
