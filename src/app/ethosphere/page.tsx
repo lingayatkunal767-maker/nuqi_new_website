@@ -13,6 +13,7 @@ import {
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
+import { MagneticButton } from "@/components/MagneticButton";
 
 interface Edition {
   image: string;
@@ -60,7 +61,7 @@ function EditionCard({ item }: { item: Edition }) {
       rel="noopener noreferrer"
       whileHover={{ y: -8 }}
       transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-      className="group flex-shrink-0 rounded-2xl border border-white/10 bg-[#0a0a0a] h-96 w-60 md:h-[28rem] md:w-[18rem] overflow-hidden flex flex-col items-start justify-start relative z-10 transition-colors duration-300 hover:border-[#57c0af]/50 hover:shadow-[0_0_35px_rgba(87,192,175,0.25)]"
+      className="group flex-shrink-0 rounded-2xl border border-white/10 bg-[#0a0a0a] h-96 w-60 md:h-[28rem] md:w-[18rem] overflow-hidden flex flex-col items-start justify-start relative z-10 transition-colors duration-300 hover:border-gold/50 hover:shadow-[0_0_35px_rgba(225,198,106,0.25)]"
     >
       <div className="absolute h-full top-0 inset-x-0 bg-gradient-to-b from-black/60 via-transparent to-transparent z-30 pointer-events-none" />
       <div className="relative z-40 p-4">
@@ -70,7 +71,7 @@ function EditionCard({ item }: { item: Edition }) {
         <p className="text-white text-xs md:text-sm font-normal text-left mt-3 uppercase leading-snug">
           {item.title}
         </p>
-        <p className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium uppercase tracking-[0.15em] text-[#57c0af] transition-transform duration-300 group-hover:translate-x-1">
+        <p className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium uppercase tracking-[0.15em] text-gold transition-transform duration-300 group-hover:translate-x-1">
           Read More <span aria-hidden>→</span>
         </p>
       </div>
@@ -99,7 +100,7 @@ export default function EthospherePage() {
         <section className="section-x pt-16 md:pt-20">
           <Reveal>
             <div className="max-w-3xl mx-auto text-center">
-              <p className="eyebrow text-[#57c0af] mb-5">Research &amp; Insights</p>
+              <p className="eyebrow text-gold mb-5">Research &amp; Insights</p>
               <h1 className="font-display-italic text-5xl md:text-7xl leading-tight text-white">
                 Ethosphere
               </h1>
@@ -115,26 +116,26 @@ export default function EthospherePage() {
             <div className="w-full flex flex-row justify-center items-center gap-2 sm:gap-4 container mb-8">
               <button
                 type="button"
-                className="eyebrow flex items-center gap-1.5 rounded-full border border-white/15 bg-transparent px-4 py-2 text-white/60 transition-colors duration-300 hover:border-[#57c0af]/50 hover:text-[#57c0af]"
+                className="eyebrow flex items-center gap-1.5 rounded-full border border-white/15 bg-transparent px-4 py-2 text-white/60 transition-colors duration-300 hover:border-gold/50 hover:text-gold"
               >
                 2026 <ChevronDown className="w-3.5 h-3.5" />
               </button>
               <button
                 type="button"
-                className="eyebrow flex items-center gap-1.5 whitespace-nowrap rounded-full border border-white/15 bg-transparent px-4 py-2 text-white/60 transition-colors duration-300 hover:border-[#57c0af]/50 hover:text-[#57c0af]"
+                className="eyebrow flex items-center gap-1.5 whitespace-nowrap rounded-full border border-white/15 bg-transparent px-4 py-2 text-white/60 transition-colors duration-300 hover:border-gold/50 hover:text-gold"
               >
                 All Month <ChevronDown className="w-3.5 h-3.5" />
               </button>
               <div className="flex items-center justify-center gap-2 ml-auto">
                 <button
                   type="button"
-                  className="rounded-lg border border-white/15 p-2 text-white/60 transition-colors duration-300 hover:border-[#57c0af]/50 hover:text-[#57c0af]"
+                  className="rounded-lg border border-white/15 p-2 text-white/60 transition-colors duration-300 hover:border-gold/50 hover:text-gold"
                 >
                   <Grid3x3 className="w-4 h-4 lg:w-5 lg:h-5" />
                 </button>
                 <button
                   type="button"
-                  className="rounded-lg border border-white/15 p-2 text-white/60 transition-colors duration-300 hover:border-[#57c0af]/50 hover:text-[#57c0af]"
+                  className="rounded-lg border border-white/15 p-2 text-white/60 transition-colors duration-300 hover:border-gold/50 hover:text-gold"
                 >
                   <List className="w-4 h-4 lg:w-5 lg:h-5" />
                 </button>
@@ -154,20 +155,22 @@ export default function EthospherePage() {
               </div>
             </div>
             <div className="flex justify-center gap-4">
-              <button
+              <MagneticButton
+                as="button"
                 type="button"
                 onClick={() => scrollByAmount(-300)}
-                className="relative z-40 h-10 w-10 rounded-full border border-white/15 bg-transparent flex items-center justify-center text-white/60 transition-colors duration-300 hover:border-[#57c0af]/50 hover:text-[#57c0af] disabled:opacity-50"
+                className="relative z-40 h-10 w-10 rounded-full border border-white/15 bg-transparent flex items-center justify-center text-white/60 transition-colors duration-300 hover:border-gold/50 hover:text-gold disabled:opacity-50"
               >
                 <ArrowLeft className="h-5 w-5" />
-              </button>
-              <button
+              </MagneticButton>
+              <MagneticButton
+                as="button"
                 type="button"
                 onClick={() => scrollByAmount(300)}
-                className="relative z-40 h-10 w-10 rounded-full border border-white/15 bg-transparent flex items-center justify-center text-white/60 transition-colors duration-300 hover:border-[#57c0af]/50 hover:text-[#57c0af] disabled:opacity-50"
+                className="relative z-40 h-10 w-10 rounded-full border border-white/15 bg-transparent flex items-center justify-center text-white/60 transition-colors duration-300 hover:border-gold/50 hover:text-gold disabled:opacity-50"
               >
                 <ArrowRight className="h-5 w-5" />
-              </button>
+              </MagneticButton>
             </div>
           </div>
         </div>

@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { RevealGroup, RevealItem } from "@/components/Reveal";
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Reveal } from "@/components/Reveal";
 
 interface Offering {
   themeColor: string;
@@ -80,7 +81,7 @@ function OfferingCard({
             background: `radial-gradient(circle at 50% 45%, ${offering.themeColor}, transparent 70%)`,
           }}
         />
-        <span className="eyebrow absolute right-4 top-4 z-10 text-white/25">
+        <span className="eyebrow absolute right-4 top-4 z-10 text-nuqi-gold/25">
           {String(index + 1).padStart(2, "0")}
         </span>
         <Image
@@ -108,85 +109,118 @@ function OfferingCard({
 }
 
 export function PriveOfferings() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const lastIndex = OFFERINGS.length - 1;
+  const count = OFFERINGS.length;
 
-  const goToPrevious = () => {
-    setActiveIndex((current) => (current === 0 ? lastIndex : current - 1));
-  };
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const container = containerRef.current;
+    const viewport = viewportRef.current;
+    const track = trackRef.current;
+    const progressBar = progressRef.current;
+    if (!container || !viewport || !track) return;
 
-  const goToNext = () => {
-    setActiveIndex((current) => (current === lastIndex ? 0 : current + 1));
-  };
+    const getMaxTranslate = () =>
+      Math.max(track.scrollWidth - viewport.clientWidth, 0);
 
-  const translateX = activeIndex * (CARD_WIDTH + CARD_GAP);
+    const st = ScrollTrigger.create({
+      trigger: container,
+      start: "top top",
+      end: () =>
+        `+=${Math.max(
+          window.innerHeight * 0.6 * (count - 1),
+          getMaxTranslate()
+        )}`,
+      pin: true,
+      scrub: 0.6,
+      invalidateOnRefresh: true,
+      onUpdate: (self) => {
+        const maxTranslate = getMaxTranslate();
+        gsap.to(track, {
+          x: -maxTranslate * self.progress,
+          duration: 0.2,
+          overwrite: true,
+          ease: "none",
+        });
+        if (progressBar) {
+          gsap.to(progressBar, {
+            width: `${self.progress * 100}%`,
+            duration: 0.2,
+            overwrite: true,
+            ease: "none",
+          });
+        }
+        const index = Math.min(
+          count - 1,
+          Math.round(self.progress * (count - 1))
+        );
+        setActiveIndex((prev) => (prev === index ? prev : index));
+      },
+    });
+
+    return () => {
+      st.kill();
+    };
+  }, [count]);
 
   return (
     <section id="services" className="scroll-mt-24 bg-void section-y section-x">
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto mb-16 max-w-2xl text-center md:mb-20">
-          <h2 className="text-3xl font-medium leading-tight tracking-tight md:text-4xl lg:text-5xl">
-            <span className="text-white">Nuqi</span>{" "}
-            <span className="text-nuqi-teal">
-              <span className="font-display-italic">Prive</span> Offerings
-            </span>
-          </h2>
+          <Reveal>
+            <h2 className="text-3xl font-medium leading-tight tracking-tight md:text-4xl lg:text-5xl">
+              <span className="text-white">Nuqi</span>{" "}
+              <span className="font-display-gold">Prive</span>{" "}
+              <span className="text-white">Offerings</span>
+            </h2>
+          </Reveal>
         </div>
+      </div>
 
-        <div className="relative">
-          <div className="relative mx-auto" style={{ maxWidth: 1140 }}>
-            <button
-              type="button"
-              aria-label="Previous slide"
-              onClick={goToPrevious}
-              className="absolute -left-4 top-1/2 z-20 -translate-y-1/2 rounded-full border border-line bg-panel/80 p-3 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:border-nuqi-teal/60 hover:bg-panel"
-            >
-              <ChevronLeft className="text-nuqi-teal" size={18} />
-            </button>
-            <button
-              type="button"
-              aria-label="Next slide"
-              onClick={goToNext}
-              className="absolute -right-4 top-1/2 z-20 -translate-y-1/2 rounded-full border border-line bg-panel/80 p-3 backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:border-nuqi-teal/60 hover:bg-panel"
-            >
-              <ChevronRight className="text-nuqi-teal" size={18} />
-            </button>
-
-            <div className="overflow-hidden px-6">
-              <RevealGroup>
-                <div
-                  className="flex transition-transform duration-500"
-                  style={{
-                    gap: CARD_GAP,
-                    transform: `translateX(-${translateX}px)`,
-                  }}
-                >
-                  {OFFERINGS.map((offering, index) => (
-                    <RevealItem key={offering.title} className="shrink-0">
-                      <div style={{ width: CARD_WIDTH }} className="h-full">
-                        <OfferingCard offering={offering} index={index} />
-                      </div>
-                    </RevealItem>
-                  ))}
-                </div>
-              </RevealGroup>
+      {/* Pinned GSAP horizontal-scroll gallery: pins for extra scroll distance while
+          the card track translates sideways, scrubbed 1:1 with scroll position. */}
+      <div ref={containerRef} className="group/gallery relative">
+        <div className="h-screen w-full flex flex-col justify-center overflow-hidden section-x border-y border-white/5 transition-colors duration-700 group-hover/gallery:border-nuqi-gold/25">
+          <div className="mx-auto w-full max-w-7xl">
+            <div className="mb-8 flex items-center justify-between">
+              <span className="eyebrow text-white/30">Scroll to explore</span>
+              <span className="font-mono text-xs tracking-wider text-nuqi-gold">
+                {String(activeIndex + 1).padStart(2, "0")} /{" "}
+                {String(count).padStart(2, "0")}
+              </span>
             </div>
-          </div>
 
-          <div className="mt-10 flex justify-center gap-2">
-            {OFFERINGS.map((offering, index) => (
-              <button
-                key={offering.title}
-                type="button"
-                aria-label={`Go to slide ${index + 1}`}
-                onClick={() => setActiveIndex(index)}
-                className={`rounded-full transition-all duration-300 ${
-                  index === activeIndex
-                    ? "h-2 w-8 bg-nuqi-teal"
-                    : "h-2 w-2 bg-white/20 hover:bg-white/40"
-                }`}
+            <div ref={viewportRef} className="overflow-hidden">
+              <div
+                ref={trackRef}
+                className="flex items-stretch will-change-transform"
+                style={{ gap: `${CARD_GAP}px` }}
+              >
+                {OFFERINGS.map((offering, index) => (
+                  <div
+                    key={offering.title}
+                    style={{ width: CARD_WIDTH }}
+                    className="h-full shrink-0"
+                  >
+                    <OfferingCard offering={offering} index={index} />
+                  </div>
+                ))}
+                {/* trailing spacer: gives the last card breathing room and extends travel */}
+                <div aria-hidden className="w-[20vw] shrink-0" />
+              </div>
+            </div>
+
+            <div className="mt-10 h-px w-full bg-white/10">
+              <div
+                ref={progressRef}
+                className="h-px w-0 bg-nuqi-gold"
+                style={{ boxShadow: "0 0 8px rgba(225,198,106,0.6)" }}
               />
-            ))}
+            </div>
           </div>
         </div>
       </div>

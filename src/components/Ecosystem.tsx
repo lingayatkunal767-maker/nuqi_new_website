@@ -16,20 +16,20 @@ const TIEUP_LOGOS: TieupLogo[] = [
   { src: "/images/tieups/accordwhite.png", alt: "Tieup Logo" },
 ];
 
-function LogoRow() {
+function LogoRow({ direction = "left" }: { direction?: "left" | "right" }) {
   return (
-    <Marquee speed={40} pauseOnHover gradient={false}>
+    <Marquee speed={40} direction={direction} pauseOnHover gradient={false}>
       {TIEUP_LOGOS.map((logo, index) => (
         <div
           key={`${logo.src}-${index}`}
-          className="flex h-14 min-w-52 items-center justify-center"
+          className="flex h-16 min-w-60 items-center justify-center"
         >
           <Image
             src={logo.src}
             alt={logo.alt}
             width={280}
             height={56}
-            className="mx-16 w-56 object-contain grayscale invert opacity-60 transition-opacity duration-300 hover:opacity-100"
+            className="mx-20 w-64 object-contain grayscale invert opacity-60 transition-opacity duration-300 hover:opacity-100"
           />
         </div>
       ))}
@@ -42,9 +42,12 @@ export function Ecosystem() {
     <section className="bg-paper">
       <div className="mx-auto max-w-7xl px-6 py-24 md:px-12 md:py-32 lg:px-20">
         <Reveal className="mx-auto mb-16 max-w-3xl text-center md:mb-20">
-          <span className="eyebrow text-[#57c0af]">Our Ecosystem</span>
+          <span className="eyebrow text-[#a68c4a]">Our Ecosystem</span>
           <h2 className="mt-6 text-4xl font-medium tracking-tight text-black md:text-6xl">
-            A Shared <span className="font-display-italic">Journey</span>
+            A Shared{" "}
+            <span className="font-display-italic text-[#a68c4a]">
+              Journey
+            </span>
           </h2>
           <p className="mt-6 text-base font-light leading-relaxed text-black/60 md:text-lg">
             From first-time investors to experienced wealth-builders, our
@@ -53,8 +56,8 @@ export function Ecosystem() {
           </p>
         </Reveal>
         <div className="flex flex-col gap-10">
-          <LogoRow />
-          <LogoRow />
+          <LogoRow direction="left" />
+          <LogoRow direction="right" />
         </div>
       </div>
     </section>

@@ -1,7 +1,11 @@
+"use client";
+
 import { ArrowDownUp, Lock } from "lucide-react";
+import { motion } from "motion/react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
+import { MagneticButton } from "@/components/MagneticButton";
 
 interface StockRow {
   name: string;
@@ -64,10 +68,10 @@ export default function IrisPage() {
           <div className="max-w-7xl mx-auto">
             <Reveal>
               <div className="max-w-3xl mx-auto text-center">
-                <p className="eyebrow text-[#57c0af] mb-5">IRIS</p>
+                <p className="eyebrow text-gold mb-5">IRIS</p>
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-normal leading-[1.05] tracking-tight text-white">
                   Invest{" "}
-                  <span className="font-display-italic text-[#57c0af]">
+                  <span className="font-display-gold">
                     ethically
                   </span>{" "}
                   with IRIS
@@ -79,7 +83,7 @@ export default function IrisPage() {
               <div className="max-w-3xl mx-auto text-center mt-16 md:mt-20">
                 <p className="eyebrow text-white/50 mb-3">Trending</p>
                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-medium text-white">
-                  <span className="font-display-italic text-[#57c0af]">
+                  <span className="font-display-gold">
                     Ethical
                   </span>{" "}
                   Stocks
@@ -150,19 +154,30 @@ export default function IrisPage() {
                 </div>
 
                 <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 rounded-2xl border border-white/10 bg-black/40 backdrop-blur-md">
-                  <div className="w-14 h-14 rounded-full flex items-center justify-center border border-[#57c0af]/40 shadow-[0_0_20px_rgba(87,192,175,0.25)] mb-4">
-                    <Lock className="h-6 w-6 text-[#57c0af]" />
-                  </div>
+                  <motion.div
+                    className="w-14 h-14 rounded-full flex items-center justify-center border border-gold/40 mb-4"
+                    animate={{
+                      boxShadow: [
+                        "0 0 20px rgba(225,198,106,0.25)",
+                        "0 0 34px rgba(225,198,106,0.55)",
+                        "0 0 20px rgba(225,198,106,0.25)",
+                      ],
+                    }}
+                    transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    <Lock className="h-6 w-6 text-gold" />
+                  </motion.div>
                   <p className="text-white font-medium text-xl mb-5">
                     Subscribe to Access
                   </p>
-                  <button
+                  <MagneticButton
+                    as="button"
                     type="button"
-                    className="inline-flex h-12 px-6 items-center justify-center gap-2 rounded-full bg-[#57c0af] hover:bg-[#48a894] text-black font-semibold text-sm md:text-base transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(87,192,175,0.5)]"
+                    className="inline-flex h-12 px-6 items-center justify-center gap-2 rounded-full bg-[color:var(--color-nuqi-gold)] hover:bg-[color:var(--color-nuqi-gold-dim)] text-black font-semibold text-sm md:text-base transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(225,198,106,0.5)]"
                   >
                     <Lock className="h-4 w-4" />
                     Sign-Up for free and unlock
-                  </button>
+                  </MagneticButton>
                 </div>
               </div>
             </Reveal>

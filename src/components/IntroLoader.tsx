@@ -7,14 +7,12 @@ export function IntroLoader() {
   const [show, setShow] = useState(true);
 
   useEffect(() => {
-    if (sessionStorage.getItem("nuqi-intro-seen")) {
-      setShow(false);
-      return;
-    }
+    const alreadySeen = sessionStorage.getItem("nuqi-intro-seen");
+    const delay = alreadySeen ? 0 : 1400;
     const t = setTimeout(() => {
       setShow(false);
       sessionStorage.setItem("nuqi-intro-seen", "1");
-    }, 1400);
+    }, delay);
     return () => clearTimeout(t);
   }, []);
 
@@ -33,7 +31,7 @@ export function IntroLoader() {
             transition={{ duration: 0.4 }}
           >
             <motion.span
-              className="block font-mono text-xs uppercase tracking-[0.3em] text-[#57c0af] text-center mb-3"
+              className="block font-mono text-xs uppercase tracking-[0.3em] text-gold text-center mb-3"
               initial={{ y: 16, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}

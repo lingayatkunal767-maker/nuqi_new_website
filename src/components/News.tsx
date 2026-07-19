@@ -6,6 +6,7 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Reveal } from "@/components/Reveal";
+import { MagneticButton } from "@/components/MagneticButton";
 
 interface NewsItem {
   image: string;
@@ -42,8 +43,10 @@ const NEWS_ITEMS: NewsItem[] = [
 ];
 
 // Cycles through the site's signature accent palette — one blob color per
-// card — echoing useorigin.com's soft gradient-blob testimonial cards.
-const BLOB_COLORS = ["#57c0af", "#0dd3ff", "#ee82ee", "#ffa500"] as const;
+// card — echoing useorigin.com's soft gradient-blob testimonial cards. Gold
+// leads as the anchor tone (the site's primary signature accent); the
+// teal/cyan/violet/orange rotation is kept for supporting variety.
+const BLOB_COLORS = ["#e1c66a", "#0dd3ff", "#ee82ee", "#ffa500"] as const;
 
 const CARD_WIDTH = 373;
 const GAP = 24;
@@ -78,7 +81,8 @@ function NewsCard({ item, index }: { item: NewsItem; index: number }) {
           href={item.href}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-auto text-sm font-medium tracking-wide text-[#57c0af] underline underline-offset-4 transition-colors hover:text-white"
+          style={{ color: themeColor }}
+          className="mt-auto text-sm font-medium tracking-wide underline underline-offset-4 transition-colors hover:text-white"
         >
           Learn more
         </a>
@@ -122,13 +126,12 @@ export function News() {
     <section className="bg-black px-6 py-24 md:px-12 md:py-32 lg:px-20">
       <div className="mx-auto w-full max-w-[1200px]">
         <Reveal className="mb-14 text-center">
-          <span className="eyebrow text-[#57c0af]">Latest News</span>
+          <span className="eyebrow text-gold">Latest News</span>
           <h2 className="mt-4 text-3xl font-medium tracking-tight text-white md:text-4xl">
-            Nuqi in the{" "}
-            <span className="font-display-italic text-[#57c0af]">News</span>
+            Nuqi in the <span className="font-display-gold">News</span>
           </h2>
         </Reveal>
-        <div className="relative mx-4">
+        <Reveal className="relative mx-4" delay={0.1}>
           <div className="overflow-hidden">
             <div
               className="flex gap-6 transition-transform duration-500"
@@ -140,36 +143,40 @@ export function News() {
             </div>
           </div>
           <div className="absolute right-0 bottom-[-80px] left-0 flex items-center justify-center gap-5 lg:right-36 lg:left-36">
-            <button
+            <MagneticButton
+              as="button"
               type="button"
               aria-label="Previous Slide"
+              strength={0.4}
               className={cn(
                 "flex h-14 w-14 items-center justify-center rounded-full border transition-all duration-300",
                 isPrevDisabled
                   ? "cursor-not-allowed border-white/10 bg-white/5 text-white/25"
-                  : "border-[#57c0af]/40 bg-[#57c0af]/10 text-[#57c0af] hover:border-[#57c0af] hover:bg-[#57c0af] hover:text-black"
+                  : "border-[#e1c66a]/40 bg-[#e1c66a]/10 text-[#e1c66a] hover:border-[#e1c66a] hover:bg-[#e1c66a] hover:text-black"
               )}
               disabled={isPrevDisabled}
               onClick={handlePrev}
             >
               <ChevronLeft size={22} />
-            </button>
-            <button
+            </MagneticButton>
+            <MagneticButton
+              as="button"
               type="button"
               aria-label="Next Slide"
+              strength={0.4}
               className={cn(
                 "flex h-14 w-14 items-center justify-center rounded-full border transition-all duration-300",
                 isNextDisabled
                   ? "cursor-not-allowed border-white/10 bg-white/5 text-white/25"
-                  : "border-[#57c0af]/40 bg-[#57c0af]/10 text-[#57c0af] hover:border-[#57c0af] hover:bg-[#57c0af] hover:text-black"
+                  : "border-[#e1c66a]/40 bg-[#e1c66a]/10 text-[#e1c66a] hover:border-[#e1c66a] hover:bg-[#e1c66a] hover:text-black"
               )}
               disabled={isNextDisabled}
               onClick={handleNext}
             >
               <ChevronRight size={22} />
-            </button>
+            </MagneticButton>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

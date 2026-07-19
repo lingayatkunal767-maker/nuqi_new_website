@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { RevealGroup, RevealItem } from "@/components/Reveal";
+import { ArrowRight } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Reveal } from "@/components/Reveal";
 
 interface CepItem {
   themeColor: string;
@@ -68,7 +69,7 @@ function CepCard({ item, index }: { item: CepItem; index: number }) {
         style={{ background: item.themeColor }}
       />
 
-      <span className="eyebrow absolute right-6 top-6 z-10 text-white/25">
+      <span className="eyebrow absolute right-6 top-6 z-10 text-nuqi-gold/25">
         {String(index + 1).padStart(2, "0")}
       </span>
 
@@ -112,84 +113,118 @@ function CepCard({ item, index }: { item: CepItem; index: number }) {
 }
 
 export function CepCarousel() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const count = CEP_ITEMS.length;
 
-  const goNext = () => setActiveIndex((i) => (i + 1) % count);
-  const goPrev = () => setActiveIndex((i) => (i - 1 + count) % count);
-  const goTo = (i: number) => setActiveIndex(i);
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const container = containerRef.current;
+    const viewport = viewportRef.current;
+    const track = trackRef.current;
+    const progressBar = progressRef.current;
+    if (!container || !viewport || !track) return;
 
-  const offset = activeIndex * (CARD_WIDTH + CARD_GAP);
+    const getMaxTranslate = () =>
+      Math.max(track.scrollWidth - viewport.clientWidth, 0);
+
+    const st = ScrollTrigger.create({
+      trigger: container,
+      start: "top top",
+      end: () =>
+        `+=${Math.max(
+          window.innerHeight * 0.6 * (count - 1),
+          getMaxTranslate()
+        )}`,
+      pin: true,
+      scrub: 0.6,
+      invalidateOnRefresh: true,
+      onUpdate: (self) => {
+        const maxTranslate = getMaxTranslate();
+        gsap.to(track, {
+          x: -maxTranslate * self.progress,
+          duration: 0.2,
+          overwrite: true,
+          ease: "none",
+        });
+        if (progressBar) {
+          gsap.to(progressBar, {
+            width: `${self.progress * 100}%`,
+            duration: 0.2,
+            overwrite: true,
+            ease: "none",
+          });
+        }
+        const index = Math.min(
+          count - 1,
+          Math.round(self.progress * (count - 1))
+        );
+        setActiveIndex((prev) => (prev === index ? prev : index));
+      },
+    });
+
+    return () => {
+      st.kill();
+    };
+  }, [count]);
 
   return (
     <section id="advisory" className="bg-panel">
       <div id="explore-solution" className="section-y section-x scroll-mt-24">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="eyebrow mb-5 text-[#57c0af]">Investment Themes</p>
-          <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[1.05] text-white">
-            Nuqi Curated Equity{" "}
-            <span className="font-display-italic italic">Portfolios</span>{" "}
-            <span className="text-white/40">(CEP)</span>
-          </h2>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/55 sm:text-lg">
-            Our Nuqi India Basket offers a variety of curated investment
-            themes, each catering to specific risk appetite and investment
-            goals.
-          </p>
+          <Reveal>
+            <p className="eyebrow mb-5 text-nuqi-gold">Investment Themes</p>
+            <h2 className="text-[clamp(2rem,4vw,3.5rem)] font-medium leading-[1.05] text-white">
+              Nuqi Curated Equity{" "}
+              <span className="font-display-italic italic">Portfolios</span>{" "}
+              <span className="text-white/40">(CEP)</span>
+            </h2>
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/55 sm:text-lg">
+              Our Nuqi India Basket offers a variety of curated investment
+              themes, each catering to specific risk appetite and investment
+              goals.
+            </p>
+          </Reveal>
         </div>
+      </div>
 
-        <div className="relative mt-16 md:mt-20">
-          <div className="relative mx-auto px-6" style={{ maxWidth: "1104px" }}>
-            <button
-              type="button"
-              aria-label="Previous slide"
-              onClick={goPrev}
-              className="absolute -left-2 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/40 text-white/70 backdrop-blur-sm transition-all duration-300 hover:border-[#57c0af]/50 hover:text-[#57c0af] hover:scale-105 sm:-left-5"
-            >
-              <ChevronLeft size={18} strokeWidth={1.5} />
-            </button>
-            <button
-              type="button"
-              aria-label="Next slide"
-              onClick={goNext}
-              className="absolute -right-2 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/40 text-white/70 backdrop-blur-sm transition-all duration-300 hover:border-[#57c0af]/50 hover:text-[#57c0af] hover:scale-105 sm:-right-5"
-            >
-              <ChevronRight size={18} strokeWidth={1.5} />
-            </button>
+      {/* Pinned GSAP horizontal-scroll gallery: pins for extra scroll distance while
+          the card track translates sideways, scrubbed 1:1 with scroll position. */}
+      <div ref={containerRef} className="group/gallery relative">
+        <div className="h-screen w-full flex flex-col justify-center overflow-hidden section-x border-y border-white/5 transition-colors duration-700 group-hover/gallery:border-nuqi-gold/25">
+          <div className="mx-auto w-full max-w-7xl">
+            <div className="mb-8 flex items-center justify-between">
+              <span className="eyebrow text-white/30">Scroll to explore</span>
+              <span className="font-mono text-xs tracking-wider text-nuqi-gold">
+                {String(activeIndex + 1).padStart(2, "0")} /{" "}
+                {String(count).padStart(2, "0")}
+              </span>
+            </div>
 
-            <div className="overflow-visible px-6">
-              <div className="relative overflow-hidden">
-                <div
-                  className="transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
-                  style={{ transform: `translateX(-${offset}px)` }}
-                >
-                  <RevealGroup className="flex gap-6" stagger={0.08}>
-                    {CEP_ITEMS.map((item, i) => (
-                      <RevealItem key={item.title} className="flex-shrink-0">
-                        <CepCard item={item} index={i} />
-                      </RevealItem>
-                    ))}
-                  </RevealGroup>
-                </div>
+            <div ref={viewportRef} className="overflow-hidden">
+              <div
+                ref={trackRef}
+                className="flex will-change-transform"
+                style={{ gap: `${CARD_GAP}px` }}
+              >
+                {CEP_ITEMS.map((item, i) => (
+                  <CepCard key={item.title} item={item} index={i} />
+                ))}
+                {/* trailing spacer: gives the last card breathing room and extends travel */}
+                <div aria-hidden className="w-[20vw] shrink-0" />
               </div>
             </div>
-          </div>
 
-          <div className="mt-10 flex justify-center gap-2">
-            {CEP_ITEMS.map((item, i) => (
-              <button
-                key={item.title}
-                type="button"
-                aria-label={`Go to slide ${i + 1}`}
-                onClick={() => goTo(i)}
-                className={cn(
-                  "h-1.5 rounded-full transition-all duration-300",
-                  i === activeIndex
-                    ? "w-6 bg-[#57c0af]"
-                    : "w-1.5 bg-white/20 hover:bg-white/40"
-                )}
+            <div className="mt-10 h-px w-full bg-white/10">
+              <div
+                ref={progressRef}
+                className="h-px w-0 bg-nuqi-gold"
+                style={{ boxShadow: "0 0 8px rgba(225,198,106,0.6)" }}
               />
-            ))}
+            </div>
           </div>
         </div>
       </div>

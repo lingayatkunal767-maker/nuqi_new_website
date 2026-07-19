@@ -147,33 +147,58 @@ const rightFaqItems: FaqItem[] = [
 
 interface FaqAccordionItemProps {
   item: FaqItem;
+  displayNumber: number;
   isOpen: boolean;
   onToggle: () => void;
   panelId: string;
+  tinted: boolean;
 }
 
 function FaqAccordionItem({
   item,
+  displayNumber,
   isOpen,
   onToggle,
   panelId,
+  tinted,
 }: FaqAccordionItemProps) {
+  const paddedNumber = String(displayNumber).padStart(2, "0");
+
   return (
-    <div className="group py-6 md:py-7">
+    <div
+      className={cn(
+        "group relative -mx-4 rounded-xl px-4 py-6 transition-colors duration-500 md:py-7",
+        tinted && "bg-[#e1c66a]/[0.035]",
+      )}
+    >
       <button
         type="button"
-        className="flex w-full items-start justify-between gap-6 text-left"
+        className="flex w-full items-start justify-between gap-4 text-left sm:gap-6"
         aria-expanded={isOpen}
         aria-controls={panelId}
         onClick={onToggle}
       >
-        <h3 className="pr-2 text-base font-medium leading-snug text-white transition-colors duration-200 group-hover:text-[#57c0af] md:text-[17px]">
+        <span
+          aria-hidden="true"
+          className={cn(
+            "mt-1 hidden flex-shrink-0 select-none font-mono text-xs tracking-[0.1em] transition-colors duration-300 sm:block",
+            isOpen ? "text-gold" : "text-white/30",
+          )}
+        >
+          {paddedNumber}
+        </span>
+        <h3
+          className={cn(
+            "flex-1 pr-2 text-lg font-medium leading-[1.15] tracking-[-0.01em] transition-colors duration-300 md:text-[22px]",
+            isOpen ? "text-gold" : "text-white group-hover:text-gold",
+          )}
+        >
           {item.question}
         </h3>
         <span
           aria-hidden="true"
           className={cn(
-            "mt-0.5 flex-shrink-0 font-mono text-xl leading-none text-[#57c0af] transition-transform duration-300 ease-out",
+            "mt-0.5 flex-shrink-0 font-mono text-2xl leading-none text-gold transition-transform duration-300 ease-out",
             isOpen ? "rotate-45" : "rotate-0",
           )}
         >
@@ -188,12 +213,21 @@ function FaqAccordionItem({
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.35, ease: EASE }}
+            transition={{
+              height: { duration: 0.45, ease: EASE },
+              opacity: { duration: isOpen ? 0.3 : 0.2, ease: EASE },
+            }}
             className="overflow-hidden"
           >
-            <div className="pt-4 pr-6 text-[15px] leading-7 text-zinc-400 md:pr-10">
+            <motion.div
+              initial={{ y: -8, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -4, opacity: 0 }}
+              transition={{ duration: 0.35, delay: 0.05, ease: EASE }}
+              className="pt-4 pr-6 text-[15px] leading-7 text-zinc-400 sm:pl-[3.25rem] md:pr-10"
+            >
               {item.answer}
-            </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -233,12 +267,10 @@ export function Faq() {
     <section className="bg-black text-white">
       <div className="section-x section-y mx-auto w-full max-w-7xl">
         <div className="mb-12 md:mb-16">
-          <p className="eyebrow text-[#57c0af]">FAQs</p>
-          <h2 className="mt-4 text-3xl font-medium text-white md:text-4xl lg:text-5xl">
+          <p className="eyebrow text-gold">FAQs</p>
+          <h2 className="mt-4 text-4xl font-medium leading-[1.05] text-white md:text-5xl lg:text-6xl">
             Frequently Asked{" "}
-            <span className="font-display-italic text-[#57c0af]">
-              Questions
-            </span>{" "}
+            <span className="font-display-gold">Questions</span>{" "}
             <span className="text-white/40">(FAQs)</span>
           </h2>
         </div>
@@ -249,9 +281,11 @@ export function Faq() {
               <RevealItem key={item.question}>
                 <FaqAccordionItem
                   item={item}
+                  displayNumber={index + 1}
                   isOpen={openLeft.has(index)}
                   onToggle={() => toggleLeft(index)}
                   panelId={`faq-left-panel-${index}`}
+                  tinted={(index + 1) % 4 === 0}
                 />
               </RevealItem>
             ))}
@@ -261,9 +295,11 @@ export function Faq() {
               <RevealItem key={item.question}>
                 <FaqAccordionItem
                   item={item}
+                  displayNumber={leftFaqItems.length + index + 1}
                   isOpen={openRight.has(index)}
                   onToggle={() => toggleRight(index)}
                   panelId={`faq-right-panel-${index}`}
+                  tinted={(leftFaqItems.length + index + 1) % 4 === 0}
                 />
               </RevealItem>
             ))}

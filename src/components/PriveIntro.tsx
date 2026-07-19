@@ -15,10 +15,7 @@ export function PriveIntro() {
         <Reveal className="lg:col-span-5">
           <div className="lg:sticky lg:top-32">
             <h2 className="text-4xl font-light leading-[0.95] tracking-tight text-white md:text-5xl lg:text-6xl">
-              Nuqi{" "}
-              <span className="font-display-italic text-nuqi-teal">
-                Prive
-              </span>
+              Nuqi <span className="font-display-gold">Prive</span>
             </h2>
             <p className="mt-8 max-w-md text-xl font-light leading-relaxed text-nuqi-teal/90 md:text-2xl">
               Tailored Solutions for Ultra-High Net Worth Individuals.
@@ -34,8 +31,8 @@ export function PriveIntro() {
                 key={item}
                 className="group flex items-stretch gap-6 border-b border-line py-6 md:py-7"
               >
-                <span className="w-px shrink-0 bg-nuqi-teal/30 transition-colors duration-300 group-hover:bg-nuqi-teal" />
-                <span className="eyebrow shrink-0 pt-0.5 text-nuqi-teal/70 transition-colors duration-300 group-hover:text-nuqi-teal">
+                <span className="w-px shrink-0 bg-nuqi-gold/30 transition-colors duration-300 group-hover:bg-nuqi-gold" />
+                <span className="eyebrow shrink-0 pt-0.5 text-nuqi-gold/70 transition-colors duration-300 group-hover:text-nuqi-gold">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <p className="text-base font-light leading-relaxed text-fg-muted transition-colors duration-300 group-hover:text-white md:text-lg">

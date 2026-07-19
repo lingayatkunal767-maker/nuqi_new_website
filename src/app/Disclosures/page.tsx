@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Reveal } from "@/components/Reveal";
 import { cn } from "@/lib/utils";
+
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 type TabKey = "compliance" | "ai" | "payment";
 
@@ -39,10 +41,10 @@ function ComplianceDisclosure() {
         Board of India (Investment Advisers) Regulations, 2013, for last and
         current financial years are as under:
       </p>
-      <div className="w-full overflow-x-auto rounded-2xl border border-white/10">
+      <div className="w-full overflow-x-auto rounded-2xl border border-nuqi-gold/25">
         <table className="min-w-full text-sm sm:text-base">
           <thead>
-            <tr className="border-b-2 border-[#57c0af]">
+            <tr className="border-b-2 border-nuqi-gold">
               <th className="p-4 text-left font-medium text-zinc-400 eyebrow">
                 Sr. No
               </th>
@@ -84,7 +86,7 @@ function AiDisclosure() {
   return (
     <div className="max-w-3xl space-y-6 text-sm sm:text-base leading-relaxed text-zinc-300">
       <div className="space-y-2">
-        <p className="eyebrow text-[#57c0af]">Disclaimer</p>
+        <p className="eyebrow text-gold">Disclaimer</p>
         <h3 className="text-lg sm:text-xl font-medium text-white">
           Use of Artificial Intelligence (&apos;AI&apos;) Tools in IA Services
         </h3>
@@ -96,7 +98,7 @@ function AiDisclosure() {
       <ul className="space-y-3">
         {AI_DISCLOSURE_ITEMS.map((item) => (
           <li key={item} className="flex gap-3">
-            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#57c0af]" />
+            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-nuqi-gold" />
             <span>{item}</span>
           </li>
         ))}
@@ -108,13 +110,13 @@ function AiDisclosure() {
 function PaymentUpi() {
   return (
     <div className="space-y-10">
-      <div className="rounded-2xl border border-white/10 bg-white/[0.02] px-6 py-5">
-        <p className="eyebrow text-[#57c0af]">Payment Via UPI</p>
+      <div className="rounded-2xl border border-nuqi-gold/25 bg-nuqi-gold/[0.03] px-6 py-5">
+        <p className="eyebrow text-gold">Payment Via UPI</p>
       </div>
       <div className="flex flex-col md:flex-row items-start md:items-center gap-10 md:gap-16">
         <div className="flex-1 space-y-5 text-sm sm:text-base leading-relaxed text-zinc-300">
           <p>We now have a validated UPI ID for all investor payments:</p>
-          <p className="text-[#57c0af] font-semibold text-base sm:text-lg tracking-wide">
+          <p className="text-gold font-semibold text-base sm:text-lg tracking-wide">
             nuqiwealthindia.ia@validhdfc
           </p>
           <p>
@@ -123,17 +125,23 @@ function PaymentUpi() {
             mark of authenticity.
           </p>
         </div>
-        <div className="flex w-full flex-col items-center gap-3 rounded-2xl border border-white/10 p-6 md:w-auto">
-          <Image
-            src="/images/QR.png"
-            alt="NUQI Wealth India UPI QR Code"
-            width={288}
-            height={288}
-            className="h-48 w-48 object-contain sm:h-56 sm:w-56 md:h-64 md:w-64 lg:h-72 lg:w-72"
-          />
-          <p className="text-[#57c0af] text-sm font-medium tracking-wide">
-            nuqiwealthindia.ia@validhdfc
-          </p>
+        <div className="relative w-full md:w-auto">
+          <div className="absolute inset-0 rounded-[28px] bg-nuqi-gold/20 blur-2xl" />
+          <div className="relative flex w-full flex-col items-center gap-4 rounded-2xl border border-nuqi-gold/40 bg-gradient-to-b from-nuqi-gold/[0.08] to-black p-8 shadow-[0_0_60px_-12px_rgba(225,198,106,0.45)] md:w-auto">
+            <div className="rounded-xl border border-nuqi-gold/30 bg-white p-3">
+              <Image
+                src="/images/QR.png"
+                alt="NUQI Wealth India UPI QR Code"
+                width={288}
+                height={288}
+                className="h-48 w-48 object-contain sm:h-56 sm:w-56 md:h-64 md:w-64 lg:h-72 lg:w-72"
+              />
+            </div>
+            <p className="eyebrow text-gold">Scan to Pay Securely</p>
+            <p className="text-gold text-sm font-medium tracking-wide">
+              nuqiwealthindia.ia@validhdfc
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -149,13 +157,13 @@ export default function DisclosuresPage() {
       <main className="min-h-screen bg-void pt-24 text-white">
         <div className="section-x mx-auto max-w-5xl py-16 md:py-24">
           <Reveal>
-            <p className="eyebrow mb-4 text-[#57c0af]">Legal &amp; Compliance</p>
+            <p className="eyebrow mb-4 text-gold">Legal &amp; Compliance</p>
             <h1 className="text-4xl font-medium tracking-tight text-white sm:text-6xl">
               Disclosures
             </h1>
             <p className="mt-4 max-w-xl text-sm text-zinc-400 sm:text-base">
               Everything we&apos;re required to tell you — and everything we{" "}
-              <span className="font-display-italic text-lg text-[#57c0af] sm:text-xl">
+              <span className="font-display-gold text-lg sm:text-xl">
                 want
               </span>{" "}
               to.
@@ -186,7 +194,7 @@ export default function DisclosuresPage() {
                   {activeTab === tab.key && (
                     <motion.span
                       layoutId="disclosures-tab-underline"
-                      className="absolute inset-x-0 -bottom-px h-[2px] bg-[#57c0af]"
+                      className="absolute inset-x-0 -bottom-px h-[2px] bg-nuqi-gold shadow-[0_0_10px_rgba(225,198,106,0.6)]"
                       transition={{ type: "spring", stiffness: 380, damping: 32 }}
                     />
                   )}
@@ -195,9 +203,19 @@ export default function DisclosuresPage() {
             </div>
 
             <div className="mt-10 md:mt-12">
-              {activeTab === "compliance" && <ComplianceDisclosure />}
-              {activeTab === "ai" && <AiDisclosure />}
-              {activeTab === "payment" && <PaymentUpi />}
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTab}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.35, ease: EASE }}
+                >
+                  {activeTab === "compliance" && <ComplianceDisclosure />}
+                  {activeTab === "ai" && <AiDisclosure />}
+                  {activeTab === "payment" && <PaymentUpi />}
+                </motion.div>
+              </AnimatePresence>
             </div>
           </Reveal>
         </div>

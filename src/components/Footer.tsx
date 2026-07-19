@@ -101,34 +101,37 @@ export function Footer() {
           <div className="flex gap-8">
             <a
               aria-label="Contact by Mail"
-              className="text-[#57c0af] hover:text-white transition"
+              className="text-gold hover:text-white transition"
               href="mailto:support@nuqiwealth.in"
             >
               <Mail className="w-6 h-6" />
             </a>
             <a
               aria-label="Follow on Instagram"
-              className="text-[#57c0af] hover:text-white transition"
+              className="text-gold hover:text-white transition"
               href="https://www.instagram.com/nuqiwealth_india/"
             >
               <InstagramIcon className="w-6 h-6" />
             </a>
             <a
               aria-label="Follow on Facebook"
-              className="text-[#57c0af] hover:text-white transition"
+              className="text-gold hover:text-white transition"
               href="https://www.facebook.com/NuqiWealthIndia/"
             >
               <FacebookIcon className="w-6 h-6" />
             </a>
             <a
               aria-label="Follow on Linkedin"
-              className="text-[#57c0af] hover:text-white transition"
+              className="text-gold hover:text-white transition"
               href="https://www.linkedin.com/company/nuqi-wealth"
             >
               <LinkedinIcon className="w-6 h-6" />
             </a>
           </div>
         </div>
+        <p className="font-display-gold mt-16 text-center text-4xl sm:text-5xl md:text-6xl">
+          The Gold Collar Life
+        </p>
         <div className="mt-16 grid grid-cols-2 gap-x-6 gap-y-6 text-center md:grid-cols-3 lg:grid-cols-6 xl:flex xl:justify-center xl:gap-10">
           {FOOTER_LINKS.map((link) => (
             <a
@@ -136,8 +139,8 @@ export function Footer() {
               href={link.href}
               className={
                 link.isHome
-                  ? "eyebrow text-[#57c0af]"
-                  : "eyebrow text-white/60 transition hover:text-[#57c0af]"
+                  ? "eyebrow text-gold"
+                  : "eyebrow text-white/60 transition hover:text-gold"
               }
             >
               {link.label}
