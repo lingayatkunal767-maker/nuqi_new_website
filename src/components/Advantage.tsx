@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
   ShieldCheck,
@@ -9,12 +10,10 @@ import {
   Cpu,
   Globe,
 } from "lucide-react";
-import { motion } from "motion/react";
-import { cn } from "@/lib/utils";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { NewsletterForm } from "@/components/NewsletterForm";
-import { RevealGroup, RevealItem } from "@/components/Reveal";
-
-const EASE = [0.16, 1, 0.3, 1] as const;
+import { Reveal } from "@/components/Reveal";
 
 interface AdvantageCard {
   number: string;
@@ -69,101 +68,147 @@ const CARDS: AdvantageCard[] = [
 ];
 
 export function Advantage() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const chapterRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const container = containerRef.current;
+    if (!container) return;
+
+    const chapters = chapterRefs.current.filter(Boolean) as HTMLDivElement[];
+    gsap.set(chapters, { opacity: 0, y: 40 });
+    gsap.set(chapters[0], { opacity: 1, y: 0 });
+
+    const st = ScrollTrigger.create({
+      trigger: container,
+      start: "top top",
+      end: () => `+=${window.innerHeight * (CARDS.length - 1)}`,
+      pin: true,
+      scrub: 0.6,
+      invalidateOnRefresh: true,
+      onUpdate: (self) => {
+        const raw = self.progress * (CARDS.length - 1);
+        const index = Math.min(CARDS.length - 1, Math.round(raw));
+        setActiveIndex((prev) => (prev === index ? prev : index));
+
+        chapters.forEach((el, i) => {
+          const dist = Math.abs(raw - i);
+          const opacity = Math.max(0, 1 - dist * 1.4);
+          gsap.to(el, {
+            opacity,
+            y: (i - raw) * 24,
+            duration: 0.2,
+            overwrite: true,
+          });
+        });
+      },
+    });
+
+    return () => {
+      st.kill();
+    };
+  }, []);
+
+  const active = CARDS[activeIndex];
+
   return (
-    <section
-      id="advisory"
-      className="w-full bg-void text-zinc-200 section-x section-y"
-    >
-      <div className="max-w-7xl mx-auto mb-16 md:mb-20 grid md:grid-cols-2 gap-10">
-        <div className="space-y-5">
-          <p className="eyebrow text-nuqi-teal">THE ADVANTAGE</p>
-          <h2 className="text-4xl md:text-5xl font-medium leading-[1.05] text-white">
-            Why NUQI <br />
-            <span className="font-display-italic text-4xl md:text-5xl">
-              Digital Wealth
-            </span>
-            ?
-          </h2>
-        </div>
-        <p className="text-lg text-fg-muted mt-8 leading-relaxed">
-          We combine the intelligence of modern fintech with
-          institution-grade safety, transparency and global accessibility —
-          giving investors a platform that is secure, informed and aligned
-          with long-term growth.
-        </p>
-      </div>
-
-      <div className="max-w-7xl mx-auto rounded-2xl overflow-hidden border border-line">
-        <RevealGroup className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-line">
-          {CARDS.map((card) => (
-            <RevealItem key={card.number} className="h-full">
-              <motion.div
-                className="group relative h-full bg-void p-8 md:p-10 flex flex-col overflow-hidden"
-                whileHover={{
-                  y: -4,
-                  boxShadow: "0 24px 48px -24px rgba(87,192,175,0.35)",
-                }}
-                transition={{ duration: 0.3, ease: EASE }}
-              >
-                {/* faint mono index number */}
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute top-5 right-6 font-mono text-4xl md:text-5xl font-light tracking-tight text-white/[0.06] select-none"
-                >
-                  {card.number}
+    <section id="advisory" className="w-full bg-void text-zinc-200">
+      <div className="section-x pt-24 md:pt-32 max-w-7xl mx-auto">
+        <Reveal>
+          <div className="grid md:grid-cols-2 gap-10 mb-16 md:mb-20">
+            <div className="space-y-5">
+              <p className="eyebrow text-nuqi-teal">THE ADVANTAGE</p>
+              <h2 className="text-4xl md:text-5xl font-medium leading-[1.05] text-white">
+                Why NUQI <br />
+                <span className="font-display-italic text-4xl md:text-5xl">
+                  Digital Wealth
                 </span>
-
-                {/* accent ring that brightens on hover */}
-                <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-nuqi-teal/0 transition-all duration-300 group-hover:ring-nuqi-teal/50" />
-
-                {/* square icon tile */}
-                <div className="relative mb-8">
-                  <div
-                    className={cn(
-                      "w-12 h-12 rounded-md flex items-center justify-center",
-                      "border border-line bg-panel transition-all duration-300",
-                      "group-hover:border-nuqi-teal/60 group-hover:shadow-[0_0_20px_rgba(87,192,175,0.25)]"
-                    )}
-                  >
-                    <card.icon className="w-5 h-5 text-nuqi-teal transition-colors duration-300" />
-                  </div>
-                </div>
-
-                <h3 className="relative text-lg md:text-xl font-medium mb-3 text-white">
-                  {card.title}
-                </h3>
-                <p className="relative text-sm md:text-base text-fg-muted leading-relaxed">
-                  {card.description}
-                </p>
-
-                <a
-                  href="#"
-                  className="relative mt-8 inline-flex items-center gap-2 self-start font-mono text-xs uppercase tracking-[0.15em] text-nuqi-teal"
-                >
-                  Read More
-                  <span
-                    aria-hidden
-                    className="transition-transform duration-300 group-hover:translate-x-1"
-                  >
-                    →
-                  </span>
-                </a>
-              </motion.div>
-            </RevealItem>
-          ))}
-        </RevealGroup>
+                ?
+              </h2>
+            </div>
+            <p className="text-lg text-fg-muted mt-8 leading-relaxed">
+              We combine the intelligence of modern fintech with
+              institution-grade safety, transparency and global accessibility
+              — giving investors a platform that is secure, informed and
+              aligned with long-term growth.
+            </p>
+          </div>
+        </Reveal>
       </div>
 
-      <div className="max-w-7xl mx-auto mt-6 rounded-2xl border border-line bg-panel p-10 md:p-16">
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
-          <h3 className="text-2xl md:text-3xl font-light text-white max-w-3xl leading-relaxed text-left">
-            Simplifying ethical compliance so businesses can operate{" "}
-            <span className="text-nuqi-teal font-normal">
-              responsibly and confidently.
-            </span>
-          </h3>
-          <NewsletterForm />
+      {/* Pinned scroll-story: one chapter per advantage, scrubbed by scroll position */}
+      <div ref={containerRef} className="relative">
+        <div className="h-screen w-full flex items-center overflow-hidden section-x">
+          <div className="max-w-7xl mx-auto w-full grid md:grid-cols-[auto_1fr] gap-12 md:gap-20 items-center">
+            {/* Chapter index rail */}
+            <div className="hidden md:flex flex-col gap-4">
+              {CARDS.map((card, i) => (
+                <div key={card.number} className="flex items-center gap-3">
+                  <span
+                    className={`h-px transition-all duration-500 ${
+                      i === activeIndex ? "w-8 bg-nuqi-teal" : "w-4 bg-white/15"
+                    }`}
+                  />
+                  <span
+                    className={`font-mono text-xs transition-colors duration-500 ${
+                      i === activeIndex ? "text-nuqi-teal" : "text-white/25"
+                    }`}
+                  >
+                    {card.number}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Stacked chapter panels */}
+            <div className="relative h-[420px] md:h-[380px]">
+              <span
+                aria-hidden
+                className="absolute -top-16 -left-4 md:-left-8 font-mono text-[10rem] md:text-[16rem] leading-none text-white/[0.04] select-none pointer-events-none"
+              >
+                {active.number}
+              </span>
+              {CARDS.map((card, i) => (
+                <div
+                  key={card.number}
+                  ref={(el) => {
+                    chapterRefs.current[i] = el;
+                  }}
+                  className="absolute inset-0 flex flex-col justify-center"
+                  style={{ pointerEvents: i === activeIndex ? "auto" : "none" }}
+                >
+                  <div className="mb-8 w-14 h-14 rounded-md flex items-center justify-center border border-nuqi-teal/40 bg-panel shadow-[0_0_30px_rgba(87,192,175,0.15)]">
+                    <card.icon className="w-6 h-6 text-nuqi-teal" />
+                  </div>
+                  <h3 className="text-3xl md:text-5xl font-medium text-white mb-6 max-w-xl leading-tight">
+                    {card.title}
+                  </h3>
+                  <p className="text-base md:text-lg text-fg-muted leading-relaxed max-w-xl">
+                    {card.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
+      </div>
+
+      <div className="section-x pb-24 md:pb-32 max-w-7xl mx-auto">
+        <Reveal>
+          <div className="rounded-2xl border border-line bg-panel p-10 md:p-16">
+            <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+              <h3 className="text-2xl md:text-3xl font-light text-white max-w-3xl leading-relaxed text-left">
+                Simplifying ethical compliance so businesses can operate{" "}
+                <span className="text-nuqi-teal font-normal">
+                  responsibly and confidently.
+                </span>
+              </h3>
+              <NewsletterForm />
+            </div>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

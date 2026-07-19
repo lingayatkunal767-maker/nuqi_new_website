@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import { Agentation } from "agentation";
 import { SmoothScroll } from "@/components/SmoothScroll";
+import { CustomCursor } from "@/components/CustomCursor";
+import { IntroLoader } from "@/components/IntroLoader";
 import "./globals.css";
 
 const agentationEnabled = process.env.NEXT_PUBLIC_ENABLE_AGENTATION === "true";
@@ -48,6 +50,9 @@ export default function RootLayout({
       className={`${inter.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans bg-black text-white">
+        <IntroLoader />
+        <div className="grain-overlay" aria-hidden />
+        <CustomCursor />
         <SmoothScroll>{children}</SmoothScroll>
         {agentationEnabled && <Agentation />}
       </body>

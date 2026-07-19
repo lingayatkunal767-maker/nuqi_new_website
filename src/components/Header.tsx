@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { motion } from "motion/react"
+import { motion, type Variants } from "motion/react"
 import { ArrowUpRight, Menu, X } from "lucide-react"
 
 const EASE = [0.16, 1, 0.3, 1] as const
@@ -11,15 +11,92 @@ const EASE = [0.16, 1, 0.3, 1] as const
 interface NavLink {
   label: string
   href: string
+  gradient: string
 }
 
 const NAV_LINKS: NavLink[] = [
-  { label: "Advisory", href: "/" },
-  { label: "Prive", href: "/digitalwealth" },
-  { label: "IRIS", href: "/iris" },
-  { label: "Ethosphere", href: "/ethosphere" },
-  { label: "Disclosures", href: "/Disclosures" },
+  { label: "Advisory", href: "/", gradient: "radial-gradient(circle, rgba(225,198,106,0.22) 0%, rgba(225,198,106,0.08) 50%, transparent 100%)" },
+  { label: "Prive", href: "/digitalwealth", gradient: "radial-gradient(circle, rgba(87,192,175,0.22) 0%, rgba(87,192,175,0.08) 50%, transparent 100%)" },
+  { label: "IRIS", href: "/iris", gradient: "radial-gradient(circle, rgba(225,198,106,0.22) 0%, rgba(225,198,106,0.08) 50%, transparent 100%)" },
+  { label: "Ethosphere", href: "/ethosphere", gradient: "radial-gradient(circle, rgba(87,192,175,0.22) 0%, rgba(87,192,175,0.08) 50%, transparent 100%)" },
+  { label: "Disclosures", href: "/Disclosures", gradient: "radial-gradient(circle, rgba(225,198,106,0.22) 0%, rgba(225,198,106,0.08) 50%, transparent 100%)" },
 ]
+
+const itemVariants: Variants = {
+  initial: { rotateX: 0, opacity: 1 },
+  hover: { rotateX: -90, opacity: 0 },
+}
+const backVariants: Variants = {
+  initial: { rotateX: 90, opacity: 0 },
+  hover: { rotateX: 0, opacity: 1 },
+}
+const glowVariants: Variants = {
+  initial: { opacity: 0, scale: 0.8 },
+  hover: {
+    opacity: 1,
+    scale: 1.8,
+    transition: { duration: 0.5, ease: EASE },
+  },
+}
+const flipTransition = { type: "spring" as const, stiffness: 240, damping: 22 }
+
+function FlipNavItem({
+  label,
+  onClick,
+  href,
+  gradient,
+}: {
+  label: string
+  onClick?: () => void
+  href?: string
+  gradient: string
+}) {
+  const renderFace = (className: string) =>
+    href ? (
+      <Link href={href} className={className}>
+        {label}
+      </Link>
+    ) : (
+      <button type="button" onClick={onClick} className={className}>
+        {label}
+      </button>
+    )
+
+  return (
+    <motion.div
+      className="relative"
+      style={{ perspective: "600px" }}
+      initial="initial"
+      whileHover="hover"
+    >
+      <motion.div
+        className="absolute inset-0 z-0 pointer-events-none rounded-full"
+        variants={glowVariants}
+        style={{ background: gradient }}
+      />
+      <motion.div
+        variants={itemVariants}
+        transition={flipTransition}
+        style={{ transformStyle: "preserve-3d", transformOrigin: "center bottom" }}
+        className="relative z-10"
+      >
+        {renderFace("block px-4 py-2 font-mono text-[11px] uppercase tracking-[0.15em] text-white/70")}
+      </motion.div>
+      <motion.div
+        variants={backVariants}
+        transition={flipTransition}
+        style={{
+          transformStyle: "preserve-3d",
+          transformOrigin: "center top",
+          transform: "rotateX(90deg)",
+        }}
+        className="absolute inset-0 z-10"
+      >
+        {renderFace("block px-4 py-2 font-mono text-[11px] uppercase tracking-[0.15em] text-gold")}
+      </motion.div>
+    </motion.div>
+  )
+}
 
 interface UniverseLink {
   href: string
@@ -99,21 +176,13 @@ export function Header() {
 
           <nav className="hidden lg:flex flex-grow items-center justify-center gap-1">
             {NAV_LINKS.map((link) => (
-              <Link
-                key={link.label}
-                className="px-4 py-2 font-mono text-[11px] uppercase tracking-[0.15em] text-white/70 transition-colors duration-300 hover:text-[#57c0af] focus:outline-none"
-                href={link.href}
-              >
-                {link.label}
-              </Link>
+              <FlipNavItem key={link.label} label={link.label} href={link.href} gradient={link.gradient} />
             ))}
-            <button
-              type="button"
+            <FlipNavItem
+              label="Nuqi Universe"
               onClick={() => setIsUniverseOpen(true)}
-              className="px-4 py-2 font-mono text-[11px] uppercase tracking-[0.15em] text-white/70 transition-colors duration-300 hover:text-[#57c0af]"
-            >
-              Nuqi Universe
-            </button>
+              gradient="radial-gradient(circle, rgba(225,198,106,0.22) 0%, rgba(225,198,106,0.08) 50%, transparent 100%)"
+            />
           </nav>
 
           <div className="flex items-center gap-2.5 sm:gap-3">
@@ -131,7 +200,7 @@ export function Header() {
             </button>
 
             <div className="lg:hidden">
-              <button className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-white/15 bg-transparent transition-colors duration-300 hover:border-[#57c0af]">
+              <button className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-white/15 bg-transparent transition-colors duration-300 hover:border-gold">
                 <Image
                   src="/images/india.jpg"
                   alt="India"
@@ -148,12 +217,12 @@ export function Header() {
                   whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.97 }}
                   transition={{ duration: 0.25, ease: EASE }}
-                  className="rounded-full border border-[#57c0af]/60 bg-transparent px-5 py-2 font-mono text-[11px] uppercase tracking-[0.15em] text-white transition-colors duration-300 hover:border-[#57c0af] hover:bg-[#57c0af] hover:text-black"
+                  className="rounded-full border border-[#e1c66a]/60 bg-transparent px-5 py-2 font-mono text-[11px] uppercase tracking-[0.15em] text-white transition-colors duration-300 hover:border-[#e1c66a] hover:bg-[#e1c66a] hover:text-black"
                 >
                   Log In/Sign Up
                 </motion.button>
               </a>
-              <button className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-white/15 bg-transparent transition-colors duration-300 hover:border-[#57c0af]">
+              <button className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-white/15 bg-transparent transition-colors duration-300 hover:border-gold">
                 <Image
                   src="/images/india.jpg"
                   alt="India"
@@ -176,7 +245,7 @@ export function Header() {
             {NAV_LINKS.map((link) => (
               <li key={link.label}>
                 <Link
-                  className="block px-2 py-3 font-mono text-xs uppercase tracking-[0.15em] text-white/80 transition-colors duration-300 hover:text-[#57c0af]"
+                  className="block px-2 py-3 font-mono text-xs uppercase tracking-[0.15em] text-white/80 transition-colors duration-300 hover:text-gold"
                   href={link.href}
                   onClick={closeMobileNav}
                 >
@@ -191,14 +260,14 @@ export function Header() {
                   setIsUniverseOpen(true)
                   closeMobileNav()
                 }}
-                className="block w-full text-left px-2 py-3 font-mono text-xs uppercase tracking-[0.15em] text-white/80 transition-colors duration-300 hover:text-[#57c0af]"
+                className="block w-full text-left px-2 py-3 font-mono text-xs uppercase tracking-[0.15em] text-white/80 transition-colors duration-300 hover:text-gold"
               >
                 Nuqi Universe
               </button>
             </li>
             <li className="py-2">
               <a href="http://portal.nuqiwealth.in/" target="_blank" rel="noopener noreferrer">
-                <button className="w-full rounded-full border border-[#57c0af]/60 bg-transparent px-4 py-2.5 font-mono text-xs uppercase tracking-[0.15em] text-white transition-colors duration-300 hover:border-[#57c0af] hover:bg-[#57c0af] hover:text-black">
+                <button className="w-full rounded-full border border-[#e1c66a]/60 bg-transparent px-4 py-2.5 font-mono text-xs uppercase tracking-[0.15em] text-white transition-colors duration-300 hover:border-[#e1c66a] hover:bg-[#e1c66a] hover:text-black">
                   Log In/Sign Up
                 </button>
               </a>
@@ -222,7 +291,7 @@ export function Header() {
         }`}
         style={{
           width: "min(360px, 100vw)",
-          background: "linear-gradient(rgb(10,26,20) 0%, rgb(5,5,5) 30%)",
+          background: "linear-gradient(160deg, rgb(20,17,5) 0%, rgb(5,5,5) 40%)",
           transitionTimingFunction: "cubic-bezier(0.16,1,0.3,1)",
         }}
       >
@@ -241,20 +310,20 @@ export function Header() {
               type="button"
               onClick={closeUniverse}
               aria-label="Close"
-              className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center bg-white/5 hover:bg-white/15 hover:border-[#57c0af]/60 text-white transition-all duration-300"
+              className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center bg-white/5 hover:bg-white/15 hover:border-[#e1c66a]/60 text-white transition-all duration-300"
             >
               <X size={15} />
             </button>
           </div>
           <div className="relative px-5 pb-5">
-            <p className="eyebrow text-[#57c0af] mb-1.5">Explore</p>
+            <p className="eyebrow text-gold mb-1.5">Explore</p>
             <h2 className="text-white font-sans font-semibold text-xl leading-tight drop-shadow-md">
-              Nuqi <span className="font-display-italic">Universe</span>
+              Nuqi <span className="font-display-gold">Universe</span>
             </h2>
             <p className="text-white/60 text-xs mt-1 font-sans">
               Discover the full Nuqi ecosystem
             </p>
-            <div className="mt-4 h-px w-10 bg-[#57c0af]" />
+            <div className="mt-4 h-px w-10 bg-[#e1c66a]" />
           </div>
         </div>
 
@@ -265,7 +334,7 @@ export function Header() {
               href={item.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group block rounded-2xl overflow-hidden border border-white/10 hover:border-[#57c0af]/50 hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+              className="group block rounded-2xl overflow-hidden border border-white/10 hover:border-[#e1c66a]/50 hover:-translate-y-1 transition-all duration-300 cursor-pointer"
             >
               <div className="relative px-5 py-10 overflow-hidden">
                 <Image
@@ -285,15 +354,15 @@ export function Header() {
                     className="h-7 w-auto max-w-[130px] object-contain"
                     style={{ filter: "brightness(0) invert(1)" }}
                   />
-                  <div className="w-8 h-8 rounded-full border border-white/10 bg-white/5 group-hover:bg-white/15 group-hover:border-[#57c0af]/60 flex items-center justify-center transition-all duration-300">
-                    <ArrowUpRight size={14} className="text-white/70 group-hover:text-[#57c0af] transition-colors duration-300" />
+                  <div className="w-8 h-8 rounded-full border border-white/10 bg-white/5 group-hover:bg-white/15 group-hover:border-[#e1c66a]/60 flex items-center justify-center transition-all duration-300">
+                    <ArrowUpRight size={14} className="text-white/70 group-hover:text-gold transition-colors duration-300" />
                   </div>
                 </div>
               </div>
               <div className="bg-black/40 border-t border-white/10 px-5 py-4">
                 <p className="font-semibold text-white font-sans text-sm mb-1">{item.title}</p>
                 <p className="text-white/50 text-xs leading-relaxed">{item.description}</p>
-                <div className="mt-3 flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.1em] text-[#57c0af] group-hover:gap-2 transition-all duration-300">
+                <div className="mt-3 flex items-center gap-1 font-mono text-[11px] uppercase tracking-[0.1em] text-gold group-hover:gap-2 transition-all duration-300">
                   Visit site <ArrowUpRight size={11} />
                 </div>
               </div>
