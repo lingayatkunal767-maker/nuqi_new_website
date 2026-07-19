@@ -127,7 +127,7 @@ export function Hero() {
               INDIA&apos;s First{" "}
               <span className="font-display-italic">Ethical</span>
             </Line>
-            <Line delay={0.48} className="text-[#57c0af]">
+            <Line delay={0.48} className="text-gold">
               Investment Advisory App
             </Line>
           </h1>
@@ -152,10 +152,10 @@ export function Hero() {
             <MagneticButton
               as="a"
               href="#explore-solutions"
-              className="group relative inline-block px-8 py-5 border border-[#57c0af] bg-[#57c0af] text-black overflow-hidden rounded-xl transition-[box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:shadow-[0_0_28px_rgba(87,192,175,0.5)]"
+              className="group relative inline-block px-8 py-5 border border-[#e1c66a] bg-[#e1c66a] text-black overflow-hidden rounded-xl transition-[box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:shadow-[0_0_28px_rgba(225,198,106,0.5)]"
             >
               <span className="absolute inset-0 w-full h-full bg-black scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left ease-[cubic-bezier(0.16,1,0.3,1)]" />
-              <span className="eyebrow relative z-10 flex items-center gap-3 text-black group-hover:text-[#57c0af] transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
+              <span className="eyebrow relative z-10 flex items-center gap-3 text-black group-hover:text-gold transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
                 Explore Solutions
                 <ArrowRight
                   size={14}
@@ -166,10 +166,10 @@ export function Hero() {
             <MagneticButton
               as="a"
               href="/ContactsPage"
-              className="group relative inline-block px-7 py-4 border border-white/20 text-white overflow-hidden rounded-xl transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[#57c0af]/60"
+              className="group relative inline-block px-7 py-4 border border-white/20 text-white overflow-hidden rounded-xl transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:border-[#e1c66a]/60"
             >
-              <span className="absolute inset-0 bg-[#57c0af]/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
-              <span className="eyebrow relative z-10 group-hover:text-[#57c0af] transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
+              <span className="absolute inset-0 bg-[#e1c66a]/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+              <span className="eyebrow relative z-10 group-hover:text-gold transition-colors duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]">
                 Contact Our Team
               </span>
             </MagneticButton>
@@ -196,7 +196,7 @@ export function Hero() {
               className={cn(
                 "h-[3px] rounded-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
                 index === activeIndex
-                  ? "w-10 bg-[#57c0af] shadow-[0_0_10px_rgba(87,192,175,0.6)]"
+                  ? "w-10 bg-[#e1c66a] shadow-[0_0_10px_rgba(225,198,106,0.6)]"
                   : "w-4 bg-white/20 hover:bg-white/40"
               )}
             />
@@ -210,12 +210,12 @@ export function Hero() {
         transition={{ duration: 0.8, ease: EASE, delay: 1.1 }}
         className="absolute bottom-10 md:bottom-12 left-6 md:left-12 flex flex-col items-center gap-3 text-white/35 cursor-pointer group"
       >
-        <span className="eyebrow text-[10px] group-hover:text-[#57c0af] transition-colors duration-500">
+        <span className="eyebrow text-[10px] group-hover:text-gold transition-colors duration-500">
           Scroll
         </span>
         <div className="relative h-10 w-px bg-white/10 overflow-hidden">
           <motion.span
-            className="absolute left-0 top-0 h-3 w-px bg-[#57c0af]"
+            className="absolute left-0 top-0 h-3 w-px bg-[#e1c66a]"
             animate={{ y: [-12, 40] }}
             transition={{ duration: 1.8, ease: "easeInOut", repeat: Infinity }}
           />

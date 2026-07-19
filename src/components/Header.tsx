@@ -14,12 +14,14 @@ interface NavLink {
   gradient: string
 }
 
+const NAV_GLOW = "radial-gradient(circle, rgba(225,198,106,0.22) 0%, rgba(225,198,106,0.08) 50%, transparent 100%)";
+
 const NAV_LINKS: NavLink[] = [
-  { label: "Advisory", href: "/", gradient: "radial-gradient(circle, rgba(225,198,106,0.22) 0%, rgba(225,198,106,0.08) 50%, transparent 100%)" },
-  { label: "Prive", href: "/digitalwealth", gradient: "radial-gradient(circle, rgba(87,192,175,0.22) 0%, rgba(87,192,175,0.08) 50%, transparent 100%)" },
-  { label: "IRIS", href: "/iris", gradient: "radial-gradient(circle, rgba(225,198,106,0.22) 0%, rgba(225,198,106,0.08) 50%, transparent 100%)" },
-  { label: "Ethosphere", href: "/ethosphere", gradient: "radial-gradient(circle, rgba(87,192,175,0.22) 0%, rgba(87,192,175,0.08) 50%, transparent 100%)" },
-  { label: "Disclosures", href: "/Disclosures", gradient: "radial-gradient(circle, rgba(225,198,106,0.22) 0%, rgba(225,198,106,0.08) 50%, transparent 100%)" },
+  { label: "Advisory", href: "/", gradient: NAV_GLOW },
+  { label: "Prive", href: "/digitalwealth", gradient: NAV_GLOW },
+  { label: "IRIS", href: "/iris", gradient: NAV_GLOW },
+  { label: "Ethosphere", href: "/ethosphere", gradient: NAV_GLOW },
+  { label: "Disclosures", href: "/Disclosures", gradient: NAV_GLOW },
 ]
 
 const itemVariants: Variants = {

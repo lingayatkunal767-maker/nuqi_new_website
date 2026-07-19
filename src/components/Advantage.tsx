@@ -119,7 +119,7 @@ export function Advantage() {
         <Reveal>
           <div className="grid md:grid-cols-2 gap-10 mb-16 md:mb-20">
             <div className="space-y-5">
-              <p className="eyebrow text-nuqi-teal">THE ADVANTAGE</p>
+              <p className="eyebrow text-gold">THE ADVANTAGE</p>
               <h2 className="text-4xl md:text-5xl font-medium leading-[1.05] text-white">
                 Why NUQI <br />
                 <span className="font-display-italic text-4xl md:text-5xl">
@@ -148,12 +148,12 @@ export function Advantage() {
                 <div key={card.number} className="flex items-center gap-3">
                   <span
                     className={`h-px transition-all duration-500 ${
-                      i === activeIndex ? "w-8 bg-nuqi-teal" : "w-4 bg-white/15"
+                      i === activeIndex ? "w-8 bg-[#e1c66a]" : "w-4 bg-white/15"
                     }`}
                   />
                   <span
                     className={`font-mono text-xs transition-colors duration-500 ${
-                      i === activeIndex ? "text-nuqi-teal" : "text-white/25"
+                      i === activeIndex ? "text-gold" : "text-white/25"
                     }`}
                   >
                     {card.number}
@@ -179,8 +179,8 @@ export function Advantage() {
                   className="absolute inset-0 flex flex-col justify-center"
                   style={{ pointerEvents: i === activeIndex ? "auto" : "none" }}
                 >
-                  <div className="mb-8 w-14 h-14 rounded-md flex items-center justify-center border border-nuqi-teal/40 bg-panel shadow-[0_0_30px_rgba(87,192,175,0.15)]">
-                    <card.icon className="w-6 h-6 text-nuqi-teal" />
+                  <div className="mb-8 w-14 h-14 rounded-md flex items-center justify-center border border-[#e1c66a]/40 bg-panel shadow-[0_0_30px_rgba(225,198,106,0.15)]">
+                    <card.icon className="w-6 h-6 text-gold" />
                   </div>
                   <h3 className="text-3xl md:text-5xl font-medium text-white mb-6 max-w-xl leading-tight">
                     {card.title}
@@ -201,7 +201,7 @@ export function Advantage() {
             <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
               <h3 className="text-2xl md:text-3xl font-light text-white max-w-3xl leading-relaxed text-left">
                 Simplifying ethical compliance so businesses can operate{" "}
-                <span className="text-nuqi-teal font-normal">
+                <span className="text-gold font-normal">
                   responsibly and confidently.
                 </span>
               </h3>

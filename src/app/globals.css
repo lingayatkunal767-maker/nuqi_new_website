@@ -245,7 +245,7 @@
   width: 10px;
   height: 10px;
   border-radius: 9999px;
-  background: var(--color-nuqi-teal);
+  background: var(--color-nuqi-gold);
   pointer-events: none;
   z-index: 300;
   mix-blend-mode: difference;

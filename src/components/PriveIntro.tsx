@@ -17,10 +17,10 @@ export function PriveIntro() {
             <h2 className="text-4xl font-light leading-[0.95] tracking-tight text-white md:text-5xl lg:text-6xl">
               Nuqi <span className="font-display-gold">Prive</span>
             </h2>
-            <p className="mt-8 max-w-md text-xl font-light leading-relaxed text-nuqi-teal/90 md:text-2xl">
+            <p className="mt-8 max-w-md text-xl font-light leading-relaxed text-gold/90 md:text-2xl">
               Tailored Solutions for Ultra-High Net Worth Individuals.
             </p>
-            <div className="mt-10 h-px w-16 bg-nuqi-teal/40" />
+            <div className="mt-10 h-px w-16 bg-[#e1c66a]/40" />
           </div>
         </Reveal>
 
