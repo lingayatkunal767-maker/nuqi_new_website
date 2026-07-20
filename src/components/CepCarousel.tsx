@@ -172,8 +172,8 @@ export function CepCarousel() {
   }, [count]);
 
   return (
-    <section id="advisory" className="bg-panel">
-      <div id="explore-solution" className="section-y section-x scroll-mt-24">
+    <section id="cep" className="bg-panel">
+      <div id="explore-solutions" className="section-y section-x scroll-mt-24">
         <div className="mx-auto max-w-3xl text-center">
           <Reveal>
             <p className="eyebrow mb-5 text-nuqi-gold">Investment Themes</p>

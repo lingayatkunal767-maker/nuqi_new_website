@@ -199,15 +199,34 @@ export default function EthospherePage() {
           </Reveal>
 
           <div className="w-full max-w-7xl px-4 pb-24">
-            {filteredItems.length === 0 ? (
-              <p className="py-16 text-center text-white/40">
-                No editions found for the selected filters.
-              </p>
-            ) : view === "grid" ? (
-              <EthosphereMasonry items={filteredItems} />
-            ) : (
-              <EthosphereList items={filteredItems} />
-            )}
+            <AnimatePresence mode="wait">
+              {filteredItems.length === 0 ? (
+                <motion.p
+                  key="empty"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="py-16 text-center text-white/40"
+                >
+                  No editions found for the selected filters.
+                </motion.p>
+              ) : (
+                <motion.div
+                  key={view}
+                  initial={{ opacity: 0, y: 16, filter: "blur(6px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  exit={{ opacity: 0, y: -12, filter: "blur(6px)" }}
+                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  {view === "grid" ? (
+                    <EthosphereMasonry items={filteredItems} />
+                  ) : (
+                    <EthosphereList items={filteredItems} />
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </div>
       </div>

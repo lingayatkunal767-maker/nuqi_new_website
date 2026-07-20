@@ -1,8 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type PointerEvent } from "react";
 import { ArrowRight } from "lucide-react";
-import { motion, useScroll, useTransform } from "motion/react";
+import { motion, useMotionValue, useScroll, useSpring, useTransform } from "motion/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
 import { MagneticButton } from "@/components/MagneticButton";
 
@@ -44,6 +46,8 @@ export function Hero() {
   const [activeIndex, setActiveIndex] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
+  const line1Ref = useRef<HTMLDivElement>(null);
+  const line2Ref = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -52,6 +56,31 @@ export function Hero() {
   const bgY = useTransform(scrollYProgress, [0, 1], [0, 80]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
   const contentY = useTransform(scrollYProgress, [0, 1], [0, 60]);
+
+  // Cursor-reactive depth: only the photo layer shifts, never the text or
+  // gradients, and it lives on its own nested element so it never fights the
+  // scroll-driven bgY transform above it.
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const parallaxX = useSpring(pointerX, { stiffness: 60, damping: 20, mass: 0.5 });
+  const parallaxY = useSpring(pointerY, { stiffness: 60, damping: 20, mass: 0.5 });
+
+  const handlePointerMove = useCallback(
+    (event: PointerEvent<HTMLElement>) => {
+      if (event.pointerType !== "mouse") return;
+      const rect = event.currentTarget.getBoundingClientRect();
+      const px = (event.clientX - rect.left) / rect.width - 0.5;
+      const py = (event.clientY - rect.top) / rect.height - 0.5;
+      pointerX.set(px * -24);
+      pointerY.set(py * -24);
+    },
+    [pointerX, pointerY]
+  );
+
+  const handlePointerLeave = useCallback(() => {
+    pointerX.set(0);
+    pointerY.set(0);
+  }, [pointerX, pointerY]);
 
   const startInterval = useCallback(() => {
     if (intervalRef.current) clearInterval(intervalRef.current);
@@ -67,6 +96,37 @@ export function Hero() {
     };
   }, [startInterval]);
 
+  // Headline shatter-and-fall: scrubbed 1:1 to scroll, precise and fully
+  // reversible. GSAP owns xPercent/yPercent on these two wrapper divs only —
+  // never the same element Framer Motion's curtain-reveal (Line, above)
+  // animates — so the two systems can't fight over one transform.
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const section = sectionRef.current;
+    const line1 = line1Ref.current;
+    const line2 = line2Ref.current;
+    if (!section || !line1 || !line2) return;
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top top",
+        end: () => `+=${window.innerHeight}`,
+        scrub: 0.6,
+        invalidateOnRefresh: true,
+      },
+    });
+
+    tl.to(line1, { xPercent: -130, ease: "power1.inOut", duration: 0.4 }, 0)
+      .to(line2, { xPercent: 130, ease: "power1.inOut", duration: 0.4 }, 0.1)
+      .to([line1, line2], { yPercent: 260, opacity: 0, ease: "power1.in", duration: 0.5 }, 0.35);
+
+    return () => {
+      tl.scrollTrigger?.kill();
+      tl.kill();
+    };
+  }, []);
+
   const handleDotClick = (index: number) => {
     setActiveIndex(index);
     startInterval();
@@ -75,32 +135,54 @@ export function Hero() {
   return (
     <section
       ref={sectionRef}
+      onPointerMove={handlePointerMove}
+      onPointerLeave={handlePointerLeave}
       className="relative min-h-[100svh] w-full flex items-end overflow-hidden bg-black"
     >
-      <motion.div className="absolute inset-0 z-0" style={{ y: bgY }}>
-        {SLIDE_IMAGES.map((image, index) => (
-          <div
-            key={image}
-            className={cn(
-              "absolute -inset-y-20 inset-x-0 bg-cover bg-center bg-no-repeat transition-opacity duration-[2200ms] ease-in-out will-change-transform",
-              "[filter:grayscale(0.4)_contrast(1.15)_brightness(0.75)_saturate(0.85)]",
-              index === activeIndex ? "opacity-100" : "opacity-0"
-            )}
-            style={{ backgroundImage: `url('${image}')` }}
-          />
-        ))}
+      <motion.div className="absolute inset-0 z-0 overflow-hidden" style={{ y: bgY }}>
+        <motion.div className="absolute -inset-10" style={{ x: parallaxX, y: parallaxY }}>
+          {SLIDE_IMAGES.map((image, index) => (
+            <div
+              key={image}
+              className={cn(
+                "absolute -inset-y-20 -inset-x-10 bg-cover bg-center bg-no-repeat transition-opacity duration-[2200ms] ease-in-out will-change-transform",
+                "[filter:grayscale(0.4)_contrast(1.15)_brightness(0.75)_saturate(0.85)]",
+                index === activeIndex ? "opacity-100" : "opacity-0"
+              )}
+              style={{ backgroundImage: `url('${image}')` }}
+            />
+          ))}
+        </motion.div>
       </motion.div>
 
       <div className="absolute inset-0 z-0 bg-gradient-to-t from-black via-black/60 to-black/40 pointer-events-none" />
       <div className="absolute inset-0 z-0 bg-gradient-to-r from-black via-black/20 to-black/50 pointer-events-none" />
 
-      {/* Oversized watermark numeral — pure decorative scale statement */}
-      <div
+      {/* Oversized watermark numeral — pure decorative scale statement, given
+          a slow independent drift so the hero never reads as fully static */}
+      <motion.div
         aria-hidden
+        animate={{ x: [0, 14, 0], y: [0, -10, 0] }}
+        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
         className="absolute -top-8 right-0 z-0 select-none pointer-events-none font-mono text-[28vw] leading-none text-white/[0.03] tracking-tighter"
       >
         01
-      </div>
+      </motion.div>
+
+      {/* Corner frame brackets — a thin editorial viewfinder that gives the
+          hero a defined edge instead of photo bleeding straight to nothing */}
+      <motion.div
+        aria-hidden
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1.2, ease: EASE }}
+        className="pointer-events-none absolute inset-4 z-20 md:inset-6"
+      >
+        <span className="absolute left-0 top-0 h-5 w-5 border-l border-t border-[#e1c66a]/40 md:h-6 md:w-6" />
+        <span className="absolute right-0 top-0 h-5 w-5 border-r border-t border-[#e1c66a]/40 md:h-6 md:w-6" />
+        <span className="absolute bottom-0 left-0 h-5 w-5 border-b border-l border-[#e1c66a]/40 md:h-6 md:w-6" />
+        <span className="absolute bottom-0 right-0 h-5 w-5 border-b border-r border-[#e1c66a]/40 md:h-6 md:w-6" />
+      </motion.div>
 
       <motion.div
         style={{ opacity: contentOpacity, y: contentY }}
@@ -123,13 +205,17 @@ export function Hero() {
           </motion.div>
 
           <h1 className="text-[clamp(2.1rem,min(8vw,7svh),7rem)] font-light text-white mb-5 sm:mb-8 md:mb-10 leading-[1.08] sm:leading-[1.05] tracking-[-0.03em]">
-            <Line delay={0.35}>
-              INDIA&apos;s First{" "}
-              <span className="font-display-italic">Ethical</span>
-            </Line>
-            <Line delay={0.48} className="text-gold">
-              Investment Advisory App
-            </Line>
+            <div ref={line1Ref} className="will-change-transform">
+              <Line delay={0.35}>
+                INDIA&apos;s First{" "}
+                <span className="font-display-italic">Ethical</span>
+              </Line>
+            </div>
+            <div ref={line2Ref} className="will-change-transform">
+              <Line delay={0.48} className="text-gold">
+                Investment Advisory App
+              </Line>
+            </div>
           </h1>
 
           <motion.p

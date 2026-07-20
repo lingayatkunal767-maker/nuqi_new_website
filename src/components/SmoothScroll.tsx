@@ -10,6 +10,11 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
+    // Mobile browsers fire resize events as the address bar collapses/expands
+    // on scroll; without this, every pinned ScrollTrigger section recalculates
+    // mid-scroll and the pin length drifts, showing up as dead gaps or early/
+    // late releases exactly where sections hand off to each other.
+    ScrollTrigger.config({ ignoreMobileResize: true });
 
     const lenis = new Lenis({
       duration: 1.2,

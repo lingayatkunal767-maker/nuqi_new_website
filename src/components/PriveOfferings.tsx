@@ -168,16 +168,22 @@ export function PriveOfferings() {
   }, [count]);
 
   return (
-    <section id="services" className="scroll-mt-24 bg-void section-y section-x">
-      <div className="mx-auto max-w-7xl">
-        <div className="mx-auto mb-16 max-w-2xl text-center md:mb-20">
-          <Reveal>
-            <h2 className="text-3xl font-medium leading-tight tracking-tight md:text-4xl lg:text-5xl">
-              <span className="text-white">Nuqi</span>{" "}
-              <span className="font-display-gold">Prive</span>{" "}
-              <span className="text-white">Offerings</span>
-            </h2>
-          </Reveal>
+    <section id="services" className="scroll-mt-24 bg-void">
+      {/* Scoped to this heading wrapper (not the outer <section>) so the
+          bottom padding doesn't stack after the pinned h-screen gallery below.
+          Deliberately tighter than the shared .section-y scale — a full
+          6-10rem gap here read as an oversized dead space before the gallery. */}
+      <div className="pt-16 md:pt-20 pb-8 md:pb-10 section-x">
+        <div className="mx-auto max-w-7xl">
+          <div className="mx-auto max-w-2xl text-center">
+            <Reveal>
+              <h2 className="text-3xl font-medium leading-tight tracking-tight md:text-4xl lg:text-5xl">
+                <span className="text-white">Nuqi</span>{" "}
+                <span className="font-display-gold">Prive</span>{" "}
+                <span className="text-white">Offerings</span>
+              </h2>
+            </Reveal>
+          </div>
         </div>
       </div>
 

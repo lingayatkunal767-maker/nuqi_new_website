@@ -249,7 +249,7 @@ export function Faq() {
 
   return (
     <section className="bg-black text-white">
-      <div className="section-x section-y mx-auto w-full max-w-7xl">
+      <div className="section-x pt-16 pb-16 md:pt-20 md:pb-20 mx-auto w-full max-w-7xl">
         <div className="mb-12 md:mb-16">
           <p className="eyebrow text-gold">FAQs</p>
           <h2 className="mt-4 text-4xl font-medium leading-[1.05] text-white md:text-5xl lg:text-6xl">
