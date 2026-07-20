@@ -1,6 +1,7 @@
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { ScrollChoreography } from "@/components/ScrollChoreography";
+import { WhyNuqi } from "@/components/WhyNuqi";
 import { Advantage } from "@/components/Advantage";
 import { CepCarousel } from "@/components/CepCarousel";
 import { PriveIntro } from "@/components/PriveIntro";
@@ -26,6 +27,7 @@ export default function Home() {
           bottomRight={{ src: "/images/hero/mumbai-birds.jpg", alt: "Advisor in navy suit", caption: "DISCIPLINE" }}
           reveal={{ src: "/images/universe-gold@2x.png", alt: "The Nuqi gold mark", caption: "" }}
         />
+        <WhyNuqi />
         <Advantage />
         <CepCarousel />
         <PriveIntro />
