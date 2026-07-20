@@ -1,22 +1,82 @@
 "use client";
 
+import { motion } from "motion/react";
 import { Sparkles, Users } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Reveal, RevealGroup, RevealItem } from "@/components/Reveal";
+import { cn } from "@/lib/utils";
 
+const EASE = [0.16, 1, 0.3, 1] as const;
 const SEGMENTS = ["First-Time Investor", "HNI", "Family Office"];
+
+const CARD_HOVER =
+  "transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-gold/40 hover:shadow-[0_30px_70px_-30px_rgba(225,198,106,0.35)]";
+
+function Line({
+  children,
+  delay,
+  className,
+}: {
+  children: React.ReactNode;
+  delay: number;
+  className?: string;
+}) {
+  return (
+    <span className="block overflow-hidden">
+      <motion.span
+        initial={{ y: "110%" }}
+        whileInView={{ y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1, ease: EASE, delay }}
+        className={cn("block", className)}
+      >
+        {children}
+      </motion.span>
+    </span>
+  );
+}
 
 export function WhyNuqi() {
   return (
-    <section className="bg-void">
-      <div className="section-x section-y">
+    <section className="relative overflow-hidden bg-void">
+      {/* ambient gold glow — keeps the section from reading as a flat, boxed-in grid */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-0 z-0 h-[32rem] w-[48rem] -translate-x-1/2 rounded-full bg-[#e1c66a]/[0.06] blur-[140px]"
+      />
+
+      <div className="relative z-10 section-x section-y">
         <div className="mx-auto max-w-3xl text-center">
-          <Reveal>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: EASE }}
+            className="mb-4 flex items-center justify-center gap-4"
+          >
+            <motion.span
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: EASE, delay: 0.15 }}
+              className="h-px w-8 bg-[#e1c66a] origin-right"
+            />
             <p className="eyebrow text-gold">Why Nuqi</p>
-            <h2 className="mt-4 text-4xl font-medium leading-[1.05] text-white md:text-5xl">
-              Wealth advice, without{" "}
-              <span className="font-display-gold">the asterisks.</span>
-            </h2>
+            <motion.span
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, ease: EASE, delay: 0.15 }}
+              className="h-px w-8 bg-[#e1c66a] origin-left"
+            />
+          </motion.div>
+          <h2 className="text-4xl font-medium leading-[1.05] text-white md:text-5xl">
+            <Line delay={0.1}>Wealth advice,</Line>
+            <Line delay={0.22} className="font-display-gold">
+              without the asterisks.
+            </Line>
+          </h2>
+          <Reveal delay={0.4}>
             <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-fg-muted md:text-lg">
               No hidden fees. No black-box algorithms. No hand-off to a call
               centre. Just ethical, regulated advice, engineered to be
@@ -25,10 +85,10 @@ export function WhyNuqi() {
           </Reveal>
         </div>
 
-        <RevealGroup className="relative z-10 mt-16 grid grid-cols-6 gap-4 md:mt-20" stagger={0.08}>
+        <RevealGroup className="relative z-10 mt-16 grid grid-cols-6 gap-3 sm:gap-4 md:mt-20" stagger={0.08}>
           {/* 100% transparent — big stat card */}
           <RevealItem className="col-span-full lg:col-span-2">
-            <Card className="flex h-full overflow-hidden">
+            <Card className={cn("flex h-full overflow-hidden", CARD_HOVER)}>
               <CardContent className="relative m-auto size-fit pt-6">
                 <div className="relative flex h-24 w-56 items-center">
                   <svg
@@ -58,7 +118,7 @@ export function WhyNuqi() {
 
           {/* SEBI registered — trust badge */}
           <RevealItem className="col-span-full sm:col-span-3 lg:col-span-2">
-            <Card className="h-full overflow-hidden">
+            <Card className={cn("h-full overflow-hidden", CARD_HOVER)}>
               <CardContent className="pt-6">
                 <div className="relative mx-auto flex aspect-square size-32 rounded-full border border-white/10 before:absolute before:-inset-2 before:rounded-full before:border before:border-white/5">
                   <svg className="m-auto h-fit w-24 text-gold" viewBox="0 0 212 143" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -83,7 +143,7 @@ export function WhyNuqi() {
 
           {/* Live tracking — chart card */}
           <RevealItem className="col-span-full sm:col-span-3 lg:col-span-2">
-            <Card className="h-full overflow-hidden">
+            <Card className={cn("h-full overflow-hidden", CARD_HOVER)}>
               <CardContent className="pt-6">
                 <div className="pt-6 lg:px-6">
                   <svg className="w-full text-white/10" viewBox="0 0 386 123" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -120,7 +180,7 @@ export function WhyNuqi() {
 
           {/* AI-powered advisory */}
           <RevealItem className="col-span-full lg:col-span-3">
-            <Card className="h-full overflow-hidden">
+            <Card className={cn("h-full overflow-hidden", CARD_HOVER)}>
               <CardContent className="grid gap-8 pt-6 sm:grid-cols-2">
                 <div className="relative z-10 flex flex-col justify-between space-y-8">
                   <div className="relative flex aspect-square size-12 rounded-full border border-gold/30 bg-gradient-to-br from-[#e1c66a]/20 to-transparent before:absolute before:-inset-2 before:rounded-full before:border before:border-white/5">
@@ -170,7 +230,7 @@ export function WhyNuqi() {
 
           {/* Human advisory team */}
           <RevealItem className="col-span-full lg:col-span-3">
-            <Card className="h-full overflow-hidden">
+            <Card className={cn("h-full overflow-hidden", CARD_HOVER)}>
               <CardContent className="grid h-full gap-8 pt-6 sm:grid-cols-2">
                 <div className="relative z-10 flex flex-col justify-between space-y-8">
                   <div className="relative flex aspect-square size-12 rounded-full border border-gold/30 bg-gradient-to-br from-[#e1c66a]/20 to-transparent before:absolute before:-inset-2 before:rounded-full before:border before:border-white/5">
